@@ -4,6 +4,7 @@ import { IconBuildingStore, IconChevronDown, IconHeart, IconLogout, IconSettings
 import classes from './Header.module.css';
 import { useState } from 'react';
 import LoginForm from '../Auth/LoginForm';
+import { signOut, useSession } from 'next-auth/react';
 
 const links = [
   { link: '#1', 
@@ -54,15 +55,16 @@ export default function Header() {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const { data: session } = useSession();
 
   const handleLoginClick = () => {
     setDrawerOpened(true);
   };
 
   const handleLogout = async () => {
+    await signOut(); // Anropa signOut för att logga ut användaren
     setUserMenuOpened(false); // Stäng användarmenyn efter utloggning
   };
-
 
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
@@ -121,15 +123,15 @@ export default function Header() {
               <UnstyledButton
                 className={[classes.user, userMenuOpened && classes.userActive].filter(Boolean).join(' ')}
               >
-           <Group gap={7}>
-                <span onClick={isLoggedIn ? handleLogout : handleLoginClick}>
-                {isLoggedIn ? "Namn" : "Logga in"}
-                </span>
-                {isLoggedIn && <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />}
-             </Group>
+            <Group gap={7}>
+                  <span onClick={session ? handleLogout : handleLoginClick}>
+                    {session ? session.user.name : "Logga in"}
+                  </span>
+                  {session && <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />}
+                </Group>
               </UnstyledButton>
             </Menu.Target>
-            {isLoggedIn && (
+            {session && (
               <Menu.Dropdown>
                 <>
                   <Menu.Item
@@ -162,12 +164,12 @@ export default function Header() {
                   >
                     Hantera kontoinställningar
                   </Menu.Item>
-                  <Menu.Item
+                  <Menu.Item onClick={handleLogout}
                     leftSection={
                       <IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     }
                   >
-                    Logout
+                    Logga ut
                   </Menu.Item>
                 </>
               </Menu.Dropdown>
