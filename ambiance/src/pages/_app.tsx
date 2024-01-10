@@ -1,7 +1,23 @@
-import '@/styles/globals.css'
-import '@mantine/core/styles.css'
-import type { AppProps } from 'next/app'
+// _app.tsx
+import React from 'react';
+import { AppProps } from 'next/app';
+import '../styles/globals.css';
+import '@mantine/core/styles.css';
+import { MantineProvider, createTheme } from '@mantine/core';
+import Layout from '@/components/Layout';
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
+
+function App({ Component, pageProps }: AppProps) {
+  return (
+    <MantineProvider theme={theme}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </MantineProvider>
+  );
 }
+
+export default App;
