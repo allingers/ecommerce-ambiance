@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconBuildingStore, IconChevronDown, IconHeart, IconLogout, IconSettings, IconStar, IconUser } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import { useState } from 'react';
+import LoginForm from '../Auth/LoginForm';
 
 const links = [
   { link: '#1', 
@@ -173,6 +174,7 @@ export default function Header() {
             )}
           </Menu>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
+          {drawerOpened && <LoginForm onCloseDrawer={() => setDrawerOpened(false)} />}
         </div>
       </Container>
     </header>
