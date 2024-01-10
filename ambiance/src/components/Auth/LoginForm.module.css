@@ -1,0 +1,29 @@
+.title {
+    font-family:
+      Greycliff CF,
+      var(--mantine-font-family);
+    font-weight: 900;
+  }
+
+  .loginTitle {
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+.googleLoginTitle,
+.loginText {
+  font-weight: 500;
+  font-size: .9rem;
+  text-align: center;
+}
+
+.formButton{
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+.formButton:hover{
+background-color: white;
+color: rgba(43, 43, 43, 1);
+border: 1px solid rgba(43, 43, 43, 1);
+}
+
