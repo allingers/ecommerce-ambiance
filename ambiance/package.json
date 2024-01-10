@@ -12,6 +12,7 @@
     "@mantine/core": "^7.4.1",
     "@mantine/form": "^7.4.1",
     "@mantine/hooks": "^7.4.1",
+    "@tabler/icons-react": "^2.45.0",
     "@types/mongoose": "^5.11.97",
     "dotenv": "^16.3.1",
     "mongodb": "^6.3.0",
@@ -29,6 +30,7 @@
     "postcss": "^8.4.33",
     "postcss-preset-mantine": "^1.12.3",
     "postcss-simple-vars": "^7.0.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
