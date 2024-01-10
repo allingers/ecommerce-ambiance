@@ -1,8 +1,9 @@
-import { useSession} from 'next-auth/react';
+import { getProviders, signIn, useSession} from 'next-auth/react';
 import { Drawer, Container, Group, Text, Divider, TextInput, PasswordInput, Checkbox, Anchor, Button, useMantineTheme, Paper } from '@mantine/core';
 import classes from './LoginForm.module.css'
 import { GoogleButton } from '../Auth/GoogleButton';
 import router from 'next/router';
+import { useState } from 'react';
 
 
 interface LoginFormProps {
@@ -10,15 +11,50 @@ interface LoginFormProps {
   }
 
   const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
+  const theme = useMantineTheme();
   const { data: session } = useSession();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
 
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+
+  const handleLogin = async () => {
+    const { email, password } = formData;
+
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+        callbackUrl: `${window.location.origin}`,
+      });
+  
+      if (result && result.ok) {
+        // Inloggningen lyckades
+        console.log('Inloggning lyckades:', result);
+        onCloseDrawer(); // Stäng drawern eller navigera någon annanstans
+      } else {
+        // Inloggningen misslyckades eller result är undefined
+        console.error('Inloggning misslyckades:', result?.error);
+      }
+    } catch (error) {
+      console.error('Ett fel uppstod vid inloggning:', error);
+    }
+  };
+  
   const handleRegisterClick = () => {
     // Navigera till registreringssidan när "Registrera dig här" klickas
     router.push('/register');
     onCloseDrawer();
   };
 
-  const theme = useMantineTheme();
 
   return (
     <Drawer opened={!session} onClose={onCloseDrawer} position="right" size="md">
@@ -30,18 +66,21 @@ interface LoginFormProps {
         <Divider my="xs" label="eller fortsätt med:" labelPosition="center" />
 
         <Paper>
-          <TextInput
+        <TextInput
             type="email"
             label="E-post"
             placeholder="exempel@gmail.com"
             required
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
           />
           <PasswordInput
             label="Lösenord"
             placeholder="Lösenord"
             required
+            value={formData.password}
+            onChange={(e) => handleInputChange('password', e.target.value)}
           />
-
           <Group justify="space-between" mt="lg">
             <Checkbox label="Kom ihåg mig" />
             <Anchor component="button" size="sm">
@@ -56,6 +95,7 @@ interface LoginFormProps {
             type="submit"
             fullWidth
             mt="xl"
+            onClick={handleLogin}
           >
             Logga in
           </Button>
@@ -73,3 +113,11 @@ interface LoginFormProps {
 };
 
 export default LoginForm;
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      providers: await getProviders(),
+    },
+  };
+}
