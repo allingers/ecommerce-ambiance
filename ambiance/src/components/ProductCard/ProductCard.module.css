@@ -1,0 +1,26 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrera innehållet horisontellt */
+  border: solid 1px #f2f2f2;
+}
+
+.section {
+  width: 100%; /* Se till att bilden är 100% bredd inom Card.Section */
+}
+
+.cardImage {
+  object-fit:contain; /* Gör bilden fyrkantig genom att täcka hela området */
+  width: 100%; /* Se till att bilden täcker hela bredden av dess container */
+  height: 250px; /* Justera höjden som önskat */
+}
+
+.cardInfo {
+  display: grid;
+  gap: 10px; /* Avstånd mellan textelementen */
+  text-align: center; /* Centrera texten inom sina container */
+}
+
+.cardBrand{
+    color: #8b8989;
+}

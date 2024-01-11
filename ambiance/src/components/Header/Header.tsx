@@ -53,7 +53,6 @@ export default function Header() {
   const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const { data: session } = useSession();
 
