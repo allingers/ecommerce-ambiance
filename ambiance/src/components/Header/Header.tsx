@@ -82,7 +82,7 @@ export default function Header() {
             >
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
-                {isLoggedIn && <IconChevronDown size="0.9rem" stroke={1.5} />}
+                 <IconChevronDown size="0.9rem" stroke={1.5} />
               </Center>
             </a>
           </Menu.Target>
@@ -123,12 +123,12 @@ export default function Header() {
               <UnstyledButton
                 className={[classes.user, userMenuOpened && classes.userActive].filter(Boolean).join(' ')}
               >
-            <Group gap={7}>
-                  <span onClick={session ? handleLogout : handleLoginClick}>
+               <Group gap={7}>
+                  <span className={classes.LoginLink} onClick={ handleLoginClick}>
                     {session ? session.user.name : "Logga in"}
                   </span>
                   {session && <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />}
-                </Group>
+               </Group>
               </UnstyledButton>
             </Menu.Target>
             {session && (
@@ -164,16 +164,16 @@ export default function Header() {
                   >
                     Hantera kontoinställningar
                   </Menu.Item>
-                  <Menu.Item onClick={handleLogout}
+                  <Menu.Item 
                     leftSection={
                       <IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     }
                   >
-                    Logga ut
+                 <span onClick={handleLogout}>  Logga ut </span>
                   </Menu.Item>
                 </>
               </Menu.Dropdown>
-            )}
+              )}
           </Menu>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           {drawerOpened && <LoginForm onCloseDrawer={() => setDrawerOpened(false)} />}
