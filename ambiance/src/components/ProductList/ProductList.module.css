@@ -1,7 +1,12 @@
 /* ProductList.module.css */
-.productList {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 75%;
-  }
-  
+/* 
+@media screen and (min-width: 900px){
+  .productListContainer{
+    margin-left: 13rem;
+    margin-right: 13rem;
+   }
+}*/
+  .productListContainer{
+    margin-left: 8rem;
+    margin-right: 8rem;
+   } 

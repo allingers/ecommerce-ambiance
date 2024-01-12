@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ProductList from '../../components/ProductList/ProductList';
 import { Box, Button, Center, MultiSelect } from "@mantine/core";
 import  { IProduct }  from '../../components/ProductCard/ProductCard'; 
-import classes from './ProductPage.module.css'
+import classes from '../../styles/ProductPage.module.css'
 
 
   const ProductPage: React.FC = () => {

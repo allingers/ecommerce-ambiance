@@ -1,26 +1,36 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centrera innehållet horisontellt */
-  border: solid 1px #f2f2f2;
+  justify-content: space-between;
+  height: 500px;
+  width: 0 auto;
 }
 
-.section {
-  width: 100%; /* Se till att bilden är 100% bredd inom Card.Section */
+.card:hover {
+  background-color: #f2f2f2;
+}
+
+.imageSection {
+  align-self: stretch;
+
+}
+
+.textSection{
+  padding-left: .6rem;
+  margin-bottom: 1rem;
 }
 
 .cardImage {
-  object-fit:contain; /* Gör bilden fyrkantig genom att täcka hela området */
-  width: 100%; /* Se till att bilden täcker hela bredden av dess container */
-  height: 250px; /* Justera höjden som önskat */
+  object-fit:cover;
+  width: 100%;
+  overflow: hidden;
+  transition: 0.08s linear;
 }
 
-.cardInfo {
-  display: grid;
-  gap: 10px; /* Avstånd mellan textelementen */
-  text-align: center; /* Centrera texten inom sina container */
-}
 
-.cardBrand{
+
+.brandSection{
     color: #8b8989;
+    padding-left: .6rem;
+ 
 }

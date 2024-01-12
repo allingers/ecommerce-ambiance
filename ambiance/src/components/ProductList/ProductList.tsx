@@ -3,7 +3,7 @@ import React from 'react';
 import ProductCard from '../ProductCard/ProductCard'; 
 import  {IProduct}  from '../ProductCard/ProductCard'; 
 import classes from './ProductList.module.css'; 
-import { Center, Container, createTheme } from '@mantine/core';
+import { Center, Container, SimpleGrid, createTheme } from '@mantine/core';
 
 interface ProductListProps {
   products: IProduct[];
@@ -12,19 +12,19 @@ interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
 
-    const demoProps = {
-        bg: 'var(--mantine-color-blue-light)',
-        h: 50,
-        mt: 'md',
-      };
 
   return (
-    <Container fluid className={classes.productList}>
+    <div className={classes.productListContainer}>
+      <SimpleGrid
+      cols={{ base: 1, sm: 2, md: 3, lg: 4 }}
+      spacing={{ base: 10, sm: 'xl' }}
+      verticalSpacing={{ base: 'md', sm: 'xl' }}
+    >
       {products.map((product) => (
         <ProductCard key={product._id} product={product} />
       ))}
-    </Container>
-
+      </SimpleGrid>
+    </div>
   );
 };
 

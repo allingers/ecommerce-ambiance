@@ -1,8 +1,7 @@
 // ProductCard.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Text, Image, Group } from '@mantine/core';
 import classes from './ProductCard.module.css'
-import { ObjectId } from 'mongoose';
 
   
 export interface IProduct {
@@ -16,8 +15,8 @@ export interface IProduct {
   color: string;
   inStock: string;
   categories: {
-    main: ObjectId; // Huvudkategori
-    sub: ObjectId;  // Underkategori
+    main: string; // Huvudkategori
+    sub: string;  // Underkategori
   };
 }
 
@@ -28,19 +27,42 @@ export interface IProduct {
 
   
   const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleHover = () => {
+      setIsHovered(true);
+    };
+  
+    const handleLeave = () => {
+      setIsHovered(false);
+    };
+  
     
     return (
         <>
-       < Card className={classes.card}>
-       <Card.Section className={classes.section}>
+        <Card
+      className={classes.card}
+      onMouseEnter={handleHover}
+      onMouseLeave={handleLeave}
+    >
+  
+       <Card.Section className={classes.imageSection}>
         {product.imageUrls && product.imageUrls.length > 0 && (
-        <Image className={classes.cardImage} src={product.imageUrls[0]} alt={product.name} height={200} />
-      )}
+          <Image
+            className={`${classes.cardImage} ${isHovered ? classes.hovered : ''}`}
+            src={isHovered ? product.imageUrls[2] : product.imageUrls[1]}
+            alt={product.name}
+            h={350}
+          />
+        )}
+      </Card.Section>
+      <Card.Section className={classes.brandSection}>    
+       <Text fw={400} size="xs" mt="md">{product.brand}</Text> 
+       </Card.Section>
+        <Card.Section className={classes.textSection}>
+        <Text className={classes.cardName} fw={500} size="lg" mt="xs">{product.name}</Text>
+        <Text className={classes.cardPrice} fw={450} size="md">{product.price} SEK</Text>
         </Card.Section>
-        <Text className={classes.cardBrand} fw={500} size="sm" mt="md">{product.brand}</Text>
-        <Text className={classes.cardName} fw={400} size="md" mt="md">{product.name}</Text>
-        <Text className={classes.cardPrice} fw={500} size="md" mt="md">{product.price} SEK</Text>
-
         </Card>
       </>
     );
