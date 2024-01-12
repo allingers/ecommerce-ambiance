@@ -16,6 +16,7 @@ const links = [
     { link: '/dekoration/vaser', label: 'Vaser' }, 
     { link: '/dekoration/krukor', label: 'Krukor' }, 
     { link: '/dekoration/dekorativaaccessoarer', label: 'Dekorativa Accessoarer' }, 
+    { link: '/', label: 'Visa alla' }, 
   ],
 },
 {
@@ -26,6 +27,7 @@ const links = [
         { link: '/ljus&ljuslyktor/ljuslyktor', label: 'Ljuslyktor' },
         { link: '/ljus&ljuslyktor/ljus', label: 'Ljus' },
         { link: '/ljus&ljuslyktor/doftljus', label: 'Doftljus' },
+        { link: '/', label: 'Visa alla' }, 
     ],
   },
   { link: '#3', 
@@ -36,6 +38,8 @@ const links = [
     { link: '/belysning/vagglampor', label: 'Vägglampor' },
     { link: '/belysning/golvlampor', label: 'Golvlampor' },
     { link: '/belysning/dekorativbelysning', label: 'Dekorativ Belysning' },
+    { link: '/', label: 'Visa alla' }, 
+    
   ],
 },
 {
@@ -46,6 +50,9 @@ const links = [
         { link: '/textil/mattor', label: 'Mattor' },
         { link: '/textil/gardiner', label: 'Gardiner' },
         { link: '/textil/kökstextil', label: 'Kökstextil' },
+        { link: '/', label: ' Visa alla' }, 
+    
+        
     ],
   },
 ];
@@ -55,6 +62,8 @@ export default function Header() {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const { data: session } = useSession();
+
+  
 
   const handleLoginClick = () => {
     setDrawerOpened(true);
@@ -85,7 +94,7 @@ export default function Header() {
               </Center>
             </a>
           </Menu.Target>
-          <Menu.Dropdown>{menuItems}</Menu.Dropdown>
+          <Menu.Dropdown className={classes.dropdown}>{menuItems}</Menu.Dropdown>
         </Menu>
       );
     }

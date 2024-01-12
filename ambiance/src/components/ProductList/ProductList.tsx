@@ -1,12 +1,12 @@
 // ProductList.tsx
 import React from 'react';
 import ProductCard from '../ProductCard/ProductCard'; 
-import  {Product}  from '../ProductCard/ProductCard'; 
+import  {IProduct}  from '../ProductCard/ProductCard'; 
 import classes from './ProductList.module.css'; 
 import { Center, Container, createTheme } from '@mantine/core';
 
 interface ProductListProps {
-  products: Product[];
+  products: IProduct[];
 }
 
 

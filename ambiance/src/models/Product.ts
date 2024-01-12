@@ -1,7 +1,9 @@
 import mongoose, { Document } from 'mongoose';
 
-interface Product {
+export interface Product {
+  quantity?: number; // Observera: quantity saknas i din första Product-modell
   name: string;
+  slug: string;
   description: string;
   imageUrls: string[];
   price: number;
@@ -19,6 +21,10 @@ interface ProductModel extends Product, Document {}
 const productSchema = new mongoose.Schema<Product & Document>(
   {
     name: {
+      type: String,
+      required: true,
+    },
+   slug: {
       type: String,
       required: true,
     },
@@ -59,8 +65,13 @@ const productSchema = new mongoose.Schema<Product & Document>(
       },
     },
   },
+  {
+    timestamps: true,
+  }
 );
 
 const Product = mongoose.models.Product || mongoose.model<ProductModel>('Product', productSchema);
 
-export default Product;
+export { Product };
+export type { ProductModel };
+

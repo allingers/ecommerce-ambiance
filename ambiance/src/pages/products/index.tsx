@@ -1,13 +1,13 @@
 // pages/products/index.tsx
 import { useEffect, useState } from "react";
 import ProductList from '../../components/ProductList/ProductList';
-import { Box, Button, Center, Container, MultiSelect } from "@mantine/core";
-import  { Product }  from '../../components/ProductCard/ProductCard'; 
+import { Box, Button, Center, MultiSelect } from "@mantine/core";
+import  { IProduct }  from '../../components/ProductCard/ProductCard'; 
 import classes from './ProductPage.module.css'
 
 
   const ProductPage: React.FC = () => {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<IProduct[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
   
@@ -17,7 +17,7 @@ import classes from './ProductPage.module.css'
         try {
           const response = await fetch('/api/products');
           if (response.ok) {
-            const data: Product[] = await response.json();
+            const data: IProduct[] = await response.json();
             setProducts(data);
           } else {
             setError('Error fetching products');

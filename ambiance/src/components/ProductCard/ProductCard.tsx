@@ -1,32 +1,29 @@
 // ProductCard.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Text, Image, Group } from '@mantine/core';
 import classes from './ProductCard.module.css'
+import { ObjectId } from 'mongoose';
 
   
-  export interface Product {
-    _id?: string;
-    name: string;
-    description: string;
-    imageUrls: string[]; 
-    price: number;
-    brand: string;
-    color: string;
-    inStock: string;
-    categories: {
-      main: {
-        _id: string;
-        name: string;
-      };
-      sub: {
-        _id: string;
-        name: string;
-      };
-    };
-  }
+export interface IProduct {
+  _id?: string;
+  name: string;
+  slug: string;
+  description: string;
+  imageUrls: string[];
+  price: number;
+  brand: string;
+  color: string;
+  inStock: string;
+  categories: {
+    main: ObjectId; // Huvudkategori
+    sub: ObjectId;  // Underkategori
+  };
+}
+
 
   interface ProductCardProps {
-    product: Product;
+    product: IProduct;
   }
 
   
