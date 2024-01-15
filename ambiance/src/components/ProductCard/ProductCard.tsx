@@ -50,7 +50,7 @@ export interface IProduct {
         {product.imageUrls && product.imageUrls.length > 0 && (
           <Image
             className={`${classes.cardImage} ${isHovered ? classes.hovered : ''}`}
-            src={isHovered ? product.imageUrls[2] : product.imageUrls[1]}
+            src={isHovered ? product.imageUrls[1] : product.imageUrls[0]}
             alt={product.name}
             h={350}
           />

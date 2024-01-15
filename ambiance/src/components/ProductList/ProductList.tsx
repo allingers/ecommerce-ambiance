@@ -16,7 +16,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
     <div className={classes.productListContainer}>
       <SimpleGrid
-      cols={{ base: 1, sm: 2, md: 3, lg: 4 }}
+      cols={{ base: 1, sm: 2, md: 2, lg: 3, xl: 4 }}
       spacing={{ base: 10, sm: 'xl' }}
       verticalSpacing={{ base: 'md', sm: 'xl' }}
     >

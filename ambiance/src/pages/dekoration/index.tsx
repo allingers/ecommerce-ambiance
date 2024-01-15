@@ -4,13 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ProductList from '../../components/ProductList/ProductList';
 import { IProduct } from '../../components/ProductCard/ProductCard';
-import { Box, Text, Button, Center, Container, MultiSelect, Overlay, Title, Flex } from '@mantine/core';
+import { Box, Text, Button, Center, Container, MultiSelect, Overlay, Title, Flex, AppShell, Burger } from '@mantine/core';
 import classes from '../../styles/ProductPage.module.css'
 import cx from 'clsx';
+import { useDisclosure } from '@mantine/hooks';
 
 const DekorationPage: React.FC = () => {
   const router = useRouter();
   const { subcategory } = router.query;
+  const [opened, { toggle }] = useDisclosure();
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -52,7 +54,17 @@ const DekorationPage: React.FC = () => {
   }
 
   return (
-    <>
+  
+     <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: 300,
+        breakpoint: 'sm',
+        collapsed: { mobile: !opened },
+      }}
+      padding="md"
+    >
+      <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
     <div className={classes.wrapper}>
       <Overlay color="#000" opacity={0.65} zIndex={1} />
       <div className={classes.inner}>
@@ -66,7 +78,8 @@ const DekorationPage: React.FC = () => {
         </div> */}
       </div>
     </div>
-    <Box className={classes.btnBox} >
+    <AppShell.Main>
+    {/* <Box className={classes.btnBox} >
     <Flex
       mih={60}
       gap="md"
@@ -109,10 +122,11 @@ const DekorationPage: React.FC = () => {
         >
             Dekorativa Accessoarer</Button>
     </Flex>
-    </Box>
+    </Box> */}
 
     <ProductList products={products} />
-    </>
+    </AppShell.Main>
+    </AppShell>
   );
 };
 

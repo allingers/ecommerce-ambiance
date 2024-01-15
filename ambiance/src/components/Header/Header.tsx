@@ -16,7 +16,7 @@ const links = [
     { link: '/dekoration/vaser', label: 'Vaser' }, 
     { link: '/dekoration/krukor', label: 'Krukor' }, 
     { link: '/dekoration/dekorativaaccessoarer', label: 'Dekorativa Accessoarer' }, 
-    { link: '/', label: 'Visa alla' }, 
+    { link: '/dekoration', label: 'Visa alla' }, 
   ],
 },
 {
