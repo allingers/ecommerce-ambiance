@@ -7,7 +7,7 @@ interface Subcategory {
 }
 
 interface SubcategoryModel extends Subcategory, Document {
-  _id: string; // Ändra från mongoose.Types.ObjectId till string
+  _id: string; 
 }
 
 const subcategorySchemaDefinition: Record<keyof Subcategory, SchemaTypeOptions<any>> = {
@@ -16,7 +16,7 @@ const subcategorySchemaDefinition: Record<keyof Subcategory, SchemaTypeOptions<a
     required: true,
   },
   parentCategory: {
-    type: String, // Ändra från mongoose.Schema.Types.ObjectId till String
+    type: String, 
     ref: 'Category',
     required: true,
   },
@@ -29,3 +29,4 @@ const subcategorySchema = new mongoose.Schema<SubcategoryModel>(
 const Subcategory = mongoose.model<SubcategoryModel>('Subcategory', subcategorySchema);
 
 export default Subcategory;
+export type { SubcategoryModel };

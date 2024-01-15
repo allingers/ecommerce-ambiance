@@ -2,44 +2,54 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ProductList from '../../components/ProductList/ProductList';
-import { IProduct } from '../../components/ProductCard/ProductCard';
 import { Box, Button, Overlay, Title, Flex } from '@mantine/core';
 import classes from "../../styles/ProductPage.module.css";
+import { ProductModel } from '@/models/Product';
+import { SubcategoryModel } from '@/models/Subcategory';
 
 const CategoryPage: React.FC = () => {
   const router = useRouter();
   const { category } = router.query;
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState<ProductModel[]>([]);
+  const [subcategories, setSubcategories] = useState<SubcategoryModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProductsAndSubcategories = async () => {
       try {
-        const response = await fetch('/api/products');
-        if (response.ok) {
-          const data: IProduct[] = await response.json();
+        const productsResponse = await fetch('/api/products');
+        const productsData: ProductModel[] = await productsResponse.json();
 
-          // Filtrera produkter baserat på den dynamiska kategorin
-          const filteredProducts = data.filter((product) =>
-            product.categories.main.toString() === category
-          );
+        const subcategoriesResponse = await fetch('/api/subcategories');
+        const subcategoriesData: SubcategoryModel[] = await subcategoriesResponse.json();
 
-          setProducts(filteredProducts);
-        } else {
-          setError('Error fetching products');
-        }
+        setProducts(productsData);
+        setSubcategories(subcategoriesData);
+
+        // Filtrera produkter baserat på huvudkategorin
+        const filteredProducts = productsData.filter(
+          (product) => product.categories.main.toString() === category
+        );
+
+        setProducts(filteredProducts);
       } catch (error) {
-        console.error('Error fetching products:', error);
-        setError('Error fetching products');
+        console.error('Error fetching data:', error);
+        setError('Error fetching data');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchProductsAndSubcategories();
   }, [category]);
+
+  const handleSubcategoryClick = (subcategory: SubcategoryModel) => {
+    // Här kan du eventuellt lägga till logik för hantering av underkategoriklick
+  };
+
+
+    
 
   if (loading) {
     return <div>Loading...</div>;
@@ -48,6 +58,11 @@ const CategoryPage: React.FC = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+
+  const filteredSubcategories = subcategories.filter(
+    (subcategory) => subcategory.parentCategory.toString() === category
+  );
 
   return (
     <>
@@ -59,8 +74,17 @@ const CategoryPage: React.FC = () => {
       </Box>
       <Box className={classes.btnBox}>
         <Flex mih={60} gap="xl" justify="center" align="center" direction="row" wrap="wrap">
-          {/* <Button variant="outline" color="rgba(18, 18, 18, 1)" radius="xs">
-          </Button> */}
+          {filteredSubcategories.map((subcategory) => (
+            <Button
+              variant="outline"
+              color="rgba(18, 18, 18, 1)"
+              radius="xs"
+              key={subcategory._id}
+              onClick={() => handleSubcategoryClick(subcategory)}
+            >
+              {subcategory.name}
+            </Button>
+          ))}
         </Flex>
       </Box>
       <ProductList products={products} />

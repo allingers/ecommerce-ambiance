@@ -1,29 +1,34 @@
 // ProductCard.tsx
 import React, { useState } from 'react';
-import { Card, Text, Image, Group, Box } from '@mantine/core';
+import { Card, Text, Image, Group } from '@mantine/core';
 import classes from './ProductCard.module.css'
-import { TbHeart, TbShoppingBag, TbShoppingBagPlus } from 'react-icons/tb';
+import { TbHeart, TbShoppingBag} from 'react-icons/tb';
+import { ProductModel } from '@/models/Product';
 
   
-export interface IProduct {
-  _id?: string;
-  name: string;
-  slug: string;
-  description: string;
-  imageUrls: string[];
-  price: number;
-  brand: string;
-  color: string;
-  inStock: string;
-  categories: {
-    main: string; // Huvudkategori
-    sub: string;  // Underkategori
-  };
-}
+// export interface IProduct {
+//   _id?: string;
+//   name: string;
+//   slug: string;
+//   description: string;
+//   imageUrls: string[];
+//   price: number;
+//   brand: string;
+//   color: string;
+//   inStock: string;
+//   categories: {
+//     main: string; 
+//     sub: string;  
+//   };
+// }
 
-  interface ProductCardProps {
-    product: IProduct;
-  }
+//   interface ProductCardProps {
+//     product: IProduct;
+//   }
+
+interface ProductCardProps {
+  product: ProductModel;
+}
 
   const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const [isHovered, setIsHovered] = useState(false);
