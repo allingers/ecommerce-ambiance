@@ -5,6 +5,8 @@ import classes from './Header.module.css';
 import { useState } from 'react';
 import LoginForm from '../Auth/LoginForm';
 import { signOut, useSession } from 'next-auth/react';
+import { TbShoppingBag } from 'react-icons/tb';
+import CartDrawer from '../CartDrawer/CartDrawer';
 
 const links = [
   { link: '#1', 
@@ -61,6 +63,7 @@ export default function Header() {
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const { data: session } = useSession();
 
   
@@ -72,6 +75,10 @@ export default function Header() {
   const handleLogout = async () => {
     await signOut(); // Anropa signOut för att logga ut användaren
     setUserMenuOpened(false); // Stäng användarmenyn efter utloggning
+  };
+
+  const handleCartIconClick = () => {
+    setIsCartDrawerOpen(!isCartDrawerOpen);
   };
 
   const items = links.map((link) => {
@@ -189,6 +196,12 @@ export default function Header() {
               </Menu.Dropdown>
               )}
           </Menu>
+
+          <UnstyledButton onClick={handleCartIconClick}>
+            <TbShoppingBag />
+          </UnstyledButton>
+          <CartDrawer isOpen={isCartDrawerOpen} onClose={() => setIsCartDrawerOpen(false)} products={[]} />
+          
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           {drawerOpened && <LoginForm onCloseDrawer={() => setDrawerOpened(false)} />}
         </div>

@@ -1,0 +1,42 @@
+/* CartDrawer.module.css */
+
+.cartItemContainer {
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+  }
+  
+  .cartItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .image{
+    padding-left: .5rem;
+  }
+  .price {
+    font-weight: 600;
+  }
+  
+  .quantityContainer {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
+    padding-top: .5rem;
+  }
+  
+  .quantity {
+    font-weight: bold;
+    margin-bottom: .5rem;
+  }
+
+  .icon{
+cursor: pointer;
+font-size: 1.3rem;
+  }
+  
+  
