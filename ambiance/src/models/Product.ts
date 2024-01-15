@@ -1,7 +1,6 @@
 import mongoose, { Document } from 'mongoose';
 
 export interface Product {
-  quantity?: number; // Observera: quantity saknas i din första Product-modell
   name: string;
   slug: string;
   description: string;
@@ -11,8 +10,8 @@ export interface Product {
   color: string;
   inStock: string;
   categories: {
-    main: mongoose.Types.ObjectId; // Huvudkategori
-    sub: mongoose.Types.ObjectId;  // Underkategori
+    main: string; 
+    sub: string;  
   };
 }
 
@@ -24,7 +23,7 @@ const productSchema = new mongoose.Schema<Product & Document>(
       type: String,
       required: true,
     },
-   slug: {
+    slug: {
       type: String,
       required: true,
     },
@@ -54,12 +53,12 @@ const productSchema = new mongoose.Schema<Product & Document>(
     },
     categories: {
       main: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Category',
         required: true,
       },
       sub: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Subcategory',
         required: true,
       },

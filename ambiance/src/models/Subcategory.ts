@@ -3,11 +3,11 @@ import mongoose, { Document, Schema, SchemaTypeOptions } from 'mongoose';
 
 interface Subcategory {
   name: string;
-  parentCategory: mongoose.Types.ObjectId;
+  parentCategory: string;
 }
 
 interface SubcategoryModel extends Subcategory, Document {
-  _id: mongoose.Types.ObjectId;
+  _id: string; // Ändra från mongoose.Types.ObjectId till string
 }
 
 const subcategorySchemaDefinition: Record<keyof Subcategory, SchemaTypeOptions<any>> = {
@@ -16,7 +16,7 @@ const subcategorySchemaDefinition: Record<keyof Subcategory, SchemaTypeOptions<a
     required: true,
   },
   parentCategory: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String, // Ändra från mongoose.Schema.Types.ObjectId till String
     ref: 'Category',
     required: true,
   },

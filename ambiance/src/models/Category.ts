@@ -5,9 +5,11 @@ interface Category {
   name: string;
 }
 
-interface CategoryModel extends Category, Document {}
+interface CategoryModel extends Category, Document {
+  _id: string; // Ändra från mongoose.Types.ObjectId till string
+}
 
-const categorySchema = new mongoose.Schema<Category & Document>(
+const categorySchema = new mongoose.Schema<CategoryModel>(
   {
     name: {
       type: String,
@@ -20,4 +22,5 @@ const categorySchema = new mongoose.Schema<Category & Document>(
 const Category = mongoose.model<CategoryModel>('Category', categorySchema);
 
 export default Category;
+
 
