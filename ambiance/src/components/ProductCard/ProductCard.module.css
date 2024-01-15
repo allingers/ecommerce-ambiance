@@ -1,0 +1,25 @@
+.iconSection{
+  display: flex;
+  flex-direction: row;
+  padding-right: .8rem;
+  gap: .3rem;
+  cursor: pointer;
+}
+
+.cartIcon, .favIcon{
+font-size: 1.5rem;
+}
+
+.cartIcon:hover {
+  color: rgb(93, 131, 93);
+
+}
+
+.favIcon:hover {
+  color: palevioletred;
+}
+
+.card{
+display: flex;
+justify-content: space-between;
+}

@@ -1,28 +1,26 @@
-// Kategorischema
+// models/Category.ts
 import mongoose, { Document } from 'mongoose';
 
 interface Category {
   name: string;
-  parent?: mongoose.Types.ObjectId | null;
 }
 
-interface CategoryModel extends Category, Document {}
+interface CategoryModel extends Category, Document {
+  _id: string; // Ändra från mongoose.Types.ObjectId till string
+}
 
-const categorySchema = new mongoose.Schema<Category & Document>(
+const categorySchema = new mongoose.Schema<CategoryModel>(
   {
     name: {
       type: String,
       required: true,
       unique: true,
     },
-    parent: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
-      default: null,
-    },
   },
 );
 
-const CategoryModel = mongoose.models.Category || mongoose.model<CategoryModel>('Category', categorySchema);
+const Category = mongoose.model<CategoryModel>('Category', categorySchema);
 
-export default CategoryModel;
+export default Category;
+
+

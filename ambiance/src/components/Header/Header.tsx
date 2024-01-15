@@ -1,6 +1,6 @@
 import { Menu, Group, Center, Burger, Container, Text, rem, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconBuildingStore, IconChevronDown, IconHeart, IconLogout, IconSettings, IconStar, IconUser } from '@tabler/icons-react';
+import { IconChevronDown, IconHeart, IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import { useState } from 'react';
 import LoginForm from '../Auth/LoginForm';
@@ -16,6 +16,7 @@ const links = [
     { link: '/dekoration/vaser', label: 'Vaser' }, 
     { link: '/dekoration/krukor', label: 'Krukor' }, 
     { link: '/dekoration/dekorativaaccessoarer', label: 'Dekorativa Accessoarer' }, 
+    { link: '/dekoration', label: 'Visa alla' }, 
   ],
 },
 {
@@ -26,6 +27,7 @@ const links = [
         { link: '/ljus&ljuslyktor/ljuslyktor', label: 'Ljuslyktor' },
         { link: '/ljus&ljuslyktor/ljus', label: 'Ljus' },
         { link: '/ljus&ljuslyktor/doftljus', label: 'Doftljus' },
+        { link: '/', label: 'Visa alla' }, 
     ],
   },
   { link: '#3', 
@@ -36,6 +38,8 @@ const links = [
     { link: '/belysning/vagglampor', label: 'Vägglampor' },
     { link: '/belysning/golvlampor', label: 'Golvlampor' },
     { link: '/belysning/dekorativbelysning', label: 'Dekorativ Belysning' },
+    { link: '/', label: 'Visa alla' }, 
+    
   ],
 },
 {
@@ -46,6 +50,9 @@ const links = [
         { link: '/textil/mattor', label: 'Mattor' },
         { link: '/textil/gardiner', label: 'Gardiner' },
         { link: '/textil/kökstextil', label: 'Kökstextil' },
+        { link: '/', label: ' Visa alla' }, 
+    
+        
     ],
   },
 ];
@@ -53,9 +60,10 @@ export default function Header() {
   const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const { data: session } = useSession();
+
+  
 
   const handleLoginClick = () => {
     setDrawerOpened(true);
@@ -73,7 +81,13 @@ export default function Header() {
 
     if (menuItems) {
       return (
-        <Menu key={link.label} trigger="hover" transitionProps={{ exitDuration: 0 }} withinPortal>
+        <Menu 
+        position='bottom-start' 
+        key={link.label} 
+        trigger="hover" 
+        transitionProps={{ exitDuration: 0 }} 
+        withinPortal
+        >
           <Menu.Target>
             <a
               href={link.link}
@@ -86,7 +100,7 @@ export default function Header() {
               </Center>
             </a>
           </Menu.Target>
-          <Menu.Dropdown>{menuItems}</Menu.Dropdown>
+          <Menu.Dropdown w={500}>{menuItems}</Menu.Dropdown>
         </Menu>
       );
     }
