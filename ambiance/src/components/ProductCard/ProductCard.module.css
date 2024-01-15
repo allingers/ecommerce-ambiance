@@ -7,7 +7,7 @@
 }
 
 .cartIcon, .favIcon{
-font-size: 1.3rem;
+font-size: 1.5rem;
 }
 
 .cartIcon:hover {
@@ -17,4 +17,9 @@ font-size: 1.3rem;
 
 .favIcon:hover {
   color: palevioletred;
+}
+
+.card{
+display: flex;
+justify-content: space-between;
 }
