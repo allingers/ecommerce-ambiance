@@ -1,7 +1,8 @@
 // ProductCard.tsx
 import React, { useState } from 'react';
-import { Card, Text, Image, Group } from '@mantine/core';
+import { Card, Text, Image, Group, Box } from '@mantine/core';
 import classes from './ProductCard.module.css'
+import { TbHeart, TbShoppingBag, TbShoppingBagPlus } from 'react-icons/tb';
 
   
 export interface IProduct {
@@ -20,12 +21,10 @@ export interface IProduct {
   };
 }
 
-
   interface ProductCardProps {
     product: IProduct;
   }
 
-  
   const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -39,13 +38,16 @@ export interface IProduct {
   
     
     return (
-        <>
-        <Card
-      className={classes.card}
+    <>
+      <Card 
+        shadow="xs" 
+        radius="xs" 
+        padding="xl"
+        h={473.55}
+        w={358.75}
       onMouseEnter={handleHover}
       onMouseLeave={handleLeave}
-    >
-  
+      >
        <Card.Section className={classes.imageSection}>
         {product.imageUrls && product.imageUrls.length > 0 && (
           <Image
@@ -56,15 +58,21 @@ export interface IProduct {
           />
         )}
       </Card.Section>
-      <Card.Section className={classes.brandSection}>    
+      <Card.Section pl={10} color='#8b8989'>    
        <Text fw={400} size="xs" mt="md">{product.brand}</Text> 
-       </Card.Section>
-        <Card.Section className={classes.textSection}>
-        <Text className={classes.cardName} fw={500} size="lg" mt="xs">{product.name}</Text>
-        <Text className={classes.cardPrice} fw={450} size="md">{product.price} SEK</Text>
+      </Card.Section>
+      <Group justify="space-between" mt="md" mb="xs">
+        <Card.Section pl={10} mb={10}>
+          <Text fw={450} size="lg" mt="xs">{product.name}</Text>
+          <Text fw={500} size="md">{product.price} SEK</Text>
         </Card.Section>
-        </Card>
-      </>
+        <Card.Section className={classes.iconSection} pl={10} mb={10}>
+        <Text className={classes.cartIcon} ><TbShoppingBag /></Text> 
+        <Text className={classes.favIcon}><TbHeart /></Text> 
+        </Card.Section>
+        </Group>
+      </Card>
+    </>
     );
   };
 

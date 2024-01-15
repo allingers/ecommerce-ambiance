@@ -1,6 +1,6 @@
 import { Menu, Group, Center, Burger, Container, Text, rem, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconBuildingStore, IconChevronDown, IconHeart, IconLogout, IconSettings, IconStar, IconUser } from '@tabler/icons-react';
+import { IconChevronDown, IconHeart, IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import { useState } from 'react';
 import LoginForm from '../Auth/LoginForm';

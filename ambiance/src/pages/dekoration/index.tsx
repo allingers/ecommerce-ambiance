@@ -55,34 +55,19 @@ const DekorationPage: React.FC = () => {
 
   return (
   
-     <AppShell
-      header={{ height: 60 }}
-      navbar={{
-        width: 300,
-        breakpoint: 'sm',
-        collapsed: { mobile: !opened },
-      }}
-      padding="md"
-    >
-      <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
+  <>
     <div className={classes.wrapper}>
       <Overlay color="#000" opacity={0.65} zIndex={1} />
       <div className={classes.inner}>
         <Title className={classes.title}>
           Dekoration{' '}
         </Title>
-        {/* <div className={classes.controls}>
-          <Button className={cx(classes.control, classes.secondaryControl)} size="md">
-            Live demo
-          </Button>
-        </div> */}
       </div>
     </div>
-    <AppShell.Main>
-    {/* <Box className={classes.btnBox} >
+    <Box className={classes.btnBox} >
     <Flex
       mih={60}
-      gap="md"
+      gap="xl"
       justify="center"
       align="center"
       direction="row"
@@ -122,11 +107,10 @@ const DekorationPage: React.FC = () => {
         >
             Dekorativa Accessoarer</Button>
     </Flex>
-    </Box> */}
+    </Box>
 
     <ProductList products={products} />
-    </AppShell.Main>
-    </AppShell>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import classes from '../styles/Home.module.css';
 import cx from 'clsx';
-import { Title, Text, Container, Button, Overlay, AppShell } from '@mantine/core';
+import { Title, Text, Container, Button, Overlay} from '@mantine/core';
 
 
 
