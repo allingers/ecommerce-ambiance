@@ -1,4 +1,4 @@
-// pages/[category].tsx
+// pages/[category]/index.tsx
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ProductList from '../../components/ProductList/ProductList';
@@ -27,7 +27,7 @@ const CategoryPage: React.FC = () => {
         setProducts(productsData);
         setSubcategories(subcategoriesData);
 
-        // Filtrera produkter baserat på huvudkategorin
+        // Filtrera produkter baserat på huvudkategori
         const filteredProducts = productsData.filter(
           (product) => product.categories.main.toString() === category
         );
@@ -48,9 +48,6 @@ const CategoryPage: React.FC = () => {
     // Här kan du eventuellt lägga till logik för hantering av underkategoriklick
   };
 
-
-    
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -58,7 +55,6 @@ const CategoryPage: React.FC = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
 
   const filteredSubcategories = subcategories.filter(
     (subcategory) => subcategory.parentCategory.toString() === category
@@ -80,7 +76,9 @@ const CategoryPage: React.FC = () => {
               color="rgba(18, 18, 18, 1)"
               radius="xs"
               key={subcategory._id}
-              onClick={() => handleSubcategoryClick(subcategory)}
+              onClick={() =>
+                router.push(`/${category}/${subcategory.name.toLowerCase()}`)
+              }
             >
               {subcategory.name}
             </Button>
