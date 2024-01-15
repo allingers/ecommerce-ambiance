@@ -1,13 +1,12 @@
-// pages/dekoration/index.tsx
+// pages/belysning/index.tsx
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ProductList from '../../components/ProductList/ProductList';
 import { IProduct } from '../../components/ProductCard/ProductCard';
 import { Box, Button, Overlay, Title, Flex } from '@mantine/core';
 import classes from '../../styles/ProductPage.module.css'
-import { useDisclosure } from '@mantine/hooks';
 
-const DekorationPage: React.FC = () => {
+const BelysningPage: React.FC = () => {
   const router = useRouter();
   const { subcategory } = router.query;
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -21,9 +20,9 @@ const DekorationPage: React.FC = () => {
         if (response.ok) {
           const data: IProduct[] = await response.json();
 
-          // Filtrera produkter baserat på kategorin "Dekoration"
+          // Filtrera produkter baserat på kategorin "Belysning"
           const filteredProducts = data.filter((product) =>
-            product.categories.main.toString() === '659fa783da35295622598395'
+            product.categories.main.toString() === '659fa7c0da35295622598398'
             );
 
 
@@ -56,7 +55,7 @@ const DekorationPage: React.FC = () => {
       <Overlay color="#000" opacity={0.65} zIndex={1} />
       <div className={classes.inner}>
         <Title className={classes.title}>
-          Dekoration{' '}
+         Belysning{' '}
         </Title>
       </div>
     </div>
@@ -75,35 +74,35 @@ const DekorationPage: React.FC = () => {
       radius="xs"
       
       >
-        Posters
+        Taklampor
         </Button>
         <Button 
       variant="outline" 
       color="rgba(18, 18, 18, 1)" 
       radius="xs"
       >
-        Skulpturer
+        Bordslampor
         </Button>
         <Button 
       variant="outline" 
       color="rgba(18, 18, 18, 1)" 
       radius="xs"
       >
-        Vaser
+        Dekorativ Belysning
         </Button>
         <Button 
       variant="outline" 
       color="rgba(18, 18, 18, 1)" 
       radius="xs"
       >
-        Krukor
+        Golvlampor
         </Button>
         <Button
         variant="outline" 
         color="rgba(18, 18, 18, 1)" 
         radius="xs"
         >
-            Dekorativa Accessoarer
+           Vägglampor
             </Button>
     </Flex>
     </Box>
@@ -112,4 +111,4 @@ const DekorationPage: React.FC = () => {
   );
 };
 
-export default DekorationPage;
+export default BelysningPage;

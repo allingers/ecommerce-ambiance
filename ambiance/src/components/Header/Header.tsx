@@ -81,7 +81,13 @@ export default function Header() {
 
     if (menuItems) {
       return (
-        <Menu key={link.label} trigger="hover" transitionProps={{ exitDuration: 0 }} withinPortal>
+        <Menu 
+        position='bottom-start' 
+        key={link.label} 
+        trigger="hover" 
+        transitionProps={{ exitDuration: 0 }} 
+        withinPortal
+        >
           <Menu.Target>
             <a
               href={link.link}
@@ -94,7 +100,7 @@ export default function Header() {
               </Center>
             </a>
           </Menu.Target>
-          <Menu.Dropdown className={classes.dropdown}>{menuItems}</Menu.Dropdown>
+          <Menu.Dropdown w={500}>{menuItems}</Menu.Dropdown>
         </Menu>
       );
     }
