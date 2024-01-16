@@ -5,10 +5,8 @@ import classes from './Header.module.css';
 import { useState } from 'react';
 import LoginForm from '../Auth/LoginForm';
 import { signOut, useSession } from 'next-auth/react';
-import { TbShoppingBag, TbUserCircle } from 'react-icons/tb';
 import CartDrawer from '../CartDrawer/CartDrawer';
 import { CiUser } from 'react-icons/ci';
-import { SlBag } from 'react-icons/sl';
 import { BsHandbag } from 'react-icons/bs';
 
 const links = [
