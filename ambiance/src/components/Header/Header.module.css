@@ -2,6 +2,7 @@
     height: rem(56px);
     background-color: var(--mantine-color-body);
     border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    align-items: center;
   }
   
   .inner {
@@ -19,7 +20,7 @@
     text-decoration: none;
     color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
     font-size: var(--mantine-font-size-sm);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .link:hover {
@@ -33,7 +34,8 @@
   
   .logo {
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: .3rem;
   }
   
   .LoginLink{
@@ -41,3 +43,33 @@
     font-weight: 500;
 
   }
+
+  .classes.rightSection{
+    display: flex;
+    align-items: center;
+  }
+
+  /* .LoginIconSpan, .CartIconSpan{
+  font-size: 1.5rem;
+  } */
+
+  .CartButton, .LoginButton{
+    padding-top: .5rem;
+    cursor: pointer;
+  }
+
+  .CartButton{
+    font-size: 1.5rem;
+    }
+
+         .CartButton:hover {
+       color: rgb(107, 131, 107);
+         }
+
+  .LoginButton{
+    font-size: 1.8rem;
+  }
+
+             .LoginButton:hover {
+               color: rgb(56, 84, 124);
+             }

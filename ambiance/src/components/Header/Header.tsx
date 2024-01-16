@@ -5,8 +5,11 @@ import classes from './Header.module.css';
 import { useState } from 'react';
 import LoginForm from '../Auth/LoginForm';
 import { signOut, useSession } from 'next-auth/react';
-import { TbShoppingBag } from 'react-icons/tb';
+import { TbShoppingBag, TbUserCircle } from 'react-icons/tb';
 import CartDrawer from '../CartDrawer/CartDrawer';
+import { CiUser } from 'react-icons/ci';
+import { SlBag } from 'react-icons/sl';
+import { BsHandbag } from 'react-icons/bs';
 
 const links = [
   { link: '#1', 
@@ -140,18 +143,30 @@ export default function Header() {
             onOpen={() => setUserMenuOpened(true)}
             withinPortal
           >
-            <Menu.Target>
-              <UnstyledButton
-                className={[classes.user, userMenuOpened && classes.userActive].filter(Boolean).join(' ')}
-              >
-               <Group gap={7}>
-                  <span className={classes.LoginLink} onClick={ handleLoginClick}>
-                    {session ? session.user.name : "Logga in"}
-                  </span>
-                  {session && <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />}
-               </Group>
-              </UnstyledButton>
-            </Menu.Target>
+            <Group className={classes.rightSection}>
+              {session ? (
+              // Om session finns, visa användarens namn och dropdown-menyn
+              <Menu.Target>
+                <UnstyledButton
+                  className={[classes.user, userMenuOpened && classes.userActive].filter(Boolean).join(' ')}
+                  >
+                  <Group gap={3}>
+                    <span className={classes.LoginLink}>{session.user.name}</span>
+                    {session && <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />}
+                  </Group>
+                </UnstyledButton>
+              </Menu.Target>
+              ) : (
+                // Om ingen session finns, visa "Logga in"-knappen
+                <UnstyledButton onClick={handleLoginClick} className={classes.LoginButton}>
+                  <span className={classes.LoginIconSpan}><CiUser /></span>
+                </UnstyledButton>
+                )}
+                <UnstyledButton onClick={handleCartIconClick} className={classes.CartButton}>
+                  <span className={classes.CartIconSpan}><BsHandbag /></span>
+                </UnstyledButton>
+            </Group>
+           {/* User-meny OM session finns */}
             {session && (
               <Menu.Dropdown>
                 <>
@@ -196,13 +211,11 @@ export default function Header() {
               </Menu.Dropdown>
               )}
           </Menu>
-
-          <UnstyledButton onClick={handleCartIconClick}>
-            <TbShoppingBag />
-          </UnstyledButton>
+          {/* CartDrawer */}
           <CartDrawer isOpen={isCartDrawerOpen} onClose={() => setIsCartDrawerOpen(false)} products={[]} />
-          
+           {/* Burger - meny för mindre skärmar */}
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
+           {/* LoginDrawer */}
           {drawerOpened && <LoginForm onCloseDrawer={() => setDrawerOpened(false)} />}
         </div>
       </Container>
