@@ -25,7 +25,7 @@ interface ProductCardProps {
 
     const handleAddToCart = () => {
       // Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
-      addToCart(product._id, 1); // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
+      addToCart(product._id, 1, product.price); // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
       console.log(`Produkt med id ${product._id} lades till i varukorgen.`);
     };
   

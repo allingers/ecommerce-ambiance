@@ -38,38 +38,48 @@
     margin-bottom: .3rem;
   }
   
-  .LoginLink{
-    font-size: var(--mantine-font-size-sm);
-    font-weight: 500;
-
+  .user{
+   padding-top: .3rem;
   }
+
+    .user:hover{
+      color: rgb(56, 84, 124);
+    }
+    
+    .UserIconSpan {
+      font-size: 1.6rem;
+    }
 
   .classes.rightSection{
     display: flex;
     align-items: center;
   }
 
-  /* .LoginIconSpan, .CartIconSpan{
-  font-size: 1.5rem;
-  } */
+  .LoginIconSpan{
+    font-size: 1.7rem;
+  }
 
-  .CartButton, .LoginButton{
+  .LoginButton {
+      padding-top: .4rem;
+      cursor: pointer;
+  }
+
+  .CartButton{
     padding-top: .5rem;
     cursor: pointer;
   }
 
-  .CartButton{
+    .CartIconSpan{
     font-size: 1.5rem;
+    cursor: pointer;
+    }
+    
+    .CartButton:hover {
+      color: rgb(107, 131, 107);
+    }
+    
+    .LoginButton:hover {
+      color: rgb(56, 84, 124);
     }
 
-         .CartButton:hover {
-       color: rgb(107, 131, 107);
-         }
-
-  .LoginButton{
-    font-size: 1.8rem;
-  }
-
-             .LoginButton:hover {
-               color: rgb(56, 84, 124);
-             }
+    

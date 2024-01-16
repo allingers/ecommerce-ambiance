@@ -8,6 +8,8 @@ import { signOut, useSession } from 'next-auth/react';
 import CartDrawer from '../CartDrawer/CartDrawer';
 import { CiUser } from 'react-icons/ci';
 import { BsHandbag } from 'react-icons/bs';
+import { FaSignInAlt } from 'react-icons/fa';
+import { FiUser, FiUserCheck } from 'react-icons/fi';
 
 const links = [
   { link: '#1', 
@@ -135,7 +137,7 @@ export default function Header() {
           </Group>
           <Menu
             width={260}
-            position="bottom-end"
+            position="bottom-start"
             transitionProps={{ transition: 'pop-top-right' }}
             onClose={() => setUserMenuOpened(false)}
             onOpen={() => setUserMenuOpened(true)}
@@ -148,16 +150,13 @@ export default function Header() {
                 <UnstyledButton
                   className={[classes.user, userMenuOpened && classes.userActive].filter(Boolean).join(' ')}
                   >
-                  <Group gap={3}>
-                    <span className={classes.LoginLink}>{session.user.name}</span>
-                    {session && <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />}
-                  </Group>
+                     <span className={classes.UserIconSpan}><FiUserCheck /></span>
                 </UnstyledButton>
               </Menu.Target>
               ) : (
                 // Om ingen session finns, visa "Logga in"-knappen
                 <UnstyledButton onClick={handleLoginClick} className={classes.LoginButton}>
-                  <span className={classes.LoginIconSpan}><CiUser /></span>
+                  <span className={classes.LoginIconSpan}><FiUser /></span>
                 </UnstyledButton>
                 )}
                 <UnstyledButton onClick={handleCartIconClick} className={classes.CartButton}>
