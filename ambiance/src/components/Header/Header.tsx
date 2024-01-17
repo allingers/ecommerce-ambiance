@@ -1,4 +1,4 @@
-import { Menu, Group, Center, Burger, Container, Text, rem, UnstyledButton, useMantineTheme } from '@mantine/core';
+import { Menu, Group, Center, Burger, Container, Text, rem, UnstyledButton, useMantineTheme, Badge } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown, IconHeart, IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 import classes from './Header.module.css';
@@ -6,10 +6,10 @@ import { useState } from 'react';
 import LoginForm from '../Auth/LoginForm';
 import { signOut, useSession } from 'next-auth/react';
 import CartDrawer from '../CartDrawer/CartDrawer';
-import { CiUser } from 'react-icons/ci';
 import { BsHandbag } from 'react-icons/bs';
-import { FaSignInAlt } from 'react-icons/fa';
 import { FiUser, FiUserCheck } from 'react-icons/fi';
+import { useCart } from '@/contexts/CartContext';
+import { GoHeart, GoHeartFill } from 'react-icons/go';
 
 const links = [
   { link: '#1', 
@@ -67,6 +67,7 @@ export default function Header() {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
+   const { getCartItemCount } = useCart();
   const { data: session } = useSession();
 
   
@@ -159,8 +160,15 @@ export default function Header() {
                   <span className={classes.LoginIconSpan}><FiUser /></span>
                 </UnstyledButton>
                 )}
+                <div className={classes.CartButtonContainer}>
                 <UnstyledButton onClick={handleCartIconClick} className={classes.CartButton}>
+                    {getCartItemCount() > 0 && <span className={classes.badge}>{getCartItemCount()}</span>}
                   <span className={classes.CartIconSpan}><BsHandbag /></span>
+                </UnstyledButton>
+                </div>
+                <UnstyledButton className={classes.HeartButton}>
+                  <span className={classes.HeartIconSpan}><GoHeart /></span>
+                   {/* <span className={classes.FilledHeartIconSpan}><GoHeartFill /></span> */}
                 </UnstyledButton>
             </Group>
            {/* User-meny OM session finns */}

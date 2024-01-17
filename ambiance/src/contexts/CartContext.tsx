@@ -14,6 +14,7 @@ interface CartContextProps {
     removeCartItem: (productId: string) => void;
     updateCartItemQuantity: (productId: string, quantity: number) => void;
     calculateCartTotal: () => number;
+    getCartItemCount: () => number;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -59,6 +60,10 @@ const removeCartItem = (productId: string) => {
     );
   };
 
+   const getCartItemCount = () => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
 
   useEffect(() => {
     console.log('Fetching cart from localStorage');
@@ -84,7 +89,7 @@ const removeCartItem = (productId: string) => {
 
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, setCartItems, updateCartItemQuantity, removeCartItem, calculateCartTotal }}>
+    <CartContext.Provider value={{ cartItems, addToCart, setCartItems, updateCartItemQuantity, removeCartItem, calculateCartTotal, getCartItemCount }}>
       {children}
     </CartContext.Provider>
   );

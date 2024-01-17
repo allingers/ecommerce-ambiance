@@ -63,6 +63,10 @@
       padding-top: .4rem;
       cursor: pointer;
   }
+  
+  .LoginButton:hover {
+    color: rgb(56, 84, 124);
+    }
 
   .CartButton{
     padding-top: .5rem;
@@ -71,15 +75,42 @@
 
     .CartIconSpan{
     font-size: 1.5rem;
-    cursor: pointer;
     }
     
     .CartButton:hover {
       color: rgb(107, 131, 107);
     }
+
+    .CartButtonContainer {
+      position: relative;
+    }
     
-    .LoginButton:hover {
-      color: rgb(56, 84, 124);
+    .badge {
+      position: absolute;
+      top: .4rem;
+      right: -.6rem;
+      background-color: rgb(157, 106, 163);
+      color: white;
+      padding: 2px 4px;
+      font-size: .6rem;
+      border-radius: 50%;
+    }
+    
+    .HeartIconSpan {
+      font-size: 1.6rem;
+    }
+    
+    .HeartButton {
+      padding-top: .4rem;
+      margin-left: .4rem;
+      cursor: pointer;
     }
 
+    .HeartButton:hover {
+      color: rgb(185, 110, 145);
+    }
     
+    /* .FilledHeartIconSpan {
+      color: rgb(185, 110, 145);
+    }
+     */
