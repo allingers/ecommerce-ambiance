@@ -1,10 +1,15 @@
-import { Menu, Group, Center, Burger, Container, Text, rem, UnstyledButton, useMantineTheme } from '@mantine/core';
+import { Menu, Group, Center, Burger, Container, Text, rem, UnstyledButton, useMantineTheme, Badge } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown, IconHeart, IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import { useState } from 'react';
 import LoginForm from '../Auth/LoginForm';
 import { signOut, useSession } from 'next-auth/react';
+import CartDrawer from '../CartDrawer/CartDrawer';
+import { BsHandbag } from 'react-icons/bs';
+import { FiUser, FiUserCheck } from 'react-icons/fi';
+import { useCart } from '@/contexts/CartContext';
+import { GoHeart, GoHeartFill } from 'react-icons/go';
 
 const links = [
   { link: '#1', 
@@ -61,6 +66,8 @@ export default function Header() {
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
+   const { getCartItemCount } = useCart();
   const { data: session } = useSession();
 
   
@@ -72,6 +79,10 @@ export default function Header() {
   const handleLogout = async () => {
     await signOut(); // Anropa signOut för att logga ut användaren
     setUserMenuOpened(false); // Stäng användarmenyn efter utloggning
+  };
+
+  const handleCartIconClick = () => {
+    setIsCartDrawerOpen(!isCartDrawerOpen);
   };
 
   const items = links.map((link) => {
@@ -127,24 +138,40 @@ export default function Header() {
           </Group>
           <Menu
             width={260}
-            position="bottom-end"
+            position="bottom-start"
             transitionProps={{ transition: 'pop-top-right' }}
             onClose={() => setUserMenuOpened(false)}
             onOpen={() => setUserMenuOpened(true)}
             withinPortal
           >
-            <Menu.Target>
-              <UnstyledButton
-                className={[classes.user, userMenuOpened && classes.userActive].filter(Boolean).join(' ')}
-              >
-               <Group gap={7}>
-                  <span className={classes.LoginLink} onClick={ handleLoginClick}>
-                    {session ? session.user.name : "Logga in"}
-                  </span>
-                  {session && <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />}
-               </Group>
-              </UnstyledButton>
-            </Menu.Target>
+            <Group className={classes.rightSection}>
+              {session ? (
+              // Om session finns, visa användarens namn och dropdown-menyn
+              <Menu.Target>
+                <UnstyledButton
+                  className={[classes.user, userMenuOpened && classes.userActive].filter(Boolean).join(' ')}
+                  >
+                     <span className={classes.UserIconSpan}><FiUserCheck /></span>
+                </UnstyledButton>
+              </Menu.Target>
+              ) : (
+                // Om ingen session finns, visa "Logga in"-knappen
+                <UnstyledButton onClick={handleLoginClick} className={classes.LoginButton}>
+                  <span className={classes.LoginIconSpan}><FiUser /></span>
+                </UnstyledButton>
+                )}
+                <div className={classes.CartButtonContainer}>
+                <UnstyledButton onClick={handleCartIconClick} className={classes.CartButton}>
+                    {getCartItemCount() > 0 && <span className={classes.badge}>{getCartItemCount()}</span>}
+                  <span className={classes.CartIconSpan}><BsHandbag /></span>
+                </UnstyledButton>
+                </div>
+                <UnstyledButton className={classes.HeartButton}>
+                  <span className={classes.HeartIconSpan}><GoHeart /></span>
+                   {/* <span className={classes.FilledHeartIconSpan}><GoHeartFill /></span> */}
+                </UnstyledButton>
+            </Group>
+           {/* User-meny OM session finns */}
             {session && (
               <Menu.Dropdown>
                 <>
@@ -189,7 +216,11 @@ export default function Header() {
               </Menu.Dropdown>
               )}
           </Menu>
+          {/* CartDrawer */}
+          <CartDrawer isOpen={isCartDrawerOpen} onClose={() => setIsCartDrawerOpen(false)} products={[]} />
+           {/* Burger - meny för mindre skärmar */}
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
+           {/* LoginDrawer */}
           {drawerOpened && <LoginForm onCloseDrawer={() => setDrawerOpened(false)} />}
         </div>
       </Container>

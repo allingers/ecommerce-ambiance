@@ -4,27 +4,8 @@ import { Card, Text, Image, Group } from '@mantine/core';
 import classes from './ProductCard.module.css'
 import { TbHeart, TbShoppingBag} from 'react-icons/tb';
 import { ProductModel } from '@/models/Product';
+import { useCart } from '@/contexts/CartContext';
 
-  
-// export interface IProduct {
-//   _id?: string;
-//   name: string;
-//   slug: string;
-//   description: string;
-//   imageUrls: string[];
-//   price: number;
-//   brand: string;
-//   color: string;
-//   inStock: string;
-//   categories: {
-//     main: string; 
-//     sub: string;  
-//   };
-// }
-
-//   interface ProductCardProps {
-//     product: IProduct;
-//   }
 
 interface ProductCardProps {
   product: ProductModel;
@@ -32,6 +13,7 @@ interface ProductCardProps {
 
   const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const { addToCart } = useCart();
 
     const handleHover = () => {
       setIsHovered(true);
@@ -39,6 +21,12 @@ interface ProductCardProps {
   
     const handleLeave = () => {
       setIsHovered(false);
+    };
+
+    const handleAddToCart = () => {
+      // Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
+      addToCart(product._id, 1, product.price); // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
+      console.log(`Produkt med id ${product._id} lades till i varukorgen.`);
     };
   
     
@@ -74,7 +62,14 @@ interface ProductCardProps {
            <Text fw={500} size="md">{product.price} SEK</Text>
           </Card.Section>
           <Card.Section className={classes.iconSection} pl={10} mb={10}>
-           <Text className={classes.cartIcon} ><TbShoppingBag /></Text> 
+          <Text
+            className={classes.cartIcon}
+            onClick={handleAddToCart}
+            role="button"
+            aria-label="Add to Cart"
+          >
+            <TbShoppingBag />
+          </Text>
            <Text className={classes.favIcon}><TbHeart /></Text> 
           </Card.Section>
         </Group>
