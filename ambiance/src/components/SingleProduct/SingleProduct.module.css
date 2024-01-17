@@ -1,0 +1,17 @@
+.wrapper{
+        padding-top: rem(180px);
+        padding-bottom: rem(140px);
+     
+
+        @media (max-width: $mantine-breakpoint-xs) {
+                padding-top: rem(80px);
+                padding-bottom: rem(50px);
+            }
+
+}
+
+.ProductInfo{
+    display: flex;
+    flex-direction: column;
+
+}
