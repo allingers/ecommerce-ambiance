@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { ProductModel } from '@/models/Product'
 import SingleProduct from '@/components/SingleProduct/SingleProduct'
-import { Center, Container, SimpleGrid, Title } from '@mantine/core'
 
 const SingleProductPage: React.FC = () => {
 	const router = useRouter()

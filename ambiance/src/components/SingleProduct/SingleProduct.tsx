@@ -15,10 +15,13 @@ import {
 	UnstyledButton,
 	Card,
 	Group,
+	rem,
 } from '@mantine/core'
 import { GoHeart } from 'react-icons/go'
 import { useCart } from '@/contexts/CartContext'
 import { BsHandbag } from 'react-icons/bs'
+import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md'
+import { IconArrowRight } from '@tabler/icons-react'
 
 interface ProductDetailProps {
 	product: ProductModel
@@ -48,7 +51,15 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 						cols={{ base: 1, md: 2, sm: 2 }}
 						spacing={{ base: 10, sm: 'xl' }}>
 						<div className={classes.CarouselContainer}>
-							<Carousel height={400} w={400} loop withIndicators>
+							<Carousel
+								height={400}
+								w={400}
+								loop
+								withIndicators
+								controlSize={30}
+								nextControlIcon={<MdArrowForwardIos />}
+								previousControlIcon={<MdArrowBackIosNew />}
+								controlsOffset={'xs'}>
 								{product.imageUrls.map((url, index) => (
 									<Carousel.Slide key={index}>
 										<Image
@@ -71,11 +82,11 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 							<Text className={classes.text} pt={15}>
 								{product.description}
 							</Text>
-							<Text fw={'bold'} mt={10}>
+							<Text className={classes.text} fw={'bold'} mt={10} fz={'xl'}>
 								{product.price} SEK
 							</Text>
 							{/* <Text>I Lager {product.inStock} st</Text> */}
-							<Text c="dimmed" size="sm" mt={10}>
+							<Text c="dimmed" size="sm" mt={10} ml={2}>
 								{' '}
 								Kategori: {product.categories.main} - Underkategori:{' '}
 								{product.categories.sub}
@@ -130,7 +141,9 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 											{relatedProduct.name}
 										</Text>
 										<Group wrap="nowrap" gap="xs">
-											<Text fw={'500'}>{relatedProduct.price} SEK</Text>
+											<Text fz={'sm'} fw={'500'}>
+												{relatedProduct.price} SEK
+											</Text>
 										</Group>
 									</div>
 									<div className={classes.IconContainer}>
