@@ -1,17 +1,142 @@
-.wrapper{
-        padding-top: rem(180px);
-        padding-bottom: rem(140px);
-     
+@import url('https://fonts.googleapis.com/css2?family=Average&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&family=Rufina:wght@400;700&family=Sintony:wght@400;700&display=swap');
 
-        @media (max-width: $mantine-breakpoint-xs) {
-                padding-top: rem(80px);
-                padding-bottom: rem(50px);
-            }
+.wrapper {
+	padding-top: rem(180px);
+	padding-bottom: rem(140px);
 
+	@media (max-width: $mantine-breakpoint-xs) {
+		padding-top: rem(80px);
+		padding-bottom: rem(50px);
+	}
 }
 
-.ProductInfo{
-    display: flex;
-    flex-direction: column;
+.ProductInfo {
+	display: flex;
+	flex-direction: column;
+}
 
+.ButtonContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+	padding-top: 1rem;
+}
+
+.CartButton {
+	background-color: rgb(115, 153, 115);
+	font-weight: 500;
+	font-size: 1rem;
+}
+
+.CartButton:hover {
+	background-color: rgb(76, 105, 76);
+}
+
+.HeartButton {
+	color: palevioletred;
+	font-size: 2rem;
+	margin-top: 0.2rem;
+}
+
+.HeartButton:hover {
+	color: rgb(243, 216, 225);
+}
+
+.RelatedProductContainer {
+	padding-top: 1rem;
+	padding-bottom: 2rem;
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		padding-bottom: 1rem;
+	}
+}
+
+.card {
+	background-color: var(--mantine-color-body);
+}
+
+.title {
+	font-weight: 500;
+	font-family:
+		Greycliff CF,
+		var(--mantine-font-family);
+	line-height: 1;
+}
+
+.body {
+	padding-top: var(--mantine-spacing-sm);
+	padding-bottom: var(--mantine-spacing-sm);
+	padding-left: var(--mantine-spacing-md);
+	display: flex;
+	flex-direction: column;
+}
+
+.IconContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-left: auto;
+	padding-right: 1.5rem;
+}
+
+.HeartIconButton {
+	color: palevioletred;
+	font-size: 1.2rem;
+}
+
+.HeartIconButton:hover {
+	color: rgb(243, 216, 225);
+}
+
+.CartIconButton {
+	color: rgb(115, 153, 115);
+	font-size: 1.2rem;
+}
+
+.CartIconButton:hover {
+	color: rgb(76, 105, 76);
+}
+
+.RecommendedCard {
+	position: relative;
+	background-color: var(--mantine-color-body);
+	display: flex;
+	justify-content: space-between;
+}
+
+.iconSection {
+	display: flex;
+	flex-direction: row;
+	padding-right: 0.8rem;
+	gap: 0.5rem;
+	cursor: pointer;
+}
+
+.cartIcon {
+	font-size: 1.4rem;
+	color: rgb(115, 153, 115);
+}
+
+.favIcon {
+	font-size: 1.5rem;
+	color: palevioletred;
+}
+
+.cartIcon:hover {
+	color: rgb(76, 105, 76);
+}
+
+.favIcon:hover {
+	color: rgb(243, 216, 225);
+}
+
+.title {
+	/* font-family: 'Playfair Display', serif; */
+	font-family: 'Average', serif;
+}
+
+.ProductTitle,
+.text,
+.CartButton {
+	font-family: 'Poppins', sans-serif;
 }
