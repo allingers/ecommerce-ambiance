@@ -7,6 +7,7 @@ import { MantineProvider, createTheme } from '@mantine/core';
 import Layout from '@/components/Layout';
 import { SessionProvider } from 'next-auth/react';
 import { CartProvider } from '@/contexts/CartContext';
+import '@mantine/carousel/styles.css';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
