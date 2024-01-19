@@ -27,10 +27,11 @@ import { BsHandbag } from 'react-icons/bs'
 import { FiUser, FiUserCheck } from 'react-icons/fi'
 import { useCart } from '@/contexts/CartContext'
 import { GoHeart, GoHeartFill } from 'react-icons/go'
+import Link from 'next/link'
 
 const links = [
 	{
-		link: '#1',
+		link: '/dekoration',
 		label: 'Dekoration',
 		links: [
 			{ link: '/dekoration/posters', label: 'Posters' },
@@ -42,22 +43,23 @@ const links = [
 				link: '/dekoration/dekorativaaccessoarer',
 				label: 'Dekorativa Accessoarer',
 			},
-			{ link: '/dekoration', label: 'Visa alla' },
 		],
 	},
 	{
-		link: '#2',
+		link: '/ljus&ljuslyktor',
 		label: 'Ljus & Ljuslyktor',
 		links: [
-			{ link: '/ljus&ljuslyktor/ljusstakar', label: 'Ljusstakar' },
+			{
+				link: '/ljus&ljuslyktor/ljusstakar',
+				label: 'Ljusstakar',
+			},
 			{ link: '/ljus&ljuslyktor/ljuslyktor', label: 'Ljuslyktor' },
 			{ link: '/ljus&ljuslyktor/ljus', label: 'Ljus' },
 			{ link: '/ljus&ljuslyktor/doftljus', label: 'Doftljus' },
-			{ link: '/', label: 'Visa alla' },
 		],
 	},
 	{
-		link: '#3',
+		link: '/belysning',
 		label: 'Belysning',
 		links: [
 			{ link: '/belysning/taklampor', label: 'Taklampor' },
@@ -68,11 +70,10 @@ const links = [
 				link: '/belysning/dekorativbelysning',
 				label: 'Dekorativ Belysning',
 			},
-			{ link: '/', label: 'Visa alla' },
 		],
 	},
 	{
-		link: '#4',
+		link: '/textil',
 		label: 'Textil',
 		links: [
 			{
@@ -82,7 +83,6 @@ const links = [
 			{ link: '/textil/mattor', label: 'Mattor' },
 			{ link: '/textil/gardiner', label: 'Gardiner' },
 			{ link: '/textil/kökstextil', label: 'Kökstextil' },
-			{ link: '/', label: ' Visa alla' },
 		],
 	},
 ]
@@ -110,7 +110,9 @@ export default function Header() {
 
 	const items = links.map((link) => {
 		const menuItems = link.links?.map((item) => (
-			<Menu.Item key={item.link}>{item.label}</Menu.Item>
+			<Menu.Item key={item.link}>
+				<Link href={item.link}>{item.label}</Link>
+			</Menu.Item>
 		))
 
 		if (menuItems) {
@@ -122,15 +124,12 @@ export default function Header() {
 					transitionProps={{ exitDuration: 0 }}
 					withinPortal>
 					<Menu.Target>
-						<a
-							href={link.link}
-							className={classes.link}
-							onClick={(event) => event.preventDefault()}>
+						<Link href={link.link} className={classes.link}>
 							<Center>
 								<span className={classes.linkLabel}>{link.label}</span>
 								<IconChevronDown size="0.9rem" stroke={1.5} />
 							</Center>
-						</a>
+						</Link>
 					</Menu.Target>
 					<Menu.Dropdown w={500}>{menuItems}</Menu.Dropdown>
 				</Menu>
@@ -138,13 +137,9 @@ export default function Header() {
 		}
 
 		return (
-			<a
-				key={link.label}
-				href={link.link}
-				className={classes.link}
-				onClick={(event) => event.preventDefault()}>
+			<Link key={link.label} href={link.link} className={classes.link}>
 				{link.label}
-			</a>
+			</Link>
 		)
 	})
 
@@ -154,7 +149,7 @@ export default function Header() {
 				<div className={classes.inner}>
 					<Text className={classes.logo}>
 						{' '}
-						<a href="/">Ambiance</a>
+						<Link href="/">Ambiance</Link>
 					</Text>
 					<Group gap={5} visibleFrom="sm" justify="space-between">
 						{items}
