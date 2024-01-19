@@ -21,7 +21,6 @@ import { GoHeart } from 'react-icons/go'
 import { useCart } from '@/contexts/CartContext'
 import { BsHandbag } from 'react-icons/bs'
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md'
-import { IconArrowRight } from '@tabler/icons-react'
 import Link from 'next/link'
 
 interface ProductDetailProps {

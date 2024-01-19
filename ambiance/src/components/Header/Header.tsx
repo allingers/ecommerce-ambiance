@@ -222,7 +222,8 @@ export default function Header() {
 												stroke={1.5}
 											/>
 										}>
-										Mina sidor
+										{' '}
+										<Link href="/mina-sidor">Mina sidor</Link>
 									</Menu.Item>
 									<Menu.Item
 										leftSection={
