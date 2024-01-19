@@ -22,6 +22,7 @@ import { useCart } from '@/contexts/CartContext'
 import { BsHandbag } from 'react-icons/bs'
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md'
 import { IconArrowRight } from '@tabler/icons-react'
+import Link from 'next/link'
 
 interface ProductDetailProps {
 	product: ProductModel
@@ -36,10 +37,10 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 }) => {
 	const { addToCart } = useCart()
 
-	const handleAddToCart = () => {
+	const handleAddToCart = (productToAdd: ProductModel) => {
 		// Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
-		addToCart(product._id, 1, product.price) // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
-		console.log(`Produkt med id ${product._id} lades till i varukorgen.`)
+		addToCart(productToAdd._id, 1, productToAdd.price) // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
+		console.log(`Produkt med id ${productToAdd._id} lades till i varukorgen.`)
 	}
 
 	return (
@@ -86,15 +87,10 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 								{product.price} SEK
 							</Text>
 							{/* <Text>I Lager {product.inStock} st</Text> */}
-							<Text c="dimmed" size="sm" mt={10} ml={2}>
-								{' '}
-								Kategori: {product.categories.main} - Underkategori:{' '}
-								{product.categories.sub}
-							</Text>
 							<div className={classes.ButtonContainer}>
 								<Button
 									className={classes.CartButton}
-									onClick={handleAddToCart}
+									onClick={() => handleAddToCart(product)}
 									variant="filled"
 									size="lg">
 									Lägg i varukorgen
@@ -109,6 +105,11 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 									{/* <span className={classes.FilledHeartIconSpan}><GoHeartFill /></span>  */}
 								</UnstyledButton>
 							</div>
+							<Text tt="uppercase" c="dimmed" size="xs" mt={30} ml={2}>
+								{' '}
+								Kategori: {product.categories.main} - Underkategori:{' '}
+								{product.categories.sub}
+							</Text>
 						</div>
 					</SimpleGrid>
 				</Center>
@@ -127,19 +128,23 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 							className={classes.RelatedProductContainer}>
 							<Card withBorder radius="xs" p={0} className={classes.card}>
 								<Group wrap="nowrap" gap={0}>
-									<Image
-										height={60}
-										ml={10}
-										src={relatedProduct.imageUrls[0]}
-										alt={`Related Product Image`}
-									/>
+									<Link href={`/product/${relatedProduct._id}`}>
+										<Image
+											height={60}
+											ml={10}
+											src={relatedProduct.imageUrls[0]}
+											alt={`Related Product Image`}
+										/>
+									</Link>
 									<div className={classes.body}>
 										<Text tt="uppercase" c="dimmed" fw={600} size="xs">
 											{relatedProduct.brand}
 										</Text>
-										<Text className={classes.ProductTitle} mt="xs" mb="xs">
-											{relatedProduct.name}
-										</Text>
+										<Link href={`/product/${relatedProduct._id}`}>
+											<Text className={classes.ProductTitle} mt="xs" mb="xs">
+												{relatedProduct.name}
+											</Text>
+										</Link>
 										<Group wrap="nowrap" gap="xs">
 											<Text fz={'sm'} fw={'500'}>
 												{relatedProduct.price} SEK
@@ -147,7 +152,9 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 										</Group>
 									</div>
 									<div className={classes.IconContainer}>
-										<UnstyledButton className={classes.CartIconButton}>
+										<UnstyledButton
+											className={classes.CartIconButton}
+											onClick={() => handleAddToCart(relatedProduct)}>
 											<span className={classes.CartIconSpan}>
 												<BsHandbag />
 											</span>
@@ -196,20 +203,28 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 											{recommendedProducts.brand}
 										</Text>
 									</Card.Section>
-									<Card.Section className={classes.imageSection}>
-										<Image
-											height={150}
-											fit="contain"
-											mt={20}
-											src={recommendedProducts.imageUrls[0]}
-											alt={`Related Product Image`}
-										/>
-									</Card.Section>
+									<Link href={`/product/${recommendedProducts._id}`}>
+										<Card.Section className={classes.imageSection}>
+											<Image
+												height={150}
+												fit="contain"
+												mt={20}
+												src={recommendedProducts.imageUrls[0]}
+												alt={`Related Product Image`}
+											/>
+										</Card.Section>
+									</Link>
 									<Group justify="space-between" mt="md">
 										<Card.Section pl={15} mb={10}>
-											<Text fw={450} size="lg" mt="xs">
-												{recommendedProducts.name}
-											</Text>
+											<Link href={`/product/${recommendedProducts._id}`}>
+												<Text
+													className={classes.recommendedProductName}
+													fw={450}
+													size="md"
+													mt="xs">
+													{recommendedProducts.name}
+												</Text>
+											</Link>
 											<Text fw={500} size="md">
 												{recommendedProducts.price} SEK
 											</Text>
@@ -217,7 +232,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 										<Card.Section className={classes.iconSection} mb={10}>
 											<Text
 												className={classes.cartIcon}
-												onClick={handleAddToCart}
+												onClick={() => handleAddToCart(recommendedProducts)}
 												role="button"
 												aria-label="Add to Cart">
 												<BsHandbag />

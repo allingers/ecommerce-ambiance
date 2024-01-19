@@ -31,21 +31,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
 	return (
 		<>
-			<Link href={`/product/${product._id}`}>
-				<Card
-					className={classes.card}
-					shadow="xs"
-					radius="xs"
-					padding="xl"
-					h={473.55}
-					w={358.75}
-					onMouseEnter={handleHover}
-					onMouseLeave={handleLeave}>
-					<Card.Section pl={10} color="#8b8989">
-						<Text fw={400} size="xs" mt="md">
-							{product.brand}
-						</Text>
-					</Card.Section>
+			<Card
+				className={classes.card}
+				shadow="xs"
+				radius="xs"
+				padding="xl"
+				h={473.55}
+				w={358.75}
+				onMouseEnter={handleHover}
+				onMouseLeave={handleLeave}>
+				<Card.Section pl={10} color="#8b8989">
+					<Text fw={400} size="xs" mt="md">
+						{product.brand}
+					</Text>
+				</Card.Section>
+				<Link href={`/product/${product._id}`}>
 					<Card.Section className={classes.imageSection}>
 						{product.imageUrls && product.imageUrls.length > 0 && (
 							<Image
@@ -57,31 +57,33 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 							/>
 						)}
 					</Card.Section>
-					<Group justify="space-between" mt="md">
-						<Card.Section pl={10} mb={10}>
+				</Link>
+				<Group justify="space-between" mt="md">
+					<Card.Section pl={10} mb={10}>
+						<Link href={`/product/${product._id}`}>
 							<Text fw={450} size="lg" mt="xs" className={classes.ProductTitle}>
 								{' '}
 								{product.name}
 							</Text>
-							<Text fw={500} size="md">
-								{product.price} SEK
-							</Text>
-						</Card.Section>
-						<Card.Section className={classes.iconSection} pl={10} mb={10}>
-							<Text
-								className={classes.cartIcon}
-								onClick={handleAddToCart}
-								role="button"
-								aria-label="Add to Cart">
-								<TbShoppingBag />
-							</Text>
-							<Text className={classes.favIcon}>
-								<TbHeart />
-							</Text>
-						</Card.Section>
-					</Group>
-				</Card>
-			</Link>
+						</Link>
+						<Text fw={500} size="md">
+							{product.price} SEK
+						</Text>
+					</Card.Section>
+					<Card.Section className={classes.iconSection} pl={10} mb={10}>
+						<Text
+							className={classes.cartIcon}
+							onClick={handleAddToCart}
+							role="button"
+							aria-label="Add to Cart">
+							<TbShoppingBag />
+						</Text>
+						<Text className={classes.favIcon}>
+							<TbHeart />
+						</Text>
+					</Card.Section>
+				</Group>
+			</Card>
 		</>
 	)
 }
