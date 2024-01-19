@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Average&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&family=Rufina:wght@400;700&family=Sintony:wght@400;700&display=swap');
 
+:root {
+	--green: rgb(115, 153, 115);
+	--green-hover: rgb(76, 105, 76);
+	--pink: palevioletred;
+	--purple: rgb(157, 106, 163);
+	--pink-hover: rgb(243, 216, 225);
+	--grey-light: #f2f2f2;
+
+	--ff-title: 'Average', serif;
+	--ff-text: 'Poppins', sans-serif;
+	--ff-montserrat: 'Montserrat', sans-serif;
+	--ff-rufina: 'Rufina', serif;
+	--ff-playfair: 'Playfair Display', serif;
+}
+
 * {
 	box-sizing: border-box;
 	padding: 0;
