@@ -1,5 +1,5 @@
 // components/ProductDetail.tsx
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { ProductModel } from '@/models/Product'
 import { Carousel } from '@mantine/carousel'
 import classes from './SingleProduct.module.css'
@@ -15,13 +15,11 @@ import {
 	UnstyledButton,
 	Card,
 	Group,
-	rem,
 } from '@mantine/core'
 import { GoHeart } from 'react-icons/go'
 import { useCart } from '@/contexts/CartContext'
 import { BsHandbag } from 'react-icons/bs'
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md'
-import { IconArrowRight } from '@tabler/icons-react'
 import Link from 'next/link'
 
 interface ProductDetailProps {
@@ -36,6 +34,14 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 	recommendedProducts,
 }) => {
 	const { addToCart } = useCart()
+	const topRef = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		// Scrolla till toppen när komponenten monteras
+		if (topRef.current) {
+			topRef.current.scrollIntoView({ behavior: 'smooth' })
+		}
+	}, []) // Den här effekten körs bara vid mount
 
 	const handleAddToCart = (productToAdd: ProductModel) => {
 		// Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
@@ -45,7 +51,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 
 	return (
 		<>
-			<Container>
+			<Container ref={topRef}>
 				<Center>
 					<SimpleGrid
 						className={classes.wrapper}
