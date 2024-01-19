@@ -192,7 +192,9 @@ export default function Header() {
 									onClick={handleCartIconClick}
 									className={classes.CartButton}>
 									{getCartItemCount() > 0 && (
-										<span className={classes.badge}>{getCartItemCount()}</span>
+										<Badge className={classes.badge} circle>
+											{getCartItemCount()}
+										</Badge>
 									)}
 									<span className={classes.CartIconSpan}>
 										<BsHandbag />
