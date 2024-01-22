@@ -31,7 +31,7 @@ import Link from 'next/link'
 
 const links = [
 	{
-		link: '/dekoration',
+		link: '/products/dekoration',
 		label: 'Dekoration',
 		links: [
 			{ link: '/dekoration/posters', label: 'Posters' },
@@ -46,7 +46,7 @@ const links = [
 		],
 	},
 	{
-		link: '/ljus&ljuslyktor',
+		link: '/products/ljus&ljuslyktor',
 		label: 'Ljus & Ljuslyktor',
 		links: [
 			{
@@ -59,7 +59,7 @@ const links = [
 		],
 	},
 	{
-		link: '/belysning',
+		link: '/products/belysning',
 		label: 'Belysning',
 		links: [
 			{ link: '/belysning/taklampor', label: 'Taklampor' },
@@ -73,7 +73,7 @@ const links = [
 		],
 	},
 	{
-		link: '/textil',
+		link: '/products/textil',
 		label: 'Textil',
 		links: [
 			{
@@ -203,7 +203,10 @@ export default function Header() {
 							</div>
 							<UnstyledButton className={classes.HeartButton}>
 								<span className={classes.HeartIconSpan}>
-									<GoHeart />
+									{' '}
+									<Link href="mina-sidor?tab=favoriter">
+										<GoHeart />
+									</Link>
 								</span>
 								{/* <span className={classes.FilledHeartIconSpan}><GoHeartFill /></span> */}
 							</UnstyledButton>
@@ -236,7 +239,8 @@ export default function Header() {
 												stroke={1.5}
 											/>
 										}>
-										Favoriter
+										{' '}
+										<Link href="/mina-sidor">Favoriter</Link>
 									</Menu.Item>
 									<Menu.Label>Settings</Menu.Label>
 									<Menu.Item

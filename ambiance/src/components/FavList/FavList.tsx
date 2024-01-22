@@ -5,14 +5,24 @@ import classes from './FavList.module.css'
 import { Image, Text } from '@mantine/core'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
 
+interface ApiProductModel {
+	// Skapa en separat typ för datan du hämtar från API:et
+	// Anpassa fälten efter det faktiska API-svaret
+	_id: string
+	name: string
+	price: number
+	imageUrls: string[]
+	// Lägg till eventuella andra fält som behövs
+}
+
 const FavList: React.FC = () => {
 	const { favorites, updateFavorites } = useFavorites()
-	const [products, setProducts] = useState<ProductModel[]>([])
+	const [products, setProducts] = useState<ApiProductModel[]>([])
 
 	const fetchProductDetails = async () => {
 		try {
 			const response = await fetch('/api/products')
-			const data = await response.json()
+			const data: ApiProductModel[] = await response.json()
 			setProducts(data)
 		} catch (error) {
 			console.error('Error fetching product details:', error)
@@ -38,12 +48,12 @@ const FavList: React.FC = () => {
 					const product = products.find((p) => p._id === productId)
 
 					return (
-						<div key={productId} className={classes.FavoriteItem}>
+						<div key={product?._id} className={classes.FavoriteItem}>
 							{product && (
 								<>
 									<IoIosRemoveCircleOutline
 										className={classes.RemoveButtonIcon}
-										onClick={() => removeFromFavorites(productId)}
+										onClick={() => removeFromFavorites(product._id)}
 									/>
 
 									<Image

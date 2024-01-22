@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import useFavorites from '@/hooks/useFavorites'
+import { GoHeartFill } from 'react-icons/go'
 
 interface ProductCardProps {
 	product: ProductModel
@@ -106,7 +107,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 							onClick={handleAddToFavorites}
 							role="button"
 							aria-label="Add to Favorites">
-							<TbHeart />
+							{favorites.includes(product._id) ? (
+								<GoHeartFill className={classes.favIconFilled} />
+							) : (
+								<TbHeart />
+							)}
 						</Text>
 					</Card.Section>
 				</Group>

@@ -19,6 +19,10 @@
 	color: palevioletred;
 }
 
+.favIconFilled {
+	color: palevioletred;
+}
+
 .card {
 	display: flex;
 	justify-content: space-between;
