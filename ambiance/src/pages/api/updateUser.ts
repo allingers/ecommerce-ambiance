@@ -5,16 +5,23 @@ import User, { UserModel } from '../../models/User'
 connectDB()
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method === 'PATCH' || req.method === 'PUT') {
-		const { id, name, email, hashedPassword } = req.body
-
+	if (req.method === 'PUT') {
 		try {
-			// Hitta användaren med det angivna ID:t och uppdatera dess namn och e-post
+			// Här görs anslutningen till databasen
+			await connectDB()
+
+			const { name, email, avatar } = req.body
+
+			console.log('Received request with data:', req.body)
+
+			// Hitta användaren med det angivna e-postadressen och uppdatera dess namn, e-post och avatar
 			const updatedUser = await User.findOneAndUpdate(
-				{ _id: id },
-				{ $set: { name, email, hashedPassword } },
+				{ email: email },
+				{ $set: { name, email, avatar } },
 				{ new: true },
 			)
+
+			console.log(updatedUser)
 
 			if (!updatedUser) {
 				return res.status(404).json({ error: 'Användaren hittades inte' })
@@ -27,7 +34,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	}
 
-	return res
-		.status(405)
-		.json({ error: 'Endast HTTP-metoderna PATCH och PUT stöds' })
+	return res.status(405).json({ error: 'Endast HTTP-metoden PUT stöds' })
 }

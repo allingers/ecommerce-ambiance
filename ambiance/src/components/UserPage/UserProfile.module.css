@@ -43,3 +43,19 @@
 		}
 	}
 }
+
+.EditButton {
+	background-color: #9d6aa3;
+	margin-left: 1rem;
+	margin-top: 1rem;
+	font-family: 'Poppins', 'sans-serif';
+	font-weight: 500;
+}
+
+.SaveButton {
+	background-color: #739973;
+	margin-left: 1rem;
+	margin-top: 1rem;
+	font-family: 'Poppins', 'sans-serif';
+	font-weight: 500;
+}
