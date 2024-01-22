@@ -6,6 +6,7 @@ import { GoHeart } from 'react-icons/go'
 import { LuPackageCheck } from 'react-icons/lu'
 import UserProfile from '../../components/UserPage/UserProfile'
 import { useSession } from 'next-auth/react'
+import FavList from '@/components/FavList/FavList'
 
 export default function UserPage() {
 	const { data: session } = useSession()
@@ -34,7 +35,9 @@ export default function UserPage() {
 				<Tabs.Panel value="profil">
 					<UserProfile user={session?.user ?? {}} />
 				</Tabs.Panel>
-				<Tabs.Panel value="favoritlista">Messages tab content</Tabs.Panel>
+				<Tabs.Panel value="favoritlista">
+					<FavList />
+				</Tabs.Panel>
 				<Tabs.Panel value="orderhistorik">Settings tab content</Tabs.Panel>
 			</Tabs>
 		</Container>

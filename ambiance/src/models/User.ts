@@ -1,9 +1,11 @@
 import mongoose, { Document } from 'mongoose'
+import { ProductModel } from './Product'
 
 interface User {
 	name: string
 	email: string
 	hashedPassword: string
+	favorites?: mongoose.Types.ObjectId[] | ProductModel[]
 	avatar?: string
 }
 
@@ -27,6 +29,12 @@ const userSchema = new mongoose.Schema({
 	avatar: {
 		type: String,
 	},
+	favorites: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product', // Matchar namnet på produktmodellen
+		},
+	],
 })
 
 const User =
