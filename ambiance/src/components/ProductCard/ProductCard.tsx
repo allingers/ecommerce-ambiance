@@ -22,8 +22,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const { data: session } = useSession()
 	const { favorites, updateFavorites } = useFavorites()
 
-	console.log('Session in ProductCard:', session)
-
 	const handleHover = () => {
 		setIsHovered(true)
 	}

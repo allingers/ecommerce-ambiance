@@ -34,5 +34,10 @@
 }
 
 .ProductTitle {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'Poppins', 'sans-serif';
+	font-weight: 500;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 15rem;
 }

@@ -1,39 +1,257 @@
-import classes from '../styles/Home.module.css';
-import cx from 'clsx';
-import { Title, Text, Container, Button, Overlay} from '@mantine/core';
-
-
+import classes from '../styles/Home.module.css'
+import cx from 'clsx'
+import {
+	Title,
+	Text,
+	Container,
+	Button,
+	Overlay,
+	SimpleGrid,
+	Center,
+	Card,
+	Box,
+	BackgroundImage,
+} from '@mantine/core'
+import { useEffect, useState } from 'react'
+import ProductCard from '@/components/ProductCard/ProductCard'
+import { ProductModel } from '@/models/Product'
 
 const Home: React.FC = () => {
- 
-  return (
-    <>
-    <div className={classes.wrapper}>
-      <Overlay color="#000" opacity={0.65} zIndex={1} />
+	const [randomProducts, setRandomProducts] = useState<ProductModel[]>([])
+	const [textilProducts, setTextilProducts] = useState<ProductModel[]>([])
+	useEffect(() => {
+		// Anropa din API-endpoint och hämta 4 slumpmässiga produkter
+		const fetchRandomProducts = async () => {
+			try {
+				const response = await fetch('/api/products/randomProducts')
+				const data = await response.json()
+				setRandomProducts(data)
+			} catch (error) {
+				console.error('Error fetching random products:', error)
+			}
+		}
 
-      <div className={classes.inner}>
-        <Title className={classes.title}>
-          Winter{' '}
-          <Text component="span" inherit className={classes.highlight}>
-           Wishes
-          </Text>
-        </Title>
+		fetchRandomProducts()
+	}, [])
 
-        <Container size={640}>
-          <Text size="" className={classes.description}>
-           Våra bästa priser på tidlös design
-          </Text>
-        </Container>
+	useEffect(() => {
+		// Anropa din API-endpoint och hämta 8 textilprodukter
+		const fetchTextilProducts = async () => {
+			try {
+				const response = await fetch('/api/products/textil')
+				const data = await response.json()
+				console.log('Textil Products:', data)
+				setTextilProducts(data)
+			} catch (error) {
+				console.error('Error fetching textil products:', error)
+			}
+		}
 
-        <div className={classes.controls}>
-          <Button className={cx(classes.control, classes.secondaryControl)} size="md">
-            Live demo
-          </Button>
-        </div>
-      </div>
-    </div>
-    </>
-  );
+		fetchTextilProducts()
+	}, [])
+
+	return (
+		<>
+			{/* First section */}
+			<div className={classes.wrapper}>
+				<Overlay color="#000" opacity={0.65} zIndex={1} />
+
+				<div className={classes.inner}>
+					<Container size={640}>
+						<Text tt="uppercase" className={classes.description}>
+							Våra bästa priser på tidlös design
+						</Text>
+					</Container>
+					<Title className={classes.title}>Toppsäljare till bästa pris!</Title>
+
+					<div className={classes.controls}>
+						<Button
+							className={cx(classes.control, classes.secondaryControl)}
+							size="md">
+							Fynda här!
+						</Button>
+					</div>
+				</div>
+			</div>
+			{/* Popular products section */}
+			<Container pt={35} className={classes.PopularSection} size="xxl">
+				<Center>
+					<SimpleGrid
+						cols={{ base: 1, sm: 2, md: 3, xl: 4 }}
+						spacing={{ base: 10, sm: 'md' }}
+						verticalSpacing={{ base: 'md', sm: 'xl' }}>
+						{randomProducts.map((product) => (
+							<div key={product._id}>
+								<ProductCard product={product} />
+							</div>
+						))}
+					</SimpleGrid>
+				</Center>
+			</Container>
+
+			{/* Category hero */}
+			<div className={classes.TextilCategoryWrapper}>
+				<Overlay color="#000" opacity={0.25} zIndex={1} />
+				<div className={classes.inner}>
+					<Title tt="uppercase" className={classes.title}>
+						Ge liv med textil
+					</Title>
+					<div className={classes.controls}>
+						<Button
+							className={cx(classes.control, classes.secondaryControl)}
+							size="sm">
+							Fynda här!
+						</Button>
+					</div>
+				</div>
+			</div>
+			{/* Category Card section (textil) */}
+			<Container pt={35} className={classes.CategoryCardSection} size="xxl">
+				<Center>
+					<SimpleGrid
+						cols={{ base: 1, sm: 2, md: 2, xl: 4 }}
+						spacing={{ base: 10, sm: 'md' }}
+						verticalSpacing={{ base: 'md', sm: 'xl' }}>
+						<div className={classes.cardContainer}>
+							<Card
+								className={classes.card}
+								style={{
+									backgroundImage:
+										'url(https://royaldesign.se/image/1/chhatwal-jonsson-mahi-dhurry-matta-1?w=1920&quality=80)',
+									backgroundSize: 'cover',
+								}}>
+								<div className={classes.ImageOverlay}></div>
+								<div className={classes.TextContainer}>
+									<Text className={classes.CardTitle} ta="center">
+										Plädar &
+									</Text>
+									<Text className={classes.CardTitle} ta="center">
+										Filtar
+									</Text>
+								</div>
+							</Card>
+						</div>
+
+						<div className={classes.cardContainer}>
+							<Card
+								className={classes.card}
+								style={{
+									backgroundImage:
+										'url(https://royaldesign.se/image/1/house-doctor-chindi-matta-vit-3?w=1920&quality=80)',
+									backgroundSize: 'cover',
+								}}>
+								<div className={classes.ImageOverlay}></div>
+								<div className={classes.TextContainer}>
+									<Text className={classes.CardTitle} ta="center">
+										Mattor
+									</Text>
+								</div>
+							</Card>
+						</div>
+
+						<div className={classes.cardContainer}>
+							<Card
+								className={classes.card}
+								style={{
+									backgroundImage:
+										'url(https://www.rum21.se/image/14/mimou-gardin-ellie-halvlinne-dubbel-bredd-vit-290x250-43?w=1920&quality=80)',
+									backgroundSize: 'cover',
+								}}>
+								<div className={classes.ImageOverlay}></div>
+								<div className={classes.TextContainer}>
+									<Text className={classes.CardTitle} ta="center">
+										Gardiner
+									</Text>
+								</div>
+							</Card>
+						</div>
+
+						<div className={classes.cardContainer}>
+							<Card
+								className={classes.card}
+								style={{
+									backgroundImage:
+										'url(https://royaldesign.se/image/1/boeljan-mirja-bordsduk-150x260-cm-1?w=1920&quality=80)',
+									backgroundSize: 'cover',
+								}}>
+								<div className={classes.ImageOverlay}></div>
+								<div className={classes.TextContainer}>
+									<Text className={classes.CardTitle} ta="center">
+										Kökstextil
+									</Text>
+								</div>
+							</Card>
+						</div>
+					</SimpleGrid>
+				</Center>
+			</Container>
+			{/* Textil products section */}
+			<Container pt={35} className={classes.TextilSection} size="xxl">
+				<Center>
+					<SimpleGrid
+						cols={{ base: 1, sm: 2, md: 3, xl: 4 }}
+						spacing={{ base: 10, sm: 'md' }}
+						verticalSpacing={{ base: 'md', sm: 'xl' }}>
+						{textilProducts.map((product) => (
+							<div key={product._id}>
+								<ProductCard product={product} />
+							</div>
+						))}
+					</SimpleGrid>
+				</Center>
+			</Container>
+			<Container pt={35} className={classes.DoubleHeroSection} size="xxl">
+				<Center>
+					<SimpleGrid
+						cols={{ base: 1, md: 1, xl: 2 }}
+						spacing={{ base: 10, sm: 'md' }}
+						verticalSpacing={{ base: 'md', sm: 'xl' }}>
+						<div className={classes.HeroCardContainer}>
+							<Card
+								className={classes.HeroCard}
+								style={{
+									backgroundImage:
+										'url(https://www.rum21.se/image/14/tradition-flowerpot-vp3-bordslampa-5?w=1920&quality=80)',
+									backgroundSize: 'cover',
+								}}>
+								<div className={classes.ImageOverlay}></div>
+								<div className={classes.HeroTextContainer}>
+									<Container size={640}>
+										<Text tt="uppercase" className={classes.HeroDescription}>
+											Bordslampor
+										</Text>
+									</Container>
+									<Text className={classes.HeroCardTitle}>Flowerpot VP3</Text>
+								</div>
+							</Card>
+						</div>
+
+						<div className={classes.HeroCardContainer}>
+							<Card
+								className={classes.HeroCard}
+								style={{
+									backgroundImage:
+										'url(https://www.rum21.se/image/14/tell-me-more-frost-ljuslykta-amber-4?w=1920&quality=80)',
+									backgroundSize: 'cover',
+								}}>
+								<div className={classes.ImageOverlay}></div>
+								<div className={classes.HeroTextContainer}>
+									<Container size={640}>
+										<Text tt="uppercase" className={classes.HeroDescription}>
+											Ljus & Ljuslyktor
+										</Text>
+									</Container>
+									<Text className={classes.HeroCardTitle}>
+										Frost Ljuslykta M
+									</Text>
+								</div>
+							</Card>
+						</div>
+					</SimpleGrid>
+				</Center>
+			</Container>
+		</>
+	)
 }
 
-export default Home;
+export default Home
