@@ -6,6 +6,10 @@ import { TbHeart, TbShoppingBag } from 'react-icons/tb'
 import { ProductModel } from '@/models/Product'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+import useFavorites from '@/hooks/useFavorites'
+import { GoHeartFill } from 'react-icons/go'
 
 interface ProductCardProps {
 	product: ProductModel
@@ -14,6 +18,9 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const { addToCart } = useCart()
+	const router = useRouter()
+	const { data: session } = useSession()
+	const { favorites, updateFavorites } = useFavorites()
 
 	const handleHover = () => {
 		setIsHovered(true)
@@ -27,6 +34,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		// Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
 		addToCart(product._id, 1, product.price) // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
 		console.log(`Produkt med id ${product._id} lades till i varukorgen.`)
+	}
+	const handleAddToFavorites = () => {
+		try {
+			if (!session) {
+				console.error('User not authenticated')
+				return
+			}
+
+			// Uppdatera favoritlistan med den nya produkten
+			updateFavorites([...favorites, product._id])
+
+			console.log('Product added to favorites successfully')
+		} catch (error) {
+			console.error('An unexpected error occurred', error)
+		}
 	}
 
 	return (
@@ -78,8 +100,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 							aria-label="Add to Cart">
 							<TbShoppingBag />
 						</Text>
-						<Text className={classes.favIcon}>
-							<TbHeart />
+						<Text
+							className={classes.favIcon}
+							onClick={handleAddToFavorites}
+							role="button"
+							aria-label="Add to Favorites">
+							{favorites.includes(product._id) ? (
+								<GoHeartFill className={classes.favIconFilled} />
+							) : (
+								<TbHeart />
+							)}
 						</Text>
 					</Card.Section>
 				</Group>

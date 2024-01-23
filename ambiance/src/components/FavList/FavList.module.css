@@ -1,0 +1,56 @@
+.FavoritesContainer {
+	padding-top: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.FavoriteItem {
+	align-items: center;
+	display: flex;
+	padding-top: 1rem;
+	margin-left: 1rem;
+	flex-direction: row;
+	gap: 2rem;
+
+	@media (max-width: $mantine-breakpoint-sm) {
+		gap: 1rem;
+	}
+}
+.image {
+	@media (max-width: $mantine-breakpoint-sm) {
+		display: none;
+	}
+}
+
+.name {
+	font-size: 1rem;
+	font-weight: 400;
+	font-family: 'Poppins', sans-serif;
+}
+.price {
+	font-weight: 500;
+	font-size: 1rem;
+	font-family: 'Poppins', sans-serif;
+}
+
+.productInfo {
+	margin-top: 1rem;
+}
+
+.RemoveButtonIcon {
+	color: rgb(209, 73, 73);
+	font-size: 1.5rem;
+}
+
+.RemoveButtonIcon:hover {
+	color: rgb(165, 38, 38);
+	cursor: pointer;
+}
+
+.EmptyFavoritesMessage {
+	font-size: 1rem;
+	font-weight: 400;
+	font-family: 'Poppins', sans-serif;
+	padding-left: 1rem;
+}
