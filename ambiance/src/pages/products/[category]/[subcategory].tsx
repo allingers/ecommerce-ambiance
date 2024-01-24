@@ -50,11 +50,23 @@ const SubcategoryPage: React.FC = () => {
 		return <div>Error: {error}</div>
 	}
 
+	const getBackgroundImage = () => {
+		if (typeof subcategory === 'string') {
+			return `url(/backgrounds/${subcategory}.jpg)`
+		}
+
+		return `url(/backgrounds/default.jpg)`
+	}
+
 	return (
 		<>
-			<Box className={classes.wrapper}>
+			<Box
+				className={classes.wrapper}
+				style={{ backgroundImage: getBackgroundImage() }}>
 				<div className={classes.inner}>
-					<Title className={classes.title}>{subcategory}</Title>
+					<Title tt="capitalize" className={classes.title}>
+						{subcategory}
+					</Title>
 				</div>
 			</Box>
 			<ProductList products={products} />

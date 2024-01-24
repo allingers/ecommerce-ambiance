@@ -74,7 +74,7 @@ const Home: React.FC = () => {
 				</div>
 			</div>
 			{/* Popular products section */}
-			<Container pt={35} className={classes.PopularSection} size="xxl">
+			<Container pt={35} pb={35} className={classes.PopularSection} size="xxl">
 				<Center>
 					<SimpleGrid
 						cols={{ base: 1, sm: 2, md: 3, xl: 4 }}

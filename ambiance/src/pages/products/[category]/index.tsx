@@ -45,10 +45,6 @@ const CategoryPage: React.FC = () => {
 		fetchProductsAndSubcategories()
 	}, [category])
 
-	const handleSubcategoryClick = (subcategory: SubcategoryModel) => {
-		// Här kan du eventuellt lägga till logik för hantering av underkategoriklick
-	}
-
 	if (loading) {
 		return <div>Loading...</div>
 	}
@@ -61,12 +57,24 @@ const CategoryPage: React.FC = () => {
 		(subcategory) => subcategory.parentCategory.toString() === category,
 	)
 
+	const getBackgroundImage = () => {
+		if (typeof category === 'string') {
+			return `url(/backgrounds/${category}.jpg)`
+		}
+
+		return `url(/backgrounds/default.jpg)`
+	}
+
 	return (
 		<>
-			<Box className={classes.wrapper}>
+			<Box
+				className={classes.wrapper}
+				style={{ backgroundImage: getBackgroundImage() }}>
 				<Overlay color="#000" opacity={0.65} zIndex={1} />
 				<div className={classes.inner}>
-					<Title className={classes.title}>{category}</Title>
+					<Title tt="capitalize" className={classes.title}>
+						{category}
+					</Title>
 				</div>
 			</Box>
 			<Box className={classes.btnBox}>
