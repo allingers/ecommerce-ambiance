@@ -1,8 +1,19 @@
-.btnBox {
-	margin-top: 1rem;
+.ButtonBox {
+	padding-top: 2rem;
 	margin-bottom: 2rem;
-	display: flex;
-	justify-content: center;
+}
+
+.SubButton {
+	font-size: 0.95rem;
+	font-weight: 400;
+	font-family: 'Poppins', 'sans-serif';
+	color: black;
+	background-color: white;
+}
+
+.SubButton:hover {
+	background-color: black;
+	color: white;
 }
 
 .wrapper {
@@ -25,21 +36,33 @@
 }
 
 .title {
-	font-weight: 600;
-	font-size: rem(50px);
-	letter-spacing: rem(-1px);
+	font-weight: 500;
+	font-size: 4rem;
+	letter-spacing: 0.05rem;
 	padding-left: var(--mantine-spacing-md);
 	padding-right: var(--mantine-spacing-md);
 	color: var(--mantine-color-white);
 	margin-bottom: var(--mantine-spacing-xs);
 	text-align: center;
-	font-family:
-		Greycliff CF,
-		var(--mantine-font-family);
+	font-family: 'Montserrat', sans-serif;
 
 	@media (max-width: $mantine-breakpoint-xs) {
 		font-size: rem(28px);
-		text-align: left;
+	}
+}
+
+.text {
+	font-weight: 400;
+	font-size: 1rem;
+	word-wrap: normal;
+	letter-spacing: 0.05rem;
+	color: var(--mantine-color-white);
+	margin-bottom: var(--mantine-spacing-xs);
+	text-align: center;
+	font-family: 'Montserrat', sans-serif;
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		font-size: 0.8rem;
 	}
 }
 
@@ -57,39 +80,51 @@
 	}
 }
 
-.controls {
-	margin-top: calc(var(--mantine-spacing-xl) * 1.5);
+.innerButtonContainer {
 	display: flex;
 	justify-content: center;
-	padding-left: var(--mantine-spacing-md);
-	padding-right: var(--mantine-spacing-md);
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		flex-direction: column;
-	}
+	padding-top: 1rem;
 }
 
-.control {
-	height: rem(42px);
-	font-size: var(--mantine-font-size-md);
-
-	&:not(:first-of-type) {
-		margin-left: var(--mantine-spacing-md);
-	}
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		&:not(:first-of-type) {
-			margin-top: var(--mantine-spacing-md);
-			margin-left: 0;
-		}
-	}
+.backButton {
+	font-size: 0.9rem;
+	font-weight: 400;
+	font-family: 'Poppins', 'sans-serif';
+	color: black;
+	background-color: white;
 }
 
-.secondaryControl {
-	color: var(--mantine-color-white);
-	background-color: rgba(255, 255, 255, 0.4);
+.ArrowIcon {
+	margin-right: 0.4rem;
+	font-size: 1rem;
+}
 
-	@mixin hover {
-		background-color: rgba(255, 255, 255, 0.45);
-	}
+.backButton:hover {
+	color: white;
+	background-color: black;
+}
+
+.group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.groupContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 1.5rem;
+}
+
+.filterButton,
+.sortButton,
+.groupText {
+	font-size: 1rem;
+	font-weight: 400;
+	font-family: 'Poppins', 'sans-serif';
+	color: rgb(34, 34, 34);
+}
+
+.filterButtonIcon {
+	padding-top: 0.2rem;
 }
