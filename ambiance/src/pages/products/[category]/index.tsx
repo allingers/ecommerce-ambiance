@@ -93,7 +93,7 @@ const CategoryPage: React.FC = () => {
 							key={subcategory._id}
 							onClick={() =>
 								router.push(
-									`/products/${category}/${subcategory.name.toLowerCase()}`,
+									`/products/${category}/${subcategory.name.toLowerCase().replace(/\s+/g, '-')}`,
 								)
 							}>
 							{subcategory.name}
