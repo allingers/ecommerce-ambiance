@@ -170,3 +170,93 @@
 		text-align: left;
 	}
 }
+
+.NewsletterWrapper {
+	position: relative;
+	padding-top: rem(180px);
+	padding-bottom: rem(130px);
+	background-image: url(https://cdn.pixabay.com/photo/2015/04/10/17/03/pots-716579_1280.jpg);
+	background-size: cover;
+	background-position: center;
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		padding-top: rem(80px);
+		padding-bottom: rem(50px);
+	}
+}
+
+.NewsletterText {
+	font-weight: 500;
+	font-size: 2.2rem;
+	letter-spacing: rem(-1px);
+	padding-left: var(--mantine-spacing-md);
+	padding-right: var(--mantine-spacing-md);
+	color: var(--mantine-color-white);
+	margin-bottom: var(--mantine-spacing-lg);
+	text-wrap: wrap;
+	margin-right: 2rem;
+	font-family: 'Poppins', 'sans-serif';
+
+	@media (max-width: $mantine-breakpoint-sm) {
+		font-size: 1.8rem;
+		text-align: left;
+	}
+}
+
+.NewsletterDescription {
+	font-weight: 400;
+	font-size: 1rem;
+	letter-spacing: 0.05rem;
+	padding-left: var(--mantine-spacing-md);
+	padding-right: var(--mantine-spacing-md);
+	color: var(--mantine-color-white);
+	font-family: 'Poppins', 'sans-serif';
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		font-size: 0.8rem;
+		text-align: left;
+	}
+}
+.NewsletterTextContainer {
+	display: flex;
+	flex-direction: column;
+	padding-left: 2.3rem;
+	color: #fff; /* Justera textens färg */
+}
+
+.NewletterInputContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	padding-left: 3.2rem;
+	margin-right: 2rem;
+	flex-wrap: wrap;
+}
+
+.NewletterButton {
+	font-family: 'Poppins', 'sans-serif';
+	font-weight: 400;
+}
+
+.NewletterButton:hover {
+	background-color: white;
+	color: black;
+}
+
+.input {
+	border: none;
+	background-color: #e6e3e3;
+	width: 25rem;
+
+	@media (max-width: $mantine-breakpoint-sm) {
+		width: 15rem;
+	}
+}
+
+.input:focus {
+	background-color: #fff;
+}
+
+.NewletterModalTitle {
+	font-size: 1rem;
+}

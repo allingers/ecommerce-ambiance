@@ -11,16 +11,46 @@ import {
 	Card,
 	Box,
 	BackgroundImage,
+	Input,
+	Modal,
 } from '@mantine/core'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import ProductCard from '@/components/ProductCard/ProductCard'
 import { ProductModel } from '@/models/Product'
+import Link from 'next/link'
+import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { set } from 'mongoose'
 
 const Home: React.FC = () => {
 	const [randomProducts, setRandomProducts] = useState<ProductModel[]>([])
 	const [textilProducts, setTextilProducts] = useState<ProductModel[]>([])
+	const [email, setEmail] = useState('')
+	const [error, setError] = useState('')
+	const [opened, { open, close }] = useDisclosure(false)
+
+	const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const inputValue = event.target.value
+		setEmail(inputValue)
+
+		// Rensar error-meddelande när användaren ändrar e-postadress
+		setError('')
+	}
+
+	const handleSubmit = () => {
+		// Kontrollerar om det finns ett "@"-tecken i e-postadressen
+		const isValid = /\S+@\S+\.\S+/.test(email)
+
+		if (!isValid) {
+			setError('Det måste vara en giltig e-postadress')
+		} else {
+			setError('')
+			open() // Öppna modalen när e-postadressen är giltig
+			setEmail('') //Rensar inputfältet
+		}
+	}
+
 	useEffect(() => {
-		// Anropa din API-endpoint och hämta 4 slumpmässiga produkter
+		// Anropar API-endpoint och hämtar 4 slumpmässiga produkter
 		const fetchRandomProducts = async () => {
 			try {
 				const response = await fetch('/api/products/randomProducts')
@@ -35,7 +65,7 @@ const Home: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		// Anropa din API-endpoint och hämta 8 textilprodukter
+		// Anropar API-endpoint och hämtar 8 textilprodukter
 		const fetchTextilProducts = async () => {
 			try {
 				const response = await fetch('/api/products/textil')
@@ -100,7 +130,9 @@ const Home: React.FC = () => {
 						<Button
 							className={cx(classes.control, classes.secondaryControl)}
 							size="sm">
-							Fynda här!
+							<Link href="/products/textil">
+								<span>Fynda här!</span>
+							</Link>
 						</Button>
 					</div>
 				</div>
@@ -122,12 +154,14 @@ const Home: React.FC = () => {
 								}}>
 								<div className={classes.ImageOverlay}></div>
 								<div className={classes.TextContainer}>
-									<Text className={classes.CardTitle} ta="center">
-										Plädar &
-									</Text>
-									<Text className={classes.CardTitle} ta="center">
-										Filtar
-									</Text>
+									<Link href={'/products/textil/plädar&prydnadskuddar'}>
+										<Text className={classes.CardTitle} ta="center">
+											Plädar &
+										</Text>
+										<Text className={classes.CardTitle} ta="center">
+											Filtar
+										</Text>
+									</Link>
 								</div>
 							</Card>
 						</div>
@@ -142,9 +176,11 @@ const Home: React.FC = () => {
 								}}>
 								<div className={classes.ImageOverlay}></div>
 								<div className={classes.TextContainer}>
-									<Text className={classes.CardTitle} ta="center">
-										Mattor
-									</Text>
+									<Link href={'/products/textil/mattor'}>
+										<Text className={classes.CardTitle} ta="center">
+											Mattor
+										</Text>
+									</Link>
 								</div>
 							</Card>
 						</div>
@@ -159,9 +195,11 @@ const Home: React.FC = () => {
 								}}>
 								<div className={classes.ImageOverlay}></div>
 								<div className={classes.TextContainer}>
-									<Text className={classes.CardTitle} ta="center">
-										Gardiner
-									</Text>
+									<Link href={'/products/textil/gardiner'}>
+										<Text className={classes.CardTitle} ta="center">
+											Gardiner
+										</Text>
+									</Link>
 								</div>
 							</Card>
 						</div>
@@ -176,9 +214,11 @@ const Home: React.FC = () => {
 								}}>
 								<div className={classes.ImageOverlay}></div>
 								<div className={classes.TextContainer}>
-									<Text className={classes.CardTitle} ta="center">
-										Kökstextil
-									</Text>
+									<Link href={'/products/textil/kökstextiler'}>
+										<Text className={classes.CardTitle} ta="center">
+											Kökstextil
+										</Text>
+									</Link>
 								</div>
 							</Card>
 						</div>
@@ -200,7 +240,12 @@ const Home: React.FC = () => {
 					</SimpleGrid>
 				</Center>
 			</Container>
-			<Container pt={35} className={classes.DoubleHeroSection} size="xxl">
+			{/* Double hero section */}
+			<Container
+				pt={35}
+				pb={40}
+				className={classes.DoubleHeroSection}
+				size="xxl">
 				<Center>
 					<SimpleGrid
 						cols={{ base: 1, md: 1, xl: 2 }}
@@ -221,7 +266,9 @@ const Home: React.FC = () => {
 											Bordslampor
 										</Text>
 									</Container>
-									<Text className={classes.HeroCardTitle}>Flowerpot VP3</Text>
+									<Link href={'/product/65b0d88fda352956225983e9'}>
+										<Text className={classes.HeroCardTitle}>Flowerpot VP3</Text>
+									</Link>
 								</div>
 							</Card>
 						</div>
@@ -241,15 +288,71 @@ const Home: React.FC = () => {
 											Ljus & Ljuslyktor
 										</Text>
 									</Container>
-									<Text className={classes.HeroCardTitle}>
-										Frost Ljuslykta M
-									</Text>
+									<Link href={'/product/65b0d808da352956225983e8'}>
+										<Text className={classes.HeroCardTitle}>
+											Frost Ljuslykta M
+										</Text>
+									</Link>
 								</div>
 							</Card>
 						</div>
 					</SimpleGrid>
 				</Center>
 			</Container>
+			{/* Newsletter section */}
+			<div className={classes.NewsletterWrapper}>
+				<Overlay color="#000" opacity={0.95} zIndex={1} />
+				<div className={classes.inner}>
+					<div className={classes.NewsletterTextContainer}>
+						<Text
+							pb={10}
+							tt="uppercase"
+							className={classes.NewsletterDescription}>
+							Prenumerera på vårt nyhetsbrev
+						</Text>
+						<Title className={classes.NewsletterText}>
+							Få mängder av inspiration, nyheter och mycket mer i din inkorg!
+						</Title>
+					</div>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault()
+							handleSubmit()
+						}}
+						className={classes.NewletterInputContainer}>
+						<Input.Wrapper error={error}>
+							<Input
+								size="md"
+								radius="xs"
+								placeholder="Fyll i din emailadress"
+								classNames={{ input: classes.input }}
+								value={email}
+								onChange={handleEmailChange}
+							/>
+						</Input.Wrapper>
+						<Button
+							className={classes.NewletterButton}
+							variant="outline"
+							radius="xs"
+							size="md"
+							color="white"
+							type="submit">
+							Prenumerera
+						</Button>
+					</form>
+					<Modal.Root opened={opened} onClose={close}>
+						<Modal.Overlay />
+						<Modal.Content>
+							<Modal.Header>
+								<Modal.Title>
+									Tack för att du prenumerera på vårt nyhetsbrev!
+								</Modal.Title>
+								<Modal.CloseButton />
+							</Modal.Header>
+						</Modal.Content>
+					</Modal.Root>
+				</div>
+			</div>
 		</>
 	)
 }

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import ProductList from '../../../components/ProductList/ProductList'
-import { Box, Title } from '@mantine/core'
+import { Box, Overlay, Title } from '@mantine/core'
 import classes from '../../../styles/ProductPage.module.css'
 import { ProductModel } from '@/models/Product'
 
@@ -63,6 +63,7 @@ const SubcategoryPage: React.FC = () => {
 			<Box
 				className={classes.wrapper}
 				style={{ backgroundImage: getBackgroundImage() }}>
+				<Overlay color="#000" opacity={0.65} zIndex={1} />
 				<div className={classes.inner}>
 					<Title tt="capitalize" className={classes.title}>
 						{subcategory}
