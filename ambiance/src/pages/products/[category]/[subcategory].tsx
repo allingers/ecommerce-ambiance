@@ -170,7 +170,9 @@ const SubcategoryPage: React.FC = () => {
 								Rensa filter
 							</UnstyledButton>
 						)}
-						<Text className={classes.groupText}> Antal produkter </Text>
+						<Text className={classes.groupText}>
+							{products.length} produkter
+						</Text>
 						<Menu width={200} shadow="md" position="bottom-start">
 							<Menu.Target>
 								<UnstyledButton className={classes.sortButton}>
