@@ -11,19 +11,15 @@ import {
 	Container,
 	UnstyledButton,
 	Group,
-	Center,
 	Menu,
-	Divider,
 } from '@mantine/core'
 import classes from '../../../styles/ProductPage.module.css'
 import { ProductModel } from '@/models/Product'
 import Link from 'next/link'
-import { MdArrowBackIosNew, MdFilterListAlt } from 'react-icons/md'
-import { SlArrowLeft } from 'react-icons/sl'
 import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io'
-import { CiFilter } from 'react-icons/ci'
 import { IoFilterOutline } from 'react-icons/io5'
 import FilterDrawer from '@/components/FilterDrawer/FilterDrawer'
+import { useFilterContext } from '@/contexts/FilterContext'
 
 const SubcategoryPage: React.FC = () => {
 	const router = useRouter()
@@ -32,6 +28,21 @@ const SubcategoryPage: React.FC = () => {
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+	const {
+		selectedPriceRange,
+		setSelectedPriceRange,
+		selectedBrands,
+		setSelectedBrands,
+		selectedColors,
+		setSelectedColors,
+		allBrands,
+		setAllBrands,
+		allColors,
+		setAllColors,
+		resetFilters,
+		filtersCurrentlyApplied,
+	} = useFilterContext()
 
 	const handleOpenDrawer = () => {
 		setIsDrawerOpen(true)
@@ -48,11 +59,29 @@ const SubcategoryPage: React.FC = () => {
 				if (response.ok) {
 					const data: ProductModel[] = await response.json()
 
+					// Hämtar alla varumärken från produkterna - skickas som prop till filterDrawer
+					const uniqueBrands = [
+						...new Set(data.map((product) => product.brand)),
+					]
+					setAllBrands(uniqueBrands)
+
+					// Hämta alla färger från produkterna - skickas som prop till FilterDrawer
+					const uniqueColors = [
+						...new Set(data.map((product) => product.color)),
+					]
+					setAllColors(uniqueColors)
+
 					// Filtrera produkter baserat på huvudkategorin och underkategorin
 					const filteredProducts = data.filter(
 						(product) =>
 							product.categories.main.toString() === category &&
-							product.categories.sub.toString() === subcategory,
+							product.categories.sub.toString() === subcategory &&
+							product.price >= selectedPriceRange[0] &&
+							product.price <= selectedPriceRange[1] &&
+							(selectedBrands.length === 0 ||
+								selectedBrands.includes(product.brand)) &&
+							(selectedColors.length === 0 ||
+								selectedColors.includes(product.color)),
 					)
 
 					setProducts(filteredProducts)
@@ -68,7 +97,13 @@ const SubcategoryPage: React.FC = () => {
 		}
 
 		fetchProducts()
-	}, [category, subcategory])
+	}, [
+		category,
+		subcategory,
+		selectedPriceRange,
+		selectedBrands,
+		selectedColors,
+	])
 
 	if (loading) {
 		return <div>Loading...</div>
@@ -123,8 +158,18 @@ const SubcategoryPage: React.FC = () => {
 						className={classes.filterButton}>
 						Filtrera <IoFilterOutline className={classes.filterButtonIcon} />
 					</UnstyledButton>
-					<FilterDrawer isOpen={isDrawerOpen} onClose={handleCloseDrawer} />
+					<FilterDrawer
+						isOpen={isDrawerOpen}
+						onClose={handleCloseDrawer}
+						brands={allBrands}
+						colors={allColors}
+					/>
 					<div className={classes.groupContainer}>
+						{filtersCurrentlyApplied && (
+							<UnstyledButton onClick={resetFilters}>
+								Rensa filter
+							</UnstyledButton>
+						)}
 						<Text className={classes.groupText}> Antal produkter </Text>
 						<Menu width={200} shadow="md" position="bottom-start">
 							<Menu.Target>

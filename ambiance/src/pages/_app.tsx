@@ -8,6 +8,7 @@ import Layout from '@/components/Layout'
 import { SessionProvider } from 'next-auth/react'
 import { CartProvider } from '@/contexts/CartContext'
 import '@mantine/carousel/styles.css'
+import { FilterProvider } from '@/contexts/FilterContext'
 
 const theme = createTheme({})
 
@@ -16,9 +17,11 @@ function App({ Component, pageProps }: AppProps) {
 		<MantineProvider theme={theme}>
 			<SessionProvider session={pageProps.session}>
 				<CartProvider>
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
+					<FilterProvider>
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
+					</FilterProvider>
 				</CartProvider>
 			</SessionProvider>
 		</MantineProvider>

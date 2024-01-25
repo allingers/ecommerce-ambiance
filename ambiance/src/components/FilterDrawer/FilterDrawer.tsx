@@ -1,35 +1,47 @@
 // components/CategoryFilterDrawer.tsx
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
 	Accordion,
 	Box,
+	Button,
 	Checkbox,
 	Divider,
 	Drawer,
 	Group,
-	MultiSelect,
 	RangeSlider,
-	Slider,
 	Text,
 	Title,
+	UnstyledButton,
 } from '@mantine/core'
 import classes from './FilterDrawer.module.css'
+import { useFilterContext } from '@/contexts/FilterContext'
 
 const FilterDrawer: React.FC<{
 	isOpen: boolean
 	onClose: () => void
-}> = ({ isOpen, onClose }) => {
-	const [priceRange, setPriceRange] = useState<[number, number]>([0, 100])
-	const [selectedColors, setSelectedColors] = useState<string[]>([])
-
-	const handlePriceChange = (value: [number, number]) => {
-		setPriceRange(value)
-	}
+	brands: string[]
+	colors: string[]
+}> = ({ isOpen, onClose, brands, colors }) => {
+	const {
+		selectedPriceRange,
+		setSelectedPriceRange,
+		selectedColors,
+		setSelectedColors,
+		selectedBrands,
+		setSelectedBrands,
+		resetFilters,
+		filtersCurrentlyApplied,
+	} = useFilterContext()
 
 	const handleColorChange = (values: string[]) => {
 		setSelectedColors(values)
 	}
+
+	const handleBrandChange = (values: string[]) => {
+		setSelectedBrands(values)
+	}
+
 	return (
 		<Drawer opened={isOpen} onClose={onClose}>
 			<Title className={classes.filterTitle}>Filtrering</Title>
@@ -47,18 +59,18 @@ const FilterDrawer: React.FC<{
 						<Box maw={350} mx="auto" mb={30}>
 							<Group className={classes.PriceRangeGroup}>
 								<Text className={classes.PriceRangeMin}>
-									{priceRange[0]} SEK
+									{selectedPriceRange[0]} SEK
 								</Text>
 								<Text className={classes.PriceRangeMax}>
-									{priceRange[1]} SEK
+									{selectedPriceRange[1]} SEK
 								</Text>
 							</Group>
 							<RangeSlider
 								label={null}
-								value={priceRange}
-								onChange={handlePriceChange}
-								max={1000}
-								step={10}
+								value={selectedPriceRange}
+								onChange={(value) => setSelectedPriceRange(value)}
+								max={30000}
+								step={5}
 								color="black"
 								radius="md"
 								size="sm"
@@ -73,16 +85,15 @@ const FilterDrawer: React.FC<{
 					</Accordion.Control>
 					<Accordion.Panel>
 						<Box maw={350} mx="auto" mb={30}>
-							<MultiSelect
-								data={['Vit', 'Blå', 'Greige', 'Sand', 'Lila', 'Beige']} // Anpassa efter dina färgalternativ
-								placeholder="Välj färg(er)"
-								searchable
-								limit={5} // Maximalt antal val
-								defaultValue={[]} //
+							<Checkbox.Group
 								value={selectedColors}
-								onChange={handleColorChange}
-								pt={20}
-							/>
+								onChange={handleColorChange}>
+								<Group mt="md" className={classes.CheckboxGroup}>
+									{colors.map((color) => (
+										<Checkbox key={color} value={color} label={color} />
+									))}
+								</Group>
+							</Checkbox.Group>
 						</Box>
 					</Accordion.Panel>
 				</Accordion.Item>
@@ -93,18 +104,24 @@ const FilterDrawer: React.FC<{
 					</Accordion.Control>
 					<Accordion.Panel>
 						<Box maw={350} mx="auto" mb={30}>
-							<Checkbox.Group defaultValue={[]}>
+							<Checkbox.Group
+								value={selectedBrands}
+								onChange={handleBrandChange}>
 								<Group mt="md" className={classes.CheckboxGroup}>
-									<Checkbox value="react" label="React" />
-									<Checkbox value="svelte" label="Svelte" />
-									<Checkbox value="ng" label="Angular" />
-									<Checkbox value="vue" label="Vue" />
+									{Array.from(brands).map((brand) => (
+										<Checkbox key={brand} value={brand} label={brand} />
+									))}
 								</Group>
 							</Checkbox.Group>
 						</Box>
 					</Accordion.Panel>
 				</Accordion.Item>
 			</Accordion>
+			<Group pl={15} pt={20}>
+				{filtersCurrentlyApplied && (
+					<UnstyledButton onClick={resetFilters}>Rensa filter</UnstyledButton>
+				)}
+			</Group>
 		</Drawer>
 	)
 }
