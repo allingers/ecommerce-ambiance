@@ -9,8 +9,6 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
-	console.log('Received products:', products)
-
 	return (
 		<Container size="xxl" pt={35} pb={35}>
 			<Center>

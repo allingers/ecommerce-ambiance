@@ -154,7 +154,7 @@ const CategoryPage: React.FC = () => {
 						className={classes.filterButton}>
 						Filtrera <IoFilterOutline className={classes.filterButtonIcon} />
 					</UnstyledButton>
-					<FilterDrawer isOpen={isDrawerOpen} onClose={handleCloseDrawer} />
+					{/* <FilterDrawer isOpen={isDrawerOpen} onClose={handleCloseDrawer} /> */}
 					<div className={classes.groupContainer}>
 						<Text className={classes.groupText}> Antal produkter </Text>
 						<Menu width={200} shadow="md" position="bottom-start">
