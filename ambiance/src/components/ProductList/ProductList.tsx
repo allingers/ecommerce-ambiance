@@ -1,8 +1,7 @@
 // ProductList.tsx
 import React from 'react'
 import ProductCard from '../ProductCard/ProductCard'
-import classes from './ProductList.module.css'
-import { Box, SimpleGrid } from '@mantine/core'
+import { Center, Container, SimpleGrid } from '@mantine/core'
 import { ProductModel } from '@/models/Product'
 
 interface ProductListProps {
@@ -10,20 +9,19 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
-	console.log('Received products:', products)
-
 	return (
-		<Box className={classes.productListContainer}>
-			<SimpleGrid
-				pt={10}
-				cols={{ base: 1, sm: 2, md: 2, lg: 3, xl: 4 }}
-				spacing={{ base: 10, sm: 'xl' }}
-				verticalSpacing={{ base: 'md', sm: 'xl' }}>
-				{products.map((product) => (
-					<ProductCard key={product._id} product={product} />
-				))}
-			</SimpleGrid>
-		</Box>
+		<Container size="xxl" pt={35} pb={35}>
+			<Center>
+				<SimpleGrid
+					cols={{ base: 1, sm: 2, md: 3, lg: 4 }}
+					spacing={{ base: 10, sm: 'xl', md: 'xl', lg: 'md' }}
+					verticalSpacing={{ base: 'md', sm: 'xl' }}>
+					{products.map((product) => (
+						<ProductCard key={product._id} product={product} />
+					))}
+				</SimpleGrid>
+			</Center>
+		</Container>
 	)
 }
 

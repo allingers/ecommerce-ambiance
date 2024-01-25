@@ -47,7 +47,12 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 	}, [cartItems])
 
 	return (
-		<Drawer opened={isOpen} onClose={onClose} position="right" size="md">
+		<Drawer
+			opened={isOpen}
+			onClose={onClose}
+			position="right"
+			size="md"
+			offset={5}>
 			<Title className={classes.cartTitle} order={3}>
 				Varukorg
 			</Title>
