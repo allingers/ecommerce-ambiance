@@ -1,96 +1,136 @@
-.btnBox{
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: center;
+.ButtonBox {
+	padding-top: 2rem;
+	margin-bottom: 2rem;
 }
 
+.SubButton {
+	font-size: 0.95rem;
+	font-weight: 400;
+	font-family: 'Poppins', 'sans-serif';
+	color: black;
+	background-color: white;
+}
+
+.SubButton:hover {
+	background-color: black;
+	color: white;
+}
 
 .wrapper {
-    position: relative;
-    padding-top: rem(180px);
-    padding-bottom: rem(140px);
-    background-image: url('/svg/bright-warm-hero.svg');
-    background-size: cover;
-    background-position: center;
-    
-    @media (max-width: $mantine-breakpoint-xs) {
-      padding-top: rem(80px);
-      padding-bottom: rem(50px);
-    }
-  }
-  
-  .inner {
-    position: relative;
-    z-index: 1;
-  }
-  
-  .title {
-    font-weight: 600;
-    font-size: rem(50px);
-    letter-spacing: rem(-1px);
-    padding-left: var(--mantine-spacing-md);
-    padding-right: var(--mantine-spacing-md);
-    color: var(--mantine-color-white);
-    margin-bottom: var(--mantine-spacing-xs);
-    text-align: center;
-    font-family:
-      Greycliff CF,
-      var(--mantine-font-family);
-  
-    @media (max-width: $mantine-breakpoint-xs) {
-      font-size: rem(28px);
-      text-align: left;
-    }
-  }
-  
-  .highlight {
-    color: var(--mantine-color-primary-4);
-  }
-  
-  .description {
-    color: var(--mantine-color-gray-0);
-    text-align: center;
-  
-    @media (max-width: $mantine-breakpoint-xs) {
-      font-size: var(--mantine-font-size-md);
-      text-align: left;
-    }
-  }
-  
-  .controls {
-    margin-top: calc(var(--mantine-spacing-xl) * 1.5);
-    display: flex;
-    justify-content: center;
-    padding-left: var(--mantine-spacing-md);
-    padding-right: var(--mantine-spacing-md);
-  
-    @media (max-width: $mantine-breakpoint-xs) {
-      flex-direction: column;
-    }
-  }
-  
-  .control {
-    height: rem(42px);
-    font-size: var(--mantine-font-size-md);
-  
-    &:not(:first-of-type) {
-      margin-left: var(--mantine-spacing-md);
-    }
-  
-    @media (max-width: $mantine-breakpoint-xs) {
-      &:not(:first-of-type) {
-        margin-top: var(--mantine-spacing-md);
-        margin-left: 0;
-      }
-    }
-  }
-  
-  .secondaryControl {
-    color: var(--mantine-color-white);
-    background-color: rgba(255, 255, 255, 0.4);
-  
-    @mixin hover {
-      background-color: rgba(255, 255, 255, 0.45);
-    }
-  }
+	position: relative;
+	padding-top: rem(180px);
+	padding-bottom: rem(140px);
+	/* background-image: url('/svg/bright-warm-hero.svg'); */
+	background-size: cover;
+	background-position: center;
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		padding-top: rem(80px);
+		padding-bottom: rem(50px);
+	}
+}
+
+.inner {
+	position: relative;
+	z-index: 1;
+}
+
+.title {
+	font-weight: 500;
+	font-size: 4rem;
+	letter-spacing: 0.05rem;
+	padding-left: var(--mantine-spacing-md);
+	padding-right: var(--mantine-spacing-md);
+	color: var(--mantine-color-white);
+	margin-bottom: var(--mantine-spacing-xs);
+	text-align: center;
+	font-family: 'Montserrat', sans-serif;
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		font-size: rem(28px);
+	}
+}
+
+.text {
+	font-weight: 400;
+	font-size: 1rem;
+	word-wrap: normal;
+	letter-spacing: 0.05rem;
+	color: var(--mantine-color-white);
+	margin-bottom: var(--mantine-spacing-xs);
+	text-align: center;
+	font-family: 'Montserrat', sans-serif;
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		font-size: 0.8rem;
+	}
+}
+
+.highlight {
+	color: var(--mantine-color-primary-4);
+}
+
+.description {
+	color: var(--mantine-color-gray-0);
+	text-align: center;
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		font-size: var(--mantine-font-size-md);
+		text-align: left;
+	}
+}
+
+.innerButtonContainer {
+	display: flex;
+	justify-content: center;
+	padding-top: 1rem;
+}
+
+.backButton {
+	font-size: 0.9rem;
+	font-weight: 400;
+	font-family: 'Poppins', 'sans-serif';
+	color: black;
+	background-color: white;
+}
+
+.ArrowIcon {
+	margin-right: 0.4rem;
+	font-size: 1rem;
+}
+
+.backButton:hover {
+	color: white;
+	background-color: black;
+}
+
+.group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.groupContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 1.5rem;
+}
+
+.filterButton,
+.sortButton {
+	font-size: 1rem;
+	font-weight: 400;
+	font-family: 'Poppins', 'sans-serif';
+	color: rgb(34, 34, 34);
+}
+
+.filterButtonIcon {
+	padding-top: 0.2rem;
+}
+
+.groupText {
+	font-size: 1rem;
+
+	color: rgb(168, 168, 168);
+	font-family: 'Poppins', 'sans-serif';
+}
