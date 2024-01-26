@@ -9,6 +9,7 @@ import {
 	UnstyledButton,
 	useMantineTheme,
 	Badge,
+	Divider,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import {
@@ -28,6 +29,7 @@ import { FiUser, FiUserCheck } from 'react-icons/fi'
 import { useCart } from '@/contexts/CartContext'
 import { GoHeart, GoHeartFill } from 'react-icons/go'
 import Link from 'next/link'
+import router from 'next/router'
 
 const links = [
 	{
@@ -106,6 +108,14 @@ export default function Header() {
 
 	const handleCartIconClick = () => {
 		setIsCartDrawerOpen(!isCartDrawerOpen)
+	}
+
+	const handleNavigateToProfile = () => {
+		router.push('/mina-sidor/profil')
+	}
+
+	const handleNavigateToFav = () => {
+		router.push('/mina-sidor/favoritlista')
 	}
 
 	const items = links.map((link) => {
@@ -204,7 +214,7 @@ export default function Header() {
 							<UnstyledButton className={classes.HeartButton}>
 								<span className={classes.HeartIconSpan}>
 									{' '}
-									<Link href="mina-sidor?tab=favoriter">
+									<Link href="mina-sidor/favoritlista">
 										<GoHeart />
 									</Link>
 								</span>
@@ -215,6 +225,7 @@ export default function Header() {
 							<Menu.Dropdown>
 								<>
 									<Menu.Item
+										onClick={handleNavigateToProfile}
 										leftSection={
 											<IconUser
 												style={{
@@ -225,10 +236,10 @@ export default function Header() {
 												stroke={1.5}
 											/>
 										}>
-										{' '}
-										<Link href="/mina-sidor">Mina sidor</Link>
+										Mina sidor
 									</Menu.Item>
 									<Menu.Item
+										onClick={handleNavigateToFav}
 										leftSection={
 											<IconHeart
 												style={{
@@ -239,22 +250,11 @@ export default function Header() {
 												stroke={1.5}
 											/>
 										}>
-										{' '}
-										<Link href="/mina-sidor">Favoriter</Link>
+										Favoriter
 									</Menu.Item>
-									<Menu.Label>Settings</Menu.Label>
-									<Menu.Item
-										leftSection={
-											<IconSettings
-												style={{
-													width: rem(16),
-													height: rem(16),
-												}}
-												stroke={1.5}
-											/>
-										}>
-										Hantera kontoinställningar
-									</Menu.Item>
+									<Menu.Label>
+										<Divider />
+									</Menu.Label>
 									<Menu.Item
 										leftSection={
 											<IconLogout

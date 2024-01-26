@@ -9,8 +9,6 @@ import {
 	SimpleGrid,
 	Center,
 	Card,
-	Box,
-	BackgroundImage,
 	Input,
 	Modal,
 } from '@mantine/core'
@@ -18,8 +16,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import ProductCard from '@/components/ProductCard/ProductCard'
 import { ProductModel } from '@/models/Product'
 import Link from 'next/link'
-import { useDisclosure, useMediaQuery } from '@mantine/hooks'
-import { set } from 'mongoose'
+import { useDisclosure } from '@mantine/hooks'
 
 const Home: React.FC = () => {
 	const [randomProducts, setRandomProducts] = useState<ProductModel[]>([])
@@ -70,7 +67,6 @@ const Home: React.FC = () => {
 			try {
 				const response = await fetch('/api/products/textil')
 				const data = await response.json()
-				console.log('Textil Products:', data)
 				setTextilProducts(data)
 			} catch (error) {
 				console.error('Error fetching textil products:', error)
