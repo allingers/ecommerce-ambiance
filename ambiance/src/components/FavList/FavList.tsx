@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import useFavorites from '@/hooks/useFavorites'
 import { ProductModel } from '@/models/Product'
 import classes from './FavList.module.css'
 import { Image, Text } from '@mantine/core'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
+import { useFavorites } from '@/contexts/FavoritesContext'
 
 interface ApiProductModel {
 	// Skapa en separat typ för datan du hämtar från API:et
@@ -16,39 +16,32 @@ interface ApiProductModel {
 }
 
 const FavList: React.FC = () => {
-	const { favorites, updateFavorites } = useFavorites()
+	const { favoriteItems, removeFromFavorites } = useFavorites()
 	const [products, setProducts] = useState<ApiProductModel[]>([])
 
-	const fetchProductDetails = async () => {
-		try {
-			const response = await fetch('/api/products')
-			const data: ApiProductModel[] = await response.json()
-			setProducts(data)
-		} catch (error) {
-			console.error('Error fetching product details:', error)
-		}
-	}
-
 	useEffect(() => {
-		// Hämta produktinformation när komponenten mountar eller favoriterna ändras
-		fetchProductDetails()
-	}, [favorites])
+		const fetchProductDetails = async () => {
+			try {
+				const response = await fetch('/api/products')
+				const data: ApiProductModel[] = await response.json()
+				setProducts(data)
+			} catch (error) {
+				console.error('Error fetching product details:', error)
+			}
+		}
 
-	const removeFromFavorites = (productId: string) => {
-		// Ta bort produkt från favoriter
-		const newFavorites = favorites.filter((id) => id !== productId)
-		updateFavorites(newFavorites)
-	}
+		fetchProductDetails()
+	}, [])
 
 	return (
 		<div className={classes.FavoritesContainer}>
-			{favorites.length > 0 ? (
-				favorites.map((productId) => {
+			{favoriteItems.length > 0 ? (
+				favoriteItems.map((favoriteItem) => {
 					// Hitta produkten i listan av produkter
-					const product = products.find((p) => p._id === productId)
+					const product = products.find((p) => p._id === favoriteItem.productId)
 
 					return (
-						<div key={product?._id} className={classes.FavoriteItem}>
+						<div key={favoriteItem.productId} className={classes.FavoriteItem}>
 							{product && (
 								<>
 									<IoIosRemoveCircleOutline

@@ -8,8 +8,8 @@ import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
-import useFavorites from '@/hooks/useFavorites'
 import { GoHeartFill } from 'react-icons/go'
+import { useFavorites } from '@/contexts/FavoritesContext'
 
 interface ProductCardProps {
 	product: ProductModel
@@ -20,7 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const { addToCart } = useCart()
 	const router = useRouter()
 	const { data: session } = useSession()
-	const { favorites, updateFavorites } = useFavorites()
+	const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites()
 
 	const handleHover = () => {
 		setIsHovered(true)
@@ -35,19 +35,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		addToCart(product._id, 1, product.price) // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
 		console.log(`Produkt med id ${product._id} lades till i varukorgen.`)
 	}
+
 	const handleAddToFavorites = () => {
-		try {
-			if (!session) {
-				console.error('User not authenticated')
-				return
-			}
-
-			// Uppdatera favoritlistan med den nya produkten
-			updateFavorites([...favorites, product._id])
-
-			console.log('Product added to favorites successfully')
-		} catch (error) {
-			console.error('An unexpected error occurred', error)
+		if (isFavorite(product._id)) {
+			removeFromFavorites(product._id)
+		} else {
+			addToFavorites(product._id)
 		}
 	}
 
@@ -55,7 +48,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		<>
 			<Card
 				className={classes.card}
-				shadow="xs"
 				radius="xs"
 				padding="xl"
 				h={473.55}
@@ -105,7 +97,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 							onClick={handleAddToFavorites}
 							role="button"
 							aria-label="Add to Favorites">
-							{favorites.includes(product._id) ? (
+							{isFavorite(product._id) ? (
 								<GoHeartFill className={classes.favIconFilled} />
 							) : (
 								<TbHeart />
