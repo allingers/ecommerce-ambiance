@@ -12,10 +12,7 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
-}
-
-.image {
-	padding-left: 1rem;
+	margin-bottom: 1rem;
 }
 
 .name {

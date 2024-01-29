@@ -1,0 +1,71 @@
+.cartItemContainer {
+	align-items: center;
+	padding-top: 1.5rem;
+}
+
+.cartItem {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+	gap: 1rem;
+	margin-right: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+.image {
+	padding-left: 1rem;
+}
+
+.name {
+	font-size: 1.1rem;
+	font-weight: 400;
+	font-family: 'Poppins', sans-serif;
+}
+.price {
+	font-weight: 500;
+	font-size: 1.1rem;
+	font-family: 'Poppins', sans-serif;
+}
+
+.image {
+	@media (max-width: $mantine-breakpoint-xs) {
+		display: none;
+	}
+}
+
+.checkOutTotalContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 1rem;
+	margin-top: 1.5rem;
+	padding-left: 5rem;
+	padding-right: 5rem;
+
+	@media (max-width: $mantine-breakpoint-sm) {
+		margin-top: 1.5rem;
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+}
+
+.checkOutTitle {
+	text-align: left;
+	font-weight: 500;
+	margin-bottom: 1rem;
+	text-align: center;
+}
+
+.checkOutTotal {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	font-size: 1.1rem;
+}
+
+.CheckoutButton {
+	background-color: rgb(157, 106, 163);
+	font-family: 'Poppins', sans-serif;
+	font-weight: 400;
+	font-size: 0.9rem;
+}

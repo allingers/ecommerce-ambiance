@@ -192,12 +192,12 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 												handleAddRelatedToFavorites(relatedProduct._id)
 											}>
 											{isFavorite(relatedProduct._id) ? (
-												<span className={classes.HeartIconSpan}>
-													<GoHeart />
-												</span>
-											) : (
 												<span className={classes.FilledHeartIconSpan}>
 													<GoHeartFill />
+												</span>
+											) : (
+												<span className={classes.HeartIconSpan}>
+													<GoHeart />
 												</span>
 											)}
 										</UnstyledButton>

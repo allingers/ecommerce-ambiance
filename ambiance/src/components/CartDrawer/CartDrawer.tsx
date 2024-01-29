@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
 import { useCart } from '@/contexts/CartContext'
 import {
 	Drawer,
@@ -30,6 +31,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 		removeCartItem,
 		calculateCartTotal,
 	} = useCart()
+	const router = useRouter()
 
 	const fetchProductDetails = async () => {
 		try {
@@ -45,6 +47,12 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 		// Hämta produktinformation när komponenten mountar eller när cartItems ändras
 		fetchProductDetails()
 	}, [cartItems])
+
+	const handleGoToCheckout = () => {
+		// Navigera till checkout-sidan när användaren klickar på "Gå till kassan"
+		router.push('/checkout')
+		onClose() // Stäng cartDrawer efter navigering
+	}
 
 	return (
 		<Drawer
@@ -126,7 +134,9 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 				<Text className={classes.CartTotal}>
 					Totalsumma: {calculateCartTotal()} SEK
 				</Text>
-				<Button className={classes.CheckoutButton}>Gå till kassan </Button>
+				<Button onClick={handleGoToCheckout} className={classes.CheckoutButton}>
+					Gå till kassan{' '}
+				</Button>
 			</Box>
 		</Drawer>
 	)
