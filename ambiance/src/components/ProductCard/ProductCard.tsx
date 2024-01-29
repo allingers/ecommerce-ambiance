@@ -20,7 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const { addToCart } = useCart()
 	const router = useRouter()
 	const { data: session } = useSession()
-	const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites() // Använda useFavorites-hook
+	const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites()
 
 	const handleHover = () => {
 		setIsHovered(true)
@@ -48,7 +48,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		<>
 			<Card
 				className={classes.card}
-				shadow="xs"
 				radius="xs"
 				padding="xl"
 				h={473.55}

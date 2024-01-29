@@ -213,10 +213,7 @@ export default function Header() {
 							</div>
 							<UnstyledButton className={classes.HeartButton}>
 								<span className={classes.HeartIconSpan}>
-									{' '}
-									<Link href="mina-sidor/favoritlista">
-										<GoHeart />
-									</Link>
+									<GoHeart onClick={handleNavigateToFav} />
 								</span>
 								{/* <span className={classes.FilledHeartIconSpan}><GoHeartFill /></span> */}
 							</UnstyledButton>
