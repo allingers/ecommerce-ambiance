@@ -16,11 +16,13 @@ import {
 	Card,
 	Group,
 } from '@mantine/core'
-import { GoHeart } from 'react-icons/go'
+import { GoHeart, GoHeartFill } from 'react-icons/go'
 import { useCart } from '@/contexts/CartContext'
 import { BsHandbag } from 'react-icons/bs'
 import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md'
 import Link from 'next/link'
+import { useFavorites } from '@/contexts/FavoritesContext'
+import { TbHeart } from 'react-icons/tb'
 
 interface ProductDetailProps {
 	product: ProductModel
@@ -34,6 +36,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 	recommendedProducts,
 }) => {
 	const { addToCart } = useCart()
+	const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites()
 	const topRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
@@ -49,6 +52,29 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 		console.log(`Produkt med id ${productToAdd._id} lades till i varukorgen.`)
 	}
 
+	const handleAddToFavorites = () => {
+		if (isFavorite(product._id)) {
+			removeFromFavorites(product._id)
+		} else {
+			addToFavorites(product._id)
+		}
+	}
+
+	const handleAddRelatedToFavorites = (relatedProductId: string) => {
+		if (isFavorite(relatedProductId)) {
+			removeFromFavorites(relatedProductId)
+		} else {
+			addToFavorites(relatedProductId)
+		}
+	}
+
+	const handleAddRecommendedToFavorites = (recommendedProductId: string) => {
+		if (isFavorite(recommendedProductId)) {
+			removeFromFavorites(recommendedProductId)
+		} else {
+			addToFavorites(recommendedProductId)
+		}
+	}
 	return (
 		<>
 			<Container ref={topRef}>
@@ -103,12 +129,14 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 								</Button>
 								<UnstyledButton
 									className={classes.HeartButton}
+									onClick={handleAddToFavorites}
 									size="lg"
 									color="palevioletred">
-									<span className={classes.HeartIconSpan}>
-										<GoHeart />
-									</span>
-									{/* <span className={classes.FilledHeartIconSpan}><GoHeartFill /></span>  */}
+									{isFavorite(product._id) ? (
+										<GoHeartFill className={classes.favIconFilled} />
+									) : (
+										<TbHeart />
+									)}
 								</UnstyledButton>
 							</div>
 							<Text tt="uppercase" c="dimmed" size="xs" mt={30} ml={2}>
@@ -165,11 +193,20 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 												<BsHandbag />
 											</span>
 										</UnstyledButton>
-										<UnstyledButton className={classes.HeartIconButton}>
-											<span className={classes.HeartIconSpan}>
-												<GoHeart />
-											</span>
-											{/* <span className={classes.FilledHeartIconSpan}><GoHeartFill /></span> */}
+										<UnstyledButton
+											className={classes.HeartIconButton}
+											onClick={() =>
+												handleAddRelatedToFavorites(relatedProduct._id)
+											}>
+											{isFavorite(relatedProduct._id) ? (
+												<span className={classes.HeartIconSpan}>
+													<GoHeart />
+												</span>
+											) : (
+												<span className={classes.FilledHeartIconSpan}>
+													<GoHeartFill />
+												</span>
+											)}
 										</UnstyledButton>
 									</div>
 								</Group>
@@ -194,8 +231,8 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 						cols={{ base: 1, sm: 2, lg: 4 }}
 						spacing={{ base: 10, sm: 'sm' }}
 						verticalSpacing={{ base: 'md', sm: 'xl' }}>
-						{recommendedProducts.map((recommendedProducts) => (
-							<div key={recommendedProducts._id}>
+						{recommendedProducts.map((recommendedProduct) => (
+							<div key={recommendedProduct._id}>
 								<Card
 									className={classes.RecommendedCard}
 									withBorder
@@ -206,45 +243,55 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 									w={250.75}>
 									<Card.Section pl={15} color="#8b8989">
 										<Text fw={400} size="xs" mt="md">
-											{recommendedProducts.brand}
+											{recommendedProduct.brand}
 										</Text>
 									</Card.Section>
-									<Link href={`/product/${recommendedProducts._id}`}>
+									<Link href={`/product/${recommendedProduct._id}`}>
 										<Card.Section className={classes.imageSection}>
 											<Image
 												height={150}
 												fit="contain"
 												mt={20}
-												src={recommendedProducts.imageUrls[0]}
+												src={recommendedProduct.imageUrls[0]}
 												alt={`Related Product Image`}
 											/>
 										</Card.Section>
 									</Link>
 									<Group justify="space-between" mt="md">
 										<Card.Section pl={15} mb={10}>
-											<Link href={`/product/${recommendedProducts._id}`}>
+											<Link href={`/product/${recommendedProduct._id}`}>
 												<Text
 													className={classes.recommendedProductName}
 													fw={450}
 													size="md"
 													mt="xs">
-													{recommendedProducts.name}
+													{recommendedProduct.name}
 												</Text>
 											</Link>
 											<Text fw={500} size="md">
-												{recommendedProducts.price} SEK
+												{recommendedProduct.price} SEK
 											</Text>
 										</Card.Section>
 										<Card.Section className={classes.iconSection} mb={10}>
 											<Text
 												className={classes.cartIcon}
-												onClick={() => handleAddToCart(recommendedProducts)}
+												onClick={() => handleAddToCart(recommendedProduct)}
 												role="button"
 												aria-label="Add to Cart">
 												<BsHandbag />
 											</Text>
-											<Text className={classes.favIcon}>
-												<GoHeart />
+											<Text
+												className={classes.favIcon}
+												onClick={() =>
+													handleAddRecommendedToFavorites(
+														recommendedProduct._id,
+													)
+												}>
+												{isFavorite(recommendedProduct._id) ? (
+													<GoHeartFill className={classes.favIconFilled} />
+												) : (
+													<TbHeart />
+												)}
 											</Text>
 										</Card.Section>
 									</Group>
