@@ -15,6 +15,7 @@ import {
 import { ProductModel } from '@/models/Product'
 import classes from './CartDrawer.module.css'
 import { PiMinusThin, PiPlusThin } from 'react-icons/pi'
+import { useRouter } from 'next/router'
 
 interface CartDrawerProps {
 	isOpen: boolean
@@ -30,7 +31,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 		removeCartItem,
 		calculateCartTotal,
 	} = useCart()
-
+	const router = useRouter()
 	const fetchProductDetails = async () => {
 		try {
 			const response = await fetch('/api/products')
@@ -45,6 +46,12 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 		// Hämta produktinformation när komponenten mountar eller när cartItems ändras
 		fetchProductDetails()
 	}, [cartItems])
+
+	const handleCheckout = () => {
+		// Navigera till checkout-sidan när användaren klickar på "Gå till kassan"
+		router.push('/checkout')
+		onClose()
+	}
 
 	return (
 		<Drawer
@@ -126,7 +133,9 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 				<Text className={classes.CartTotal}>
 					Totalsumma: {calculateCartTotal()} SEK
 				</Text>
-				<Button className={classes.CheckoutButton}>Gå till kassan </Button>
+				<Button className={classes.CheckoutButton} onClick={handleCheckout}>
+					Gå till kassan{' '}
+				</Button>
 			</Box>
 		</Drawer>
 	)

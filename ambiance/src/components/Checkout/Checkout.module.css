@@ -1,0 +1,75 @@
+/* .cartItemContainer {
+	align-items: center;
+	padding-top: 1.5rem;
+} */
+
+.cartItem {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 3rem;
+	margin-top: 1.5rem;
+
+	@media (max-width: $mantine-breakpoint-sm) {
+		gap: 1.2rem;
+		margin-top: 1rem;
+		justify-content: flex-start;
+	}
+}
+
+.Title {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 500;
+	font-size: 1.4rem;
+}
+
+.MainTitle {
+	font-family: 'Poppins', sans-serif;
+}
+
+.BackButton {
+	border: 1px solid rgba(115, 153, 115, 0.644);
+	font-family: 'Poppins', sans-serif;
+	font-weight: 500;
+	font-size: 0.9rem;
+}
+
+.NextButton {
+	background-color: rgb(115, 153, 115);
+	font-family: 'Poppins', sans-serif;
+	font-weight: 400;
+	font-size: 0.9rem;
+}
+
+.name {
+	font-size: 1.1rem;
+	font-weight: 400;
+	font-family: 'Poppins', sans-serif;
+
+	@media (max-width: $mantine-breakpoint-md) {
+		font-size: 0.9rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 200px;
+	}
+
+	@media (max-width: $mantine-breakpoint-xs) {
+		font-size: 0.9rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 100px;
+	}
+}
+
+.price {
+	font-weight: 500;
+	font-size: 1.1rem;
+	font-family: 'Poppins', sans-serif;
+
+	@media (max-width: $mantine-breakpoint-md) {
+		font-size: 0.9rem;
+	}
+}
