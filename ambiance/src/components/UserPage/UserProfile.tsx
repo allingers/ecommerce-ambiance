@@ -5,7 +5,13 @@ import { UserModel } from '@/models/User'
 import classes from './UserProfile.module.css'
 
 interface UserProfileProps {
-	user: Partial<UserModel>
+	user: {
+		id: string
+		name: string
+		email: string
+		hashedPassword: string
+		favorites?: string[] // favorites kan vara undefined
+	}
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ user }) => {

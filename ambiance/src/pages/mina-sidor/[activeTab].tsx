@@ -1,7 +1,6 @@
 // pages/mina-sidor/[activeTab].tsx
 import UserProfile from '@/components/UserPage/UserProfile'
 import { Container, Tabs, rem } from '@mantine/core'
-import { IconPhoto, IconMessageCircle } from '@tabler/icons-react'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { FiUser } from 'react-icons/fi'
@@ -9,6 +8,7 @@ import { GoHeart } from 'react-icons/go'
 import { LuPackageCheck } from 'react-icons/lu'
 import FavList from '@/components/FavList/FavList'
 import { useEffect, useState } from 'react'
+import OrderHistory from '@/components/OrderHistory/OrderHistory'
 
 const iconStyle = { width: rem(12), height: rem(12) }
 
@@ -21,7 +21,25 @@ const MyAccountPage: React.FC<MyAccountPageProps> = ({
 }) => {
 	const router = useRouter()
 	const { data: session } = useSession()
+	const [orders, setOrders] = useState([])
 
+	useEffect(() => {
+		const fetchOrders = async () => {
+			try {
+				if (session) {
+					const response = await fetch(
+						`/api/orders/get-orders?userEmail=${session.user.email}`,
+					)
+					const data = await response.json()
+					setOrders(data.orders)
+				}
+			} catch (error) {
+				console.error('Fel vid hämtning av orderhistorik:', error)
+			}
+		}
+
+		fetchOrders()
+	}, [session])
 	const [activeTab, setActiveTab] = useState<string>(
 		initialActiveTab || 'profil',
 	)
@@ -70,7 +88,17 @@ const MyAccountPage: React.FC<MyAccountPageProps> = ({
 
 				<Tabs.Panel value="profil">
 					{session ? (
-						<UserProfile user={session.user ?? {}} />
+						<UserProfile
+							user={
+								session.user as {
+									id: string
+									name: string
+									email: string
+									hashedPassword: string
+									favorites?: string[]
+								}
+							}
+						/>
 					) : (
 						'Logga in för att se profilen.'
 					)}
@@ -82,7 +110,7 @@ const MyAccountPage: React.FC<MyAccountPageProps> = ({
 
 				<Tabs.Panel value="orderhistorik">
 					{session ? (
-						<div>Orderhistorik tab content</div>
+						<OrderHistory orders={orders} />
 					) : (
 						'Logga in för att se orderhistoriken.'
 					)}

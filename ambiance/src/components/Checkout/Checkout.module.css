@@ -31,15 +31,19 @@
 .BackButton {
 	border: 1px solid rgba(115, 153, 115, 0.644);
 	font-family: 'Poppins', sans-serif;
-	font-weight: 500;
 	font-size: 0.9rem;
 }
 
 .NextButton {
 	background-color: rgb(115, 153, 115);
 	font-family: 'Poppins', sans-serif;
-	font-weight: 400;
 	font-size: 0.9rem;
+}
+
+.NextButton:hover {
+	background-color: white;
+	border: 1px solid rgba(115, 153, 115, 0.644);
+	color: rgba(115, 153, 115, 0.644);
 }
 
 .name {
@@ -72,4 +76,39 @@
 	@media (max-width: $mantine-breakpoint-md) {
 		font-size: 0.9rem;
 	}
+}
+
+.UserInfoCol,
+.AdressInfoCol {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.ProductOverviewList {
+	margin-bottom: 1rem;
+	font-family: 'Poppins', sans-serif;
+}
+
+.UserInfoOverviewText {
+	font-family: 'Poppins', sans-serif;
+	display: flex;
+	flex-direction: column;
+}
+
+.UserInfoLabel {
+	font-weight: 500;
+}
+
+.PayButton {
+	font-family: 'Poppins', sans-serif;
+	background-color: rgb(157, 106, 163);
+	border: solid 1px rgb(157, 106, 163);
+	font-weight: 400;
+	font-size: 0.9rem;
+}
+
+.PayButton:hover {
+	background-color: white;
+	color: rgb(157, 106, 163);
 }

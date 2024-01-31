@@ -1,0 +1,26 @@
+.OrderSubTitle {
+	font-family: 'Poppins', sans-serif;
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+.OrderSubTitleGroup {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.3rem;
+	padding-top: 1rem;
+	padding-left: 0.5rem;
+}
+
+.OrderCard {
+}
+
+.OrderCardBox {
+	padding-left: 0.5rem;
+}
+
+.OrderText {
+	font-family: 'Poppins', sans-serif;
+	font-size: 0.9rem;
+}
