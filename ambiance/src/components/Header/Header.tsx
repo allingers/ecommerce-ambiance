@@ -102,8 +102,10 @@ export default function Header() {
 	}
 
 	const handleLogout = async () => {
+		localStorage.removeItem('userInfo')
 		await signOut() // Anropa signOut för att logga ut användaren
 		setUserMenuOpened(false) // Stäng användarmenyn efter utloggning
+		router.push('/')
 	}
 
 	const handleCartIconClick = () => {
@@ -284,4 +286,7 @@ export default function Header() {
 			</Container>
 		</header>
 	)
+}
+function mutate() {
+	throw new Error('Function not implemented.')
 }

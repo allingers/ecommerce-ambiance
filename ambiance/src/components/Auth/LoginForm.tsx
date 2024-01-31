@@ -1,4 +1,4 @@
-import { getProviders, getSession, signIn, useSession } from 'next-auth/react'
+import { getProviders, signIn, useSession } from 'next-auth/react'
 import {
 	Drawer,
 	Container,
@@ -29,12 +29,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
 		email: '',
 		password: '',
 	})
+	const [errorMessage, setErrorMessage] = useState('')
+	const [errorPwMessage, setErrorPwMessage] = useState('')
 
 	const handleInputChange = (field: string, value: string) => {
 		setFormData((prevData) => ({
 			...prevData,
 			[field]: value,
 		}))
+		setErrorMessage('')
+		setErrorPwMessage('')
 	}
 
 	const handleLogin = async () => {
@@ -51,21 +55,29 @@ const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
 			if (result && result.ok) {
 				// Inloggningen lyckades
 				const userResponse = await fetch('/api/user/get-user')
-				const user = await userResponse.json()
+				const userInfo = await userResponse.json()
 
 				// Spara användarinformation i localStorage
-				localStorage.setItem('user', JSON.stringify(user))
+				localStorage.setItem('userInfo', JSON.stringify(userInfo))
 
-				onCloseDrawer() // Stäng drawern eller navigera någon annanstans
+				onCloseDrawer() // Stäng drawern
 			} else {
 				// Inloggningen misslyckades eller result är undefined
 				console.error('Inloggning misslyckades:', result?.error)
+
+				// Avgör typen av fel och sätt lämpligt felmeddelande
+				if (result?.error === 'Email is not registered') {
+					setErrorMessage('Ingen användare hittades med denna e-postadress.')
+				} else {
+					setErrorPwMessage(
+						'Lösenordet matchar inte den angivna e-postadressen',
+					)
+				}
 			}
 		} catch (error) {
 			console.error('Ett fel uppstod vid inloggning:', error)
 		}
 	}
-
 	const handleRegisterClick = () => {
 		// Navigera till registreringssidan när "Registrera dig här" klickas
 		router.push('/register')
@@ -91,6 +103,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
 						label="E-post"
 						placeholder="exempel@gmail.com"
 						required
+						error={errorMessage}
 						value={formData.email}
 						onChange={(e) => handleInputChange('email', e.target.value)}
 					/>
@@ -99,6 +112,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
 						placeholder="Lösenord"
 						required
 						value={formData.password}
+						error={errorPwMessage}
 						onChange={(e) => handleInputChange('password', e.target.value)}
 					/>
 					<Group justify="space-between" mt="lg">
