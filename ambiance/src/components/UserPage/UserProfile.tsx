@@ -6,7 +6,7 @@ import classes from './UserProfile.module.css'
 
 interface UserProfileProps {
 	user: {
-		id: string
+		_id: string
 		name: string
 		email: string
 		hashedPassword: string

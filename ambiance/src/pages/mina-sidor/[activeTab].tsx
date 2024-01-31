@@ -91,7 +91,7 @@ const MyAccountPage: React.FC<MyAccountPageProps> = ({
 						<UserProfile
 							user={
 								session.user as {
-									id: string
+									_id: string
 									name: string
 									email: string
 									hashedPassword: string
