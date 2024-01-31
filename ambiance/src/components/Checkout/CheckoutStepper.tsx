@@ -4,12 +4,10 @@ import {
 	Button,
 	Group,
 	Container,
-	Title,
 	Image,
 	Text,
 	SimpleGrid,
 	Divider,
-	Input,
 	TextInput,
 	Box,
 } from '@mantine/core'
@@ -79,17 +77,12 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 	}, [])
 
 	const nextStep = () => {
-		// Kontrollera om användaren redan har slutfört steg 1 innan de går till steg 2
 		if (activeStep === 1) {
-			// Här kan du lägga till ytterligare logik om det behövs innan du går vidare till nästa steg
-			// Exempel: validering, kontrollera om något är ifyllt, etc.
-			// Om allt är okej, gå vidare till nästa steg
 			setActiveStep((current) => (current < 4 ? current + 1 : current))
 		} else if (activeStep === 3) {
 			// Om det är steg 3, uppdatera userData och gå vidare till nästa steg
 			setUserData((prevData) => ({
 				...prevData,
-				// Uppdatera userData med de värden som användaren har fyllt i formuläret
 			}))
 
 			setActiveStep((current) => (current < 4 ? current + 1 : current))
@@ -101,9 +94,15 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 	const prevStep = () =>
 		setActiveStep((current) => (current > 1 ? current - 1 : current))
 
+	const cartKey = 'cart'
+
+	// Funktion för att tömma Cart i localStorage
+	const clearCart = () => {
+		localStorage.removeItem(cartKey)
+	}
+
 	const handlePayment = async () => {
 		try {
-			// Implementera betalningslogik här
 			// Skicka användarens och produkternas data till servern för att slutföra betalningen
 			const session = await getSession()
 
@@ -132,8 +131,9 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 
 				if (response.ok) {
 					console.log('Order created successfully')
+					clearCart()
 					// Navigera till orderbekräftelsessidan
-					router.push('/order-bekraftelse')
+					router.push('/order-confirm')
 				} else {
 					console.error('Error creating order:', data.message)
 					// Hantera fel här, visa felmeddelande för användaren eller liknande
@@ -167,7 +167,7 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 					</Stepper.Step>
 					<Stepper.Step label="Beställning" description="Lägg din order">
 						{/* Simulering av betalning */}
-						<PaymentInformation products={cartProducts} userData={userData} />
+						<OrderInformation products={cartProducts} userData={userData} />
 					</Stepper.Step>
 					<Stepper.Completed>
 						Tack för din beställning! Klicka på "Back" för att ändra något.
@@ -205,14 +205,10 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 	)
 }
 
-// Enkel komponent för att visa översikt av produkter
+// Enkel komponent för att visa översikt av produkter i Cart
 const CartOverview: React.FC<{ products: Product[] }> = ({ products }) => (
 	<div>
 		<Container size="lg" pt={20}>
-			{/* <Title className={classes.Title} order={2}>
-				Artiklar i varukorgen:
-			</Title> */}
-
 			{products.map((product, index) => (
 				<div key={index} className={classes.cartItemContainer}>
 					<SimpleGrid
@@ -383,7 +379,7 @@ interface PaymentInformationProps {
 	userData: UserData
 }
 
-const PaymentInformation: React.FC<PaymentInformationProps> = ({
+const OrderInformation: React.FC<PaymentInformationProps> = ({
 	products,
 	userData,
 }) => (

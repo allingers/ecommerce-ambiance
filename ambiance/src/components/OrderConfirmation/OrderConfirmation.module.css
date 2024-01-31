@@ -1,0 +1,19 @@
+.ConfirmTitle {
+	font-family: 'Poppins', sans-serif;
+}
+
+.ConfirmSubTitle {
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.4rem;
+}
+
+.ConfirmText {
+	font-family: 'Poppins', sans-serif;
+	padding-top: 1rem;
+}
+
+.ConfirmBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
