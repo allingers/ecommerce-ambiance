@@ -15,16 +15,17 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"auth": ["./auth"]
 		},
 		"typeRoots": ["./types", "./node_modules/@types"]
 	},
 	"include": [
+		"process.d.ts",
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		"src/utils/db.ja",
-		"src/utils/db.js"
+		".next/types/**/*.ts"
 	],
 	"exclude": ["node_modules"]
 }

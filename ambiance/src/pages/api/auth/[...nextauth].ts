@@ -5,7 +5,7 @@ import clientPromise from '../../../lib/mongodb'
 import dbConnect from '../../../lib/dbConnect'
 import GoogleProvider from 'next-auth/providers/google'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
-import User, { UserModel } from '../../../models/User'
+import User from '../../../models/User'
 import { compare } from 'bcrypt'
 
 export default NextAuth({

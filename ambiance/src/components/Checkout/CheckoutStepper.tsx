@@ -12,7 +12,6 @@ import {
 	Box,
 } from '@mantine/core'
 import classes from './Checkout.module.css'
-import { getSession } from 'next-auth/react'
 import router from 'next/router'
 import { useCart } from '@/contexts/CartContext'
 
@@ -33,19 +32,22 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 	const [activeStep, setActiveStep] = useState(1)
 	const [cartProducts, setCartProducts] = useState<Product[]>([])
 	const [userData, setUserData] = useState<UserData>({
-		firstName: '',
-		lastName: '',
+		name: '',
 		email: '',
 		phoneNumber: '',
 		address: {
 			address: '',
-			co: '',
 			city: '',
 			postalCode: '',
 		},
 	})
 	const { calculateCartTotal } = useCart()
 
+	const cartKey = 'cart'
+	// Funktion för att tömma Cart i localStorage
+	const clearCart = () => {
+		localStorage.removeItem(cartKey)
+	}
 	useEffect(() => {
 		// Hämta produkter från localStorage när komponenten mountar
 		const storedCartProducts = localStorage.getItem('cart')
@@ -56,18 +58,18 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 
 		// Hämta användaruppgifter från sessionsdata om användaren är inloggad
 		const fetchSession = async () => {
-			const session = await getSession()
-			if (session) {
+			const storedUserInfo = localStorage.getItem('userInfo')
+			if (storedUserInfo) {
+				const userInfo = JSON.parse(storedUserInfo)
+
 				setUserData({
-					firstName: session.user.name,
-					lastName: '',
-					email: session.user.email,
-					phoneNumber: '', // Fyll i användarens telefonnummer om det finns tillgängligt i sessionsdata
+					name: userInfo.name || '',
+					email: userInfo.email || '',
+					phoneNumber: userInfo.phoneNumber || '', // Fyll i användarens telefonnummer om det finns tillgängligt i sessionsdata
 					address: {
-						address: '', // Fyll i användarens adressuppgifter om det finns tillgängligt i sessionsdata
-						co: '',
-						city: '',
-						postalCode: '',
+						address: userInfo.address.address || '', // Fyll i användarens adressuppgifter om det finns tillgängligt i sessionsdata
+						city: userInfo.address.city || '',
+						postalCode: userInfo.address.postalCode || '',
 					},
 				})
 			}
@@ -94,48 +96,71 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 	const prevStep = () =>
 		setActiveStep((current) => (current > 1 ? current - 1 : current))
 
-	const cartKey = 'cart'
-
-	// Funktion för att tömma Cart i localStorage
-	const clearCart = () => {
-		localStorage.removeItem(cartKey)
-	}
-
-	const handlePayment = async () => {
+	const handleOrder = async () => {
 		try {
-			// Skicka användarens och produkternas data till servern för att slutföra betalningen
-			const session = await getSession()
+			const storedUserInfo = localStorage.getItem('userInfo')
 
-			if (session) {
-				const userEmail = session.user?.email
+			if (storedUserInfo) {
+				const userInfo = JSON.parse(storedUserInfo)
 
-				// Skapa en order och koppla den till användarens e-postadress
-				const response = await fetch('/api/checkout/order', {
+				// Nu har du användarinformationen från localStorage (t.ex., email)
+				const userEmail = userInfo.email
+
+				// Anropa den nya endpointen för att uppdatera användaren
+				const updateUserResponse = await fetch('/api/user/update-user-adress', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-						products: cartProducts.map((product) => ({
-							productId: product.productId,
-							quantity: product.quantity,
-							price: product.price,
-						})),
-						user: userEmail, // Användarens e-postadress som referens
-						totalAmount: calculateCartTotal(),
-						// ... andra relevanta fält
+						email: userEmail,
+						address: userData.address,
+						phoneNumber: userData.phoneNumber,
 					}),
 				})
 
-				const data = await response.json()
+				const updateUserData = await updateUserResponse.json()
 
-				if (response.ok) {
-					console.log('Order created successfully')
-					clearCart()
-					// Navigera till orderbekräftelsessidan
-					router.push('/order-confirm')
+				if (updateUserResponse.ok) {
+					console.log('User data updated successfully:', updateUserData)
+					const updatedUserInfo = {
+						...userInfo,
+						address: userData.address,
+						phoneNumber: userData.phoneNumber,
+					}
+
+					localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo))
+					// Skicka användarens och produkternas data till servern för att slutföra order
+					const response = await fetch('/api/checkout/order', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							products: cartProducts.map((product) => ({
+								productId: product.productId,
+								quantity: product.quantity,
+								price: product.price,
+							})),
+							user: userEmail, // Användarens e-postadress som referens
+							totalAmount: calculateCartTotal(),
+							// ... andra nödvändiga orderuppgifter
+						}),
+					})
+
+					const data = await response.json()
+
+					if (response.ok) {
+						console.log('Order created successfully')
+						clearCart()
+						// Navigera till orderbekräftelsessidan
+						router.push('/order-confirm')
+					} else {
+						console.error('Error creating order:', data.message)
+						// Hantera fel här, visa felmeddelande för användaren eller liknande
+					}
 				} else {
-					console.error('Error creating order:', data.message)
+					console.error('Error updating user data:', updateUserData.message)
 					// Hantera fel här, visa felmeddelande för användaren eller liknande
 				}
 			}
@@ -193,10 +218,7 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 						Nästa steg
 					</Button>
 				) : (
-					<Button
-						className={classes.PayButton}
-						onClick={handlePayment} // Lägg till din betalningsfunktion här
-					>
+					<Button className={classes.PayButton} onClick={handleOrder}>
 						Lägg din order
 					</Button>
 				)}
@@ -205,7 +227,7 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({}) => {
 	)
 }
 
-// Enkel komponent för att visa översikt av produkter i Cart
+// ----- Överiskt produkter i varukogen  - step 2 -----
 const CartOverview: React.FC<{ products: Product[] }> = ({ products }) => (
 	<div>
 		<Container size="lg" pt={20}>
@@ -232,6 +254,7 @@ const CartOverview: React.FC<{ products: Product[] }> = ({ products }) => (
 	</div>
 )
 
+// ----- Användarinformation - steg 3 -----
 interface Address {
 	address: string
 	co?: string
@@ -240,8 +263,7 @@ interface Address {
 }
 
 interface UserData {
-	firstName: string
-	lastName: string
+	name: string
 	email: string
 	phoneNumber: string
 	address: Address
@@ -265,25 +287,13 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({
 				<div className={classes.UserInfoCol}>
 					<TextInput
 						label="Förnamn"
-						placeholder="Ange förnamn"
+						placeholder="Ange fullständigt namn"
 						required={true}
-						value={userData.firstName}
+						value={userData.name}
 						onChange={(event) =>
 							setUserData((prevData) => ({
 								...prevData,
 								firstName: event.target.value,
-							}))
-						}
-					/>
-					<TextInput
-						label="Efternamn"
-						placeholder="Ange efternamn"
-						required={true}
-						value={userData.lastName}
-						onChange={(event) =>
-							setUserData((prevData) => ({
-								...prevData,
-								lastName: event.target.value,
 							}))
 						}
 					/>
@@ -329,18 +339,6 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({
 					/>
 
 					<TextInput
-						label="c/o"
-						placeholder="Ange c/o (frivillig)"
-						value={userData.address.co}
-						onChange={(event) =>
-							setUserData((prevData) => ({
-								...prevData,
-								co: event.target.value,
-							}))
-						}
-					/>
-
-					<TextInput
 						label="Ort"
 						placeholder="Ange Ort"
 						required={true}
@@ -373,6 +371,8 @@ const UserDetailsForm: React.FC<UserDetailsFormProps> = ({
 		</Container>
 	)
 }
+
+// Orderöversikt - steg 4
 
 interface PaymentInformationProps {
 	products: Product[]
@@ -411,11 +411,7 @@ const OrderInformation: React.FC<PaymentInformationProps> = ({
 				<Box className={classes.UserInfoOverviewText}>
 					<Text fw={400} mb={10}>
 						<span className={classes.UserInfoLabel}>Förnamn:</span>{' '}
-						{userData.firstName}
-					</Text>
-					<Text mb={10}>
-						<span className={classes.UserInfoLabel}>Efternamn:</span>{' '}
-						{userData.lastName}
+						{userData.name}
 					</Text>
 					<Text mb={10}>
 						<span className={classes.UserInfoLabel}>E-post:</span>{' '}

@@ -11,6 +11,7 @@ interface Address {
 interface User {
 	name: string
 	email: string
+	phoneNumber?: String
 	hashedPassword: string
 	favorites?: mongoose.Types.ObjectId[] | ProductModel[]
 	avatar?: string
@@ -29,6 +30,9 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		unique: true,
 	},
+	phoneNumber: {
+		type: String,
+	},
 	hashedPassword: {
 		type: String,
 		required: true,
@@ -46,7 +50,6 @@ const userSchema = new mongoose.Schema({
 	address: {
 		type: {
 			address: String,
-			co: String,
 			city: String,
 			postalCode: String,
 		},

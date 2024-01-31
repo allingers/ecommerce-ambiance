@@ -1,22 +1,11 @@
 // OrderConfirmationComponent.tsx
-import {
-	Container,
-	Title,
-	Text,
-	Box,
-	Center,
-	UnstyledButton,
-} from '@mantine/core'
+import { Container, Title, Text, Box, Center } from '@mantine/core'
 import React from 'react'
 import classes from './OrderConfirmation.module.css'
 
-interface OrderConfirmationComponentProps {
-	orderId: string
-}
+interface OrderConfirmationComponentProps {}
 
-const OrderConfirmation: React.FC<OrderConfirmationComponentProps> = ({
-	orderId,
-}) => {
+const OrderConfirmation: React.FC<OrderConfirmationComponentProps> = ({}) => {
 	return (
 		<Container size="lg" pt={90}>
 			<Center>
@@ -24,9 +13,7 @@ const OrderConfirmation: React.FC<OrderConfirmationComponentProps> = ({
 					<Title order={1} className={classes.ConfirmTitle}>
 						Tack för din order!
 					</Title>
-					<Text className={classes.ConfirmSubTitle}>
-						Ordernummer: {orderId}
-					</Text>
+					<Text className={classes.ConfirmSubTitle}></Text>
 				</Box>
 			</Center>
 		</Container>

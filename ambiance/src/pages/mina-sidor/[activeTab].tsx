@@ -40,24 +40,25 @@ const MyAccountPage: React.FC<MyAccountPageProps> = ({
 
 		fetchOrders()
 	}, [session])
+
 	const [activeTab, setActiveTab] = useState<string>(
 		initialActiveTab || 'profil',
 	)
 
 	const handleTabChange = (value: string | null) => {
-		// Kontrollera om användaren har en session innan du tillåter ändring av flik
+		// Kontrollerar om användaren har en session innan ev. ändring av flik
 		if ((value === 'profil' || value === 'orderhistorik') && !session) {
 			// Användaren har ingen session, lås fliken
 			return
 		}
 
-		// Tillåt ändring av flik
+		// Tillåter ändring av flik
 		setActiveTab(value || 'profil')
 		router.push(`/mina-sidor/${value || 'profil'}`)
 	}
 
 	useEffect(() => {
-		// Uppdatera activeTab när asPath ändras
+		// Uppdaterar activeTab när asPath ändras
 		const pathSegments = router.asPath.split('/')
 		const tabFromPath = pathSegments[pathSegments.length - 1]
 		setActiveTab(tabFromPath || 'profil')
@@ -65,11 +66,7 @@ const MyAccountPage: React.FC<MyAccountPageProps> = ({
 
 	return (
 		<Container mt={100} size={'lg'}>
-			<Tabs
-				color="#9D6AA3"
-				value={activeTab}
-				// onChange={(value) => router.push(`/mina-sidor/${value}`)}
-				onChange={handleTabChange}>
+			<Tabs color="#9D6AA3" value={activeTab} onChange={handleTabChange}>
 				<Tabs.List>
 					<Tabs.Tab value="profil" leftSection={<FiUser style={iconStyle} />}>
 						Profil
@@ -121,73 +118,3 @@ const MyAccountPage: React.FC<MyAccountPageProps> = ({
 }
 
 export default MyAccountPage
-
-// I dina komponentfiler (t.ex. GalleryTab.tsx, MessagesTab.tsx, SettingsTab.tsx)
-// Här kan du inkludera specifikt innehåll eller funktionalitet för varje flik
-
-// import { Container, Tabs } from '@mantine/core'
-// import classes from '../../components/UserPage/UserPage.module.css'
-// import { FiUser } from 'react-icons/fi'
-// import { GoHeart } from 'react-icons/go'
-// import { LuPackageCheck } from 'react-icons/lu'
-// import UserProfile from '../../components/UserPage/UserProfile'
-// import { useSession } from 'next-auth/react'
-// import { useRouter } from 'next/router'
-
-// import FavList from '@/components/FavList/FavList'
-// import { useEffect, useState } from 'react'
-
-// export default function UserPage() {
-// 	const { data: session } = useSession()
-// 	const router = useRouter()
-// 	const [currentTab, setCurrentTab] = useState<string | null>(null)
-
-// 	useEffect(() => {
-// 		// Hämta aktuell tab från URL:en och uppdatera currentTab
-// 		const tabFromUrl = router.query.tab
-// 		setCurrentTab(tabFromUrl as string | null)
-// 	}, [router.query.tab])
-
-// 	const handleTabChange = (value: string | null) => {
-// 		// Uppdatera URL:en med den valda fliken
-// 		if (value) {
-// 			router.push(`/mina-sidor?tab=${value}`, undefined, { shallow: true })
-// 		}
-// 	}
-// 	return (
-// 		<Container mt={100} size={'lg'}>
-// 			<Tabs
-// 				color="#9D6AA3"
-// 				defaultValue="profil"
-// 				orientation="vertical"
-// 				value={router.query.activeTab as string}
-// 				onChange={handleTabChange}>
-// 				<Tabs.List>
-// 					<Tabs.Tab
-// 						className={`${classes.UserTab} ${classes.TabIcon}`}
-// 						value="profil">
-// 						<FiUser />
-// 					</Tabs.Tab>
-// 					<Tabs.Tab
-// 						className={`${classes.FavTab} ${classes.TabIcon}`}
-// 						value="favoriter">
-// 						<GoHeart />
-// 					</Tabs.Tab>
-// 					<Tabs.Tab
-// 						className={`${classes.OrdersTab} ${classes.TabIcon}`}
-// 						value="orderhistorik">
-// 						<LuPackageCheck />
-// 					</Tabs.Tab>
-// 				</Tabs.List>
-
-// 				<Tabs.Panel value="profil">
-// 					<UserProfile user={session?.user ?? {}} />
-// 				</Tabs.Panel>
-// 				<Tabs.Panel value="favoriter">
-// 					<FavList />
-// 				</Tabs.Panel>
-// 				<Tabs.Panel value="orderhistorik">Settings tab content</Tabs.Panel>
-// 			</Tabs>
-// 		</Container>
-// 	)
-// }

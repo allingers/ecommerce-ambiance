@@ -6,7 +6,6 @@ import {
 	Collapse,
 	Container,
 	Divider,
-	Group,
 	List,
 	SimpleGrid,
 	Text,
@@ -14,7 +13,6 @@ import {
 } from '@mantine/core'
 import React, { useState } from 'react'
 import classes from './OrderHistory.module.css'
-import { useDisclosure } from '@mantine/hooks'
 import { IoMdArrowDropdown } from 'react-icons/io'
 
 interface OrderHistoryComponentProps {
