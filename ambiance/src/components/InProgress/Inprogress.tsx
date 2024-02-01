@@ -7,6 +7,7 @@ import {
 	SimpleGrid,
 } from '@mantine/core'
 import classes from './Inprogress.module.css'
+import Link from 'next/link'
 
 export default function InProgress() {
 	return (
@@ -18,17 +19,19 @@ export default function InProgress() {
 				/>
 				<div>
 					<Title className={classes.title}>
-						Denna sida fungerar inte just nu...
+						Sidan är inte tillgänglig för tillfället..
 					</Title>
 
-					<Button
-						variant="outline"
-						color="black"
-						size="md"
-						mt="xl"
-						className={classes.control}>
-						Tillbaka till startsidan
-					</Button>
+					<Link href={'/'}>
+						<Button
+							variant="outline"
+							color="black"
+							size="md"
+							mt="xl"
+							className={classes.control}>
+							Tillbaka till startsidan
+						</Button>
+					</Link>
 				</div>
 				<Image
 					src="https://cdn.pixabay.com/photo/2017/06/16/07/26/under-construction-2408059_1280.png"
