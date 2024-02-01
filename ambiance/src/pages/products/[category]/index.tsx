@@ -23,6 +23,7 @@ import Link from 'next/link'
 import FilterDrawer from '@/components/FilterDrawer/FilterDrawer'
 import { IoFilterOutline } from 'react-icons/io5'
 import { useFilterContext } from '@/contexts/FilterContext'
+import { Console } from 'console'
 
 const CategoryPage: React.FC = () => {
 	const router = useRouter()
@@ -101,7 +102,13 @@ const CategoryPage: React.FC = () => {
 		}
 
 		fetchProductsAndSubcategories()
-	}, [category, selectedPriceRange, selectedBrands, selectedColors])
+	}, [
+		category,
+		selectedPriceRange,
+		selectedBrands,
+		selectedColors,
+		subcategories,
+	])
 
 	if (loading) {
 		return <div>Loading...</div>

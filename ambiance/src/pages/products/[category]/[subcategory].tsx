@@ -20,6 +20,7 @@ import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io'
 import { IoFilterOutline } from 'react-icons/io5'
 import FilterDrawer from '@/components/FilterDrawer/FilterDrawer'
 import { useFilterContext } from '@/contexts/FilterContext'
+import { SubcategoryModel } from '@/models/Subcategory'
 
 const SubcategoryPage: React.FC = () => {
 	const router = useRouter()
@@ -85,6 +86,7 @@ const SubcategoryPage: React.FC = () => {
 					)
 
 					setProducts(filteredProducts)
+					console.log(filteredProducts)
 				} else {
 					setError('Error fetching products')
 				}

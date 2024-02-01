@@ -1,26 +1,26 @@
 // models/Category.ts
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose'
 
 interface Category {
-  name: string;
+	name: string
 }
 
 interface CategoryModel extends Category, Document {
-  _id: string; // Ändra från mongoose.Types.ObjectId till string
+	_id: string
 }
 
-const categorySchema = new mongoose.Schema<CategoryModel>(
-  {
-    name: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-  },
-);
+const categorySchema = new mongoose.Schema<CategoryModel>({
+	name: {
+		type: String,
+		required: true,
+		unique: true,
+	},
+})
 
-const Category = mongoose.model<CategoryModel>('Category', categorySchema);
+// Kontrollera om modellen redan finns innan du skapar den
+const Category =
+	(mongoose.models.Category as mongoose.Model<CategoryModel>) ||
+	mongoose.model<CategoryModel>('Category', categorySchema)
 
-export default Category;
-
-
+export default Category
+export type { CategoryModel }

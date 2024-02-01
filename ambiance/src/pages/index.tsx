@@ -91,11 +91,13 @@ const Home: React.FC = () => {
 					<Title className={classes.title}>Toppsäljare till bästa pris!</Title>
 
 					<div className={classes.controls}>
-						<Button
-							className={cx(classes.control, classes.secondaryControl)}
-							size="md">
-							Fynda här!
-						</Button>
+						<Link href={'/bestsellers'}>
+							<Button
+								className={cx(classes.control, classes.secondaryControl)}
+								size="md">
+								Fynda här!
+							</Button>
+						</Link>
 					</div>
 				</div>
 			</div>
@@ -150,12 +152,12 @@ const Home: React.FC = () => {
 								}}>
 								<div className={classes.ImageOverlay}></div>
 								<div className={classes.TextContainer}>
-									<Link href={'/products/textil/plädar&prydnadskuddar'}>
+									<Link href={'/products/textil/plädar-&-prydnadskuddar'}>
 										<Text className={classes.CardTitle} ta="center">
 											Plädar &
 										</Text>
 										<Text className={classes.CardTitle} ta="center">
-											Filtar
+											Prydnadskuddar
 										</Text>
 									</Link>
 								</div>
