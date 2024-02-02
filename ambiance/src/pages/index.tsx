@@ -121,7 +121,7 @@ const Home: React.FC = () => {
 						</div>
 					)}
 					<SimpleGrid
-						cols={{ base: 1, sm: 2, md: 3, xl: 4 }}
+						cols={{ base: 1, sm: 2, md: 2, xl: 4 }}
 						spacing={{ base: 10, sm: 'md' }}
 						verticalSpacing={{ base: 'md', sm: 'xl' }}>
 						{randomProducts.map((product) => (
@@ -240,7 +240,7 @@ const Home: React.FC = () => {
 				</Center>
 			</Container>
 			{/* Textil produkter */}
-			<Container pt={35} className={classes.TextilSection} size="xl">
+			<Container pt={35} className={classes.TextilSection} size="xxl">
 				<Center>
 					{loading && (
 						<div>
@@ -248,7 +248,7 @@ const Home: React.FC = () => {
 						</div>
 					)}
 					<SimpleGrid
-						cols={{ base: 1, sm: 2, md: 3, xl: 4 }}
+						cols={{ base: 1, sm: 2, md: 2, xl: 4 }}
 						spacing={{ base: 10, sm: 'md', md: 'lg', lg: 'xl' }}
 						verticalSpacing={{ base: 'md', sm: 'xl' }}>
 						{textilProducts.map((product) => (

@@ -8,6 +8,7 @@ import { Container, Loader } from '@mantine/core'
 const OrderConfirmationPage: React.FC = () => {
 	const router = useRouter()
 	const [orderId, setOrderId] = useState<string | null>(null)
+	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -26,8 +27,9 @@ const OrderConfirmationPage: React.FC = () => {
 					if (response.ok) {
 						setOrderId(data.orderId)
 						const timeoutId = setTimeout(() => {
+							window.location.reload()
 							router.push('/')
-						}, 10000)
+						}, 3000)
 
 						// Stänger av timern om komponenten avmonteras eller om användaren navigerar vidare manuellt
 						return () => clearTimeout(timeoutId)
@@ -37,6 +39,8 @@ const OrderConfirmationPage: React.FC = () => {
 				}
 			} catch (error) {
 				console.error('Error fetching order details:', error)
+			} finally {
+				setLoading(false)
 			}
 		}
 
