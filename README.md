@@ -1,4 +1,4 @@
-# ecommerce-ambiance
+# Ambiance
 
 ## Getting Started
 
