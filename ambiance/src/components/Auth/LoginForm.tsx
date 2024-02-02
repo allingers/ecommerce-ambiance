@@ -19,7 +19,7 @@ import router from 'next/router'
 import { useState } from 'react'
 
 interface LoginFormProps {
-	onCloseDrawer: () => void //Callback för att stänga drawern
+	onCloseDrawer: () => void
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
@@ -57,7 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
 				const userResponse = await fetch('/api/user/get-user')
 				const userInfo = await userResponse.json()
 
-				// Spara användarinformation i localStorage
+				// Sparar användarinformation i localStorage
 				localStorage.setItem('userInfo', JSON.stringify(userInfo))
 
 				onCloseDrawer() // Stäng drawern
@@ -65,7 +65,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
 				// Inloggningen misslyckades eller result är undefined
 				console.error('Inloggning misslyckades:', result?.error)
 
-				// Avgör typen av fel och sätt lämpligt felmeddelande
+				// Avgör typen av fel och sätter felmeddelande beroende på felet
 				if (result?.error === 'Email is not registered') {
 					setErrorMessage('Ingen användare hittades med denna e-postadress.')
 				} else {
@@ -79,7 +79,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onCloseDrawer }) => {
 		}
 	}
 	const handleRegisterClick = () => {
-		// Navigera till registreringssidan när "Registrera dig här" klickas
 		router.push('/register')
 		onCloseDrawer()
 	}

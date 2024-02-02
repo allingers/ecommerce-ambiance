@@ -10,15 +10,20 @@
 	font-family:
 		Greycliff CF,
 		var(--mantine-font-family);
+}
 
-	@media (max-width: $mantine-breakpoint-sm) {
+@media (max-width: 48em) {
+	.title {
 		font-size: rem(32px);
 	}
 }
 
 .control {
 	font-family: 'poppins', sans-serif;
-	@media (max-width: $mantine-breakpoint-sm) {
+}
+
+@media (max-width: 48em) {
+	.contro {
 		width: 100%;
 	}
 }

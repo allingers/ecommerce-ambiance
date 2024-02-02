@@ -2,15 +2,16 @@
 
 .wrapper {
 	position: relative;
-	padding-top: rem(180px);
-	padding-bottom: rem(130px);
+	padding-top: 9rem;
+	padding-bottom: 8rem;
 	background-image: url(https://royaldesign.se/image/1/tradition-flowerpot-vp3-bordslampa-43?w=1920&quality=80);
 	background-size: cover;
-	background-position: center, bottom;
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		padding-top: rem(80px);
-		padding-bottom: rem(50px);
+	background-position: center;
+}
+@media (max-width: 36em) {
+	.wrapper {
+		padding-top: 6rem;
+		padding-bottom: 3rem;
 	}
 }
 
@@ -23,16 +24,16 @@
 	font-weight: 600;
 	font-size: 3.9rem;
 	letter-spacing: rem(-1px);
-	padding-left: var(--mantine-spacing-md);
-	padding-right: var(--mantine-spacing-md);
+	padding-left: 1rem;
+	padding-right: 1rem;
 	color: var(--mantine-color-white);
-	margin-bottom: var(--mantine-spacing-xs);
 	text-align: center;
 	font-family: 'Poppins', 'sans-serif';
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		font-size: rem(28px);
-		text-align: left;
+}
+@media (max-width: 36em) {
+	.title {
+		font-size: 3rem;
+		text-align: center;
 	}
 }
 
@@ -40,10 +41,11 @@
 	color: var(--mantine-color-gray-0);
 	text-align: center;
 	margin-bottom: 1rem;
-
-	@media (max-width: $mantine-breakpoint-xs) {
+}
+@media (max-width: 36em) {
+	.description {
 		font-size: var(--mantine-font-size-md);
-		text-align: left;
+		font-weight: 500;
 	}
 }
 
@@ -51,28 +53,23 @@
 	margin-top: calc(var(--mantine-spacing-xl) * 1.5);
 	display: flex;
 	justify-content: center;
-	padding-left: var(--mantine-spacing-md);
-	padding-right: var(--mantine-spacing-md);
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		flex-direction: column;
-	}
+	padding-left: 1rem;
+	padding-right: 1rem;
 }
 
 .control {
-	height: rem(42px);
-	font-size: var(--mantine-font-size-md);
+	height: 2.7rem;
+	font-size: 1rem;
 	font-family: 'poppins', sans-serif;
 	font-weight: 400;
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		&:not(:first-of-type) {
-			margin-top: var(--mantine-spacing-md);
-			margin-left: 0;
-		}
-	}
 }
 
+@media (max-width: 36em) {
+	.control {
+		margin-top: var(--mantine-spacing-md);
+		margin-left: 0;
+	}
+}
 .control:hover {
 	background: none;
 	border: 1px solid rgba(255, 255, 255, 0.45);
@@ -81,24 +78,20 @@
 .secondaryControl {
 	color: var(--mantine-color-white);
 	background-color: rgba(255, 255, 255, 0.4);
-
-	@mixin hover {
-		background-color: rgba(255, 255, 255, 0.45);
-	}
 }
 
 .TextilCategoryWrapper {
 	position: relative;
-	padding-top: rem(180px);
-	padding-bottom: rem(130px);
-	/* background-image: url(https://cdn.pixabay.com/photo/2021/12/23/03/58/da-guojing-6888603_1280.jpg); */
+	padding-top: 9rem;
+	padding-bottom: 8rem;
 	background-image: url(https://royaldesign.se/image/1/ceannis-egg-plad-130x170-cm-2?w=1920&quality=80);
 	background-size: cover;
 	background-position: center;
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		padding-top: rem(80px);
-		padding-bottom: rem(50px);
+}
+@media (max-width: 36em) {
+	.TextilCategoryWrapper {
+		padding-top: 6rem;
+		padding-bottom: 3rem;
 	}
 }
 
@@ -129,16 +122,18 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	z-index: 2; /* Placera texten överst */
-	color: #fff; /* Justera textens färg */
+	z-index: 2;
+	color: #fff;
 }
 
 .HeroCard {
 	width: 45rem;
 	height: 45rem;
-	@media (max-width: $mantine-breakpoint-xs) {
-		width: 22rem;
-		height: 20rem;
+}
+@media (max-width: 36em) {
+	.HeroCard {
+		width: 21rem;
+		height: 21rem;
 	}
 }
 
@@ -147,8 +142,8 @@
 	top: 80%;
 	left: 40%;
 	transform: translate(-50%, -50%);
-	z-index: 2; /* Placera texten överst */
-	color: #fff; /* Justera textens färg */
+	z-index: 2;
+	color: #fff;
 }
 
 .HeroCardTitle {
@@ -159,6 +154,14 @@
 	cursor: pointer;
 }
 
+@media (max-width: 36em) {
+	.HeroCardTitle {
+		font-size: 2rem;
+		text-align: left;
+		padding-bottom: 2.5rem;
+	}
+}
+
 .HeroCardTitle:hover {
 	text-decoration: underline;
 }
@@ -167,10 +170,13 @@
 	color: var(--mantine-color-gray-0);
 	text-align: left;
 	margin-bottom: 1rem;
+}
 
-	@media (max-width: $mantine-breakpoint-xs) {
+@media (max-width: 36em) {
+	.HeroDescription {
 		font-size: var(--mantine-font-size-md);
 		text-align: left;
+		margin-bottom: 0;
 	}
 }
 
@@ -181,8 +187,9 @@
 	background-image: url(https://cdn.pixabay.com/photo/2015/04/10/17/03/pots-716579_1280.jpg);
 	background-size: cover;
 	background-position: center;
-
-	@media (max-width: $mantine-breakpoint-xs) {
+}
+@media (max-width: 36em) {
+	.NewsletterWrapper {
 		padding-top: rem(80px);
 		padding-bottom: rem(50px);
 	}
@@ -199,8 +206,9 @@
 	text-wrap: wrap;
 	margin-right: 2rem;
 	font-family: 'Poppins', 'sans-serif';
-
-	@media (max-width: $mantine-breakpoint-sm) {
+}
+@media (max-width: 48em) {
+	.NewsletterText {
 		font-size: 1.8rem;
 		text-align: left;
 	}
@@ -214,17 +222,19 @@
 	padding-right: var(--mantine-spacing-md);
 	color: var(--mantine-color-white);
 	font-family: 'Poppins', 'sans-serif';
-
-	@media (max-width: $mantine-breakpoint-xs) {
+}
+@media (max-width: 36em) {
+	.NewsletterDescription {
 		font-size: 0.8rem;
 		text-align: left;
 	}
 }
+
 .NewsletterTextContainer {
 	display: flex;
 	flex-direction: column;
 	padding-left: 2.3rem;
-	color: #fff; /* Justera textens färg */
+	color: #fff;
 }
 
 .NewletterInputContainer {
@@ -250,8 +260,9 @@
 	border: none;
 	background-color: #e6e3e3;
 	width: 25rem;
-
-	@media (max-width: $mantine-breakpoint-sm) {
+}
+@media (max-width: 48em) {
+	.input {
 		width: 15rem;
 	}
 }

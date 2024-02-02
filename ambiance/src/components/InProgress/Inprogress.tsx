@@ -1,11 +1,6 @@
-import {
-	Image,
-	Container,
-	Title,
-	Text,
-	Button,
-	SimpleGrid,
-} from '@mantine/core'
+//InProgress.tsx
+// Komponent renderas om sidan inte är tillgänglig
+import { Image, Container, Title, Button, SimpleGrid } from '@mantine/core'
 import classes from './Inprogress.module.css'
 import Link from 'next/link'
 

@@ -1,4 +1,5 @@
 // UserDetailsForm.tsx
+// Steg 2 i Stepper-komponenten - Formulär för användarens uppgifter
 import React from 'react'
 import { Container, SimpleGrid, TextInput } from '@mantine/core'
 import classes from './Checkout.module.css'

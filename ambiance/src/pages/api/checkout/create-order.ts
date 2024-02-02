@@ -1,7 +1,7 @@
-// pages/api/checkout.ts
-
+// pages/api/checkout/create-order.ts
+// Endpoint för att skapa ny order
 import { NextApiRequest, NextApiResponse } from 'next'
-import Order from '../../../models/Order' // Uppdatera sökvägen beroende på din filstruktur
+import Order from '../../../models/Order'
 import dbConnect from '../../../lib/dbConnect'
 export default async function handler(
 	req: NextApiRequest,
@@ -15,6 +15,7 @@ export default async function handler(
 				products: req.body.products,
 				user: req.body.user,
 				totalAmount: req.body.totalAmount,
+				isGuestOrder: req.body.isGuestOrder || false,
 			})
 
 			// Sparar order i databasen

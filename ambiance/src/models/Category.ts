@@ -17,7 +17,6 @@ const categorySchema = new mongoose.Schema<CategoryModel>({
 	},
 })
 
-// Kontrollera om modellen redan finns innan du skapar den
 const Category =
 	(mongoose.models.Category as mongoose.Model<CategoryModel>) ||
 	mongoose.model<CategoryModel>('Category', categorySchema)

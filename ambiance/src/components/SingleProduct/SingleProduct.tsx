@@ -1,4 +1,5 @@
-// components/ProductDetail.tsx
+// SingleProduct.tsx
+// Komponent för att visa enskild produkt inklusive relaterade och rekomenderade produkter.
 import React, { useEffect, useRef } from 'react'
 import { ProductModel } from '@/models/Product'
 import { Carousel } from '@mantine/carousel'
@@ -84,7 +85,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 	}
 	return (
 		<>
-			<Container ref={topRef}>
+			<Container ref={topRef} size="xl">
 				<Center>
 					<SimpleGrid
 						className={classes.wrapper}
@@ -92,8 +93,8 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 						spacing={{ base: 10, sm: 'xl' }}>
 						<div className={classes.CarouselContainer}>
 							<Carousel
-								height={400}
-								w={400}
+								height={500}
+								w="auto"
 								loop
 								withIndicators
 								controlSize={30}
@@ -103,7 +104,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 								{product.imageUrls.map((url, index) => (
 									<Carousel.Slide key={index}>
 										<Image
-											h={400}
+											h={500}
 											fit="cover"
 											src={url}
 											alt={`Product Image ${index + 1}`}
@@ -130,7 +131,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 									className={classes.CartButton}
 									onClick={() => handleAddToCart(product)}
 									variant="filled"
-									size="lg">
+									size="md">
 									Lägg i varukorgen
 								</Button>
 								<UnstyledButton
@@ -181,7 +182,10 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 											{relatedProduct.brand}
 										</Text>
 										<Link href={`/product/${relatedProduct._id}`}>
-											<Text className={classes.ProductTitle} mt="xs" mb="xs">
+											<Text
+												className={classes.relatedProductName}
+												mt="xs"
+												mb="xs">
 												{relatedProduct.name}
 											</Text>
 										</Link>

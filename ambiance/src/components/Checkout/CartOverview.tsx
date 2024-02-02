@@ -1,4 +1,5 @@
 // CartOverview.tsx
+// Steg 1 i Stepper-komponenten - varukorgsöversikt
 import React from 'react'
 import { Container, SimpleGrid, Image, Text } from '@mantine/core'
 import classes from './Checkout.module.css'

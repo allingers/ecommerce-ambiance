@@ -23,13 +23,15 @@
 	color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
 	font-size: var(--mantine-font-size-sm);
 	font-weight: 500;
+}
 
-	@media (max-width: $mantine-breakpoint-xs) {
+@media (max-width: 36em) {
+	.link,
+	.drawerLinkMain {
 		display: flex;
 		flex-direction: column;
 	}
 }
-
 .link:hover {
 	background-color: light-dark(
 		var(--mantine-color-gray-0),

@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+//OrderInformation.tsx
+// Steg 3 i Stepper-komponenten - Beställningsöversikt
+import React from 'react'
 import { Container, SimpleGrid, Text, Box, Checkbox } from '@mantine/core'
-import classes from './Checkout.module.css'
 import { Product, UserData } from './CheckoutStepper'
+import { useSession } from 'next-auth/react'
+import classes from './Checkout.module.css'
 
 interface OrderInformationProps {
 	products: Product[]
@@ -16,6 +19,8 @@ const OrderInformation: React.FC<OrderInformationProps> = ({
 	saveUserInfo,
 	setSaveUserInfo,
 }) => {
+	const { data: session } = useSession()
+
 	return (
 		<Container size="lg" pt={20}>
 			<SimpleGrid
@@ -68,14 +73,16 @@ const OrderInformation: React.FC<OrderInformationProps> = ({
 							{userData.address.city}
 						</Text>
 					</Box>
-					{/* Checkbox för att spara användaruppgifter */}
 				</div>
-				<Checkbox
-					defaultChecked={saveUserInfo}
-					label="Spara mina uppgifter inför kommande köp"
-					color="lime"
-					onChange={() => setSaveUserInfo(!saveUserInfo)}
-				/>
+				{/* Inloggad användare kan spara information inför kommande köp */}
+				{session && (
+					<Checkbox
+						defaultChecked={saveUserInfo}
+						label="Spara mina uppgifter inför kommande köp"
+						color="lime"
+						onChange={() => setSaveUserInfo(!saveUserInfo)}
+					/>
+				)}
 			</SimpleGrid>
 		</Container>
 	)

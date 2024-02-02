@@ -1,9 +1,10 @@
 // pages/product/[productId].tsx
+// Sida som visar enskild produkt
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { ProductModel } from '@/models/Product'
 import SingleProduct from '@/components/SingleProduct/SingleProduct'
-import { Container, Loader } from '@mantine/core'
+import { Loader } from '@mantine/core'
 
 const SingleProductPage: React.FC = () => {
 	const router = useRouter()

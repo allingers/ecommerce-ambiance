@@ -1,4 +1,4 @@
-// ProductCard.tsx
+// ProductCard.tsx (Produktkort)
 import React, { useState } from 'react'
 import { Card, Text, Image, Group } from '@mantine/core'
 import classes from './ProductCard.module.css'
@@ -27,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	}
 
 	const handleAddToCart = () => {
-		// Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
+		// Anropar addToCart-funktionen från useCart/CartContext
 		addToCart(product._id, 1, product.price, product.name, product.imageUrls[0])
 
 		console.log(`Produkt med id ${product._id} lades till i varukorgen.`)

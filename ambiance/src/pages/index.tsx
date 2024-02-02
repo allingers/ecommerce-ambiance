@@ -12,6 +12,7 @@ import {
 	Input,
 	Modal,
 	Loader,
+	useMantineTheme,
 } from '@mantine/core'
 import { ChangeEvent, useEffect, useState } from 'react'
 import ProductCard from '@/components/ProductCard/ProductCard'
@@ -20,6 +21,7 @@ import Link from 'next/link'
 import { useDisclosure } from '@mantine/hooks'
 
 const Home: React.FC = () => {
+	const theme = useMantineTheme()
 	const [randomProducts, setRandomProducts] = useState<ProductModel[]>([])
 	const [textilProducts, setTextilProducts] = useState<ProductModel[]>([])
 	const [email, setEmail] = useState('')
@@ -27,6 +29,7 @@ const Home: React.FC = () => {
 	const [opened, { open, close }] = useDisclosure(false)
 	const [loading, setLoading] = useState(false)
 
+	// Hanterar förändringar/uppdaterar state när förändring av inputfältets värde sker.
 	const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = event.target.value
 		setEmail(inputValue)
@@ -43,7 +46,7 @@ const Home: React.FC = () => {
 			setError('Det måste vara en giltig e-postadress')
 		} else {
 			setError('')
-			open() // Öppna modalen när e-postadressen är giltig
+			open() // Öppnar modal när e-postadressen är giltig
 			setEmail('') //Rensar inputfältet
 		}
 	}
@@ -53,7 +56,7 @@ const Home: React.FC = () => {
 		const fetchRandomProducts = async () => {
 			try {
 				setLoading(true)
-				const response = await fetch('/api/products/randomProducts')
+				const response = await fetch('/api/products/random')
 				const data = await response.json()
 				setRandomProducts(data)
 			} catch (error) {
@@ -109,7 +112,7 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			{/* Popular products section */}
+			{/* "Populära produkter"- sektion  */}
 			<Container pt={35} pb={35} className={classes.PopularSection} size="xxl">
 				<Center>
 					{loading && (
@@ -130,7 +133,7 @@ const Home: React.FC = () => {
 				</Center>
 			</Container>
 
-			{/* Textil-Category hero */}
+			{/* Header textil-kategori-sektion */}
 			<div className={classes.TextilCategoryWrapper}>
 				<Overlay color="#000" opacity={0.25} zIndex={1} />
 				<div className={classes.inner}>
@@ -148,7 +151,7 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			{/* Textil-Category Cards*/}
+			{/* Textil-kategori kategorikort */}
 			<Container pt={35} className={classes.CategoryCardSection} size="xxl">
 				<Center>
 					<SimpleGrid
@@ -236,8 +239,8 @@ const Home: React.FC = () => {
 					</SimpleGrid>
 				</Center>
 			</Container>
-			{/* Textil products-section */}
-			<Container pt={35} className={classes.TextilSection} size="xxl">
+			{/* Textil produkter */}
+			<Container pt={35} className={classes.TextilSection} size="xl">
 				<Center>
 					{loading && (
 						<div>
@@ -256,8 +259,6 @@ const Home: React.FC = () => {
 					</SimpleGrid>
 				</Center>
 			</Container>
-
-			{/* Double hero-section */}
 			<Container
 				pt={35}
 				pb={40}
@@ -316,7 +317,7 @@ const Home: React.FC = () => {
 					</SimpleGrid>
 				</Center>
 			</Container>
-			{/* Newsletter section */}
+			{/* nyhetsbrev-sektion*/}
 			<div className={classes.NewsletterWrapper}>
 				<Overlay color="#000" opacity={0.95} zIndex={1} />
 				<div className={classes.inner}>

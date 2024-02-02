@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+//CartDrawer.tsx (Varukorg)
+import React, { useEffect, useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import {
 	Drawer,
@@ -48,7 +49,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 	}, [cartItems])
 
 	const handleCheckout = () => {
-		// Navigera till checkout-sidan när användaren klickar på "Gå till kassan"
 		router.push('/checkout')
 		onClose()
 	}
@@ -70,7 +70,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 						const product = products.find((p) => p._id === item.productId)
 
 						if (!product) {
-							return null // Skip rendering if product is not found
+							return null
 						}
 
 						const handleQuantityChange = (value: string | number) => {
@@ -78,10 +78,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 								typeof value === 'string' ? parseInt(value, 10) : value
 
 							if (quantity < 1) {
-								// Anropa removeCartItem om antalet är mindre än 1
+								// Tar bort produkten från cart om antalet är mindre än 1
 								removeCartItem(item.productId)
 							} else {
-								// Annars uppdatera antalet som vanligt
+								// Annars uppdateras antalet som vanligt
 								updateCartItemQuantity(item.productId, quantity)
 							}
 						}

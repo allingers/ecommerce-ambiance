@@ -1,4 +1,5 @@
 // pages/[category]/[subcategory].tsx
+
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import ProductList from '../../../components/ProductList/ProductList'
@@ -143,40 +144,41 @@ const SubcategoryPage: React.FC = () => {
 
 	return (
 		<>
-			<Box
-				className={classes.wrapper}
-				style={{ backgroundImage: getBackgroundImage() }}>
-				<Overlay color="#000" opacity={0.85} zIndex={1} />
-				<div className={classes.inner}>
-					{loading && (
-						<div>
-							<Loader color="gray" type="dots" />
-						</div>
-					)}
-					<Title tt="capitalize" className={classes.title}>
-						{formatSubcategory(subcategory)}
-					</Title>
-					<Container size="lg">
-						<Text className={classes.text}>
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis
-							accusantium nisi mollitia beatae, quidem explicabo.
-						</Text>
-					</Container>
-					<div className={classes.innerButtonContainer}>
-						<Link href={`/products/${category}`}>
-							<Button
-								tt="capitalize"
-								className={classes.backButton}
-								variant="filled"
-								size="md"
-								radius="xs">
-								<IoIosArrowBack className={classes.ArrowIcon} />
-								Tillbaka till {formatSubcategory(category)}
-							</Button>
-						</Link>
-					</div>
+			{loading ? (
+				<div>
+					<Loader color="gray" type="dots" />
 				</div>
-			</Box>
+			) : (
+				<Box
+					className={classes.wrapper}
+					style={{ backgroundImage: getBackgroundImage() }}>
+					<Overlay color="#000" opacity={0.85} zIndex={1} />
+					<div className={classes.inner}>
+						<Title tt="capitalize" className={classes.title}>
+							{formatSubcategory(subcategory)}
+						</Title>
+						<Container size="lg">
+							<Text className={classes.text}>
+								Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+								Debitis accusantium nisi mollitia beatae, quidem explicabo.
+							</Text>
+						</Container>
+						<div className={classes.innerButtonContainer}>
+							<Link href={`/products/${category}`}>
+								<Button
+									tt="capitalize"
+									className={classes.backButton}
+									variant="filled"
+									size="md"
+									radius="xs">
+									<IoIosArrowBack className={classes.ArrowIcon} />
+									Tillbaka till {formatSubcategory(category)}
+								</Button>
+							</Link>
+						</div>
+					</div>
+				</Box>
+			)}
 			<Container size="xl" pt={35} pb={35}>
 				<Group className={classes.group}>
 					<UnstyledButton
@@ -217,7 +219,6 @@ const SubcategoryPage: React.FC = () => {
 			<div>
 				{loading ? (
 					<div>
-						{' '}
 						<Loader color="gray" type="dots" />
 					</div>
 				) : (

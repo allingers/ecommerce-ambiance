@@ -1,8 +1,3 @@
-/* .cartItemContainer {
-	align-items: center;
-	padding-top: 1.5rem;
-} */
-
 .cartItem {
 	display: flex;
 	flex-direction: row;
@@ -10,8 +5,9 @@
 	justify-content: space-between;
 	gap: 3rem;
 	margin-top: 1.5rem;
-
-	@media (max-width: $mantine-breakpoint-sm) {
+}
+@media (max-width: 48em) {
+	.cartItem {
 		gap: 1.2rem;
 		margin-top: 1rem;
 		justify-content: flex-start;
@@ -50,8 +46,9 @@
 	font-size: 1.1rem;
 	font-weight: 400;
 	font-family: 'Poppins', sans-serif;
-
-	@media (max-width: $mantine-breakpoint-md) {
+}
+@media (max-width: 62em) {
+	.name {
 		font-size: 0.9rem;
 		white-space: nowrap;
 		overflow: hidden;
@@ -59,7 +56,13 @@
 		max-width: 200px;
 	}
 
-	@media (max-width: $mantine-breakpoint-xs) {
+	.price {
+		font-size: 0.9rem;
+	}
+}
+
+@media (max-width: 36em) {
+	.name {
 		font-size: 0.9rem;
 		white-space: nowrap;
 		overflow: hidden;
@@ -72,10 +75,6 @@
 	font-weight: 500;
 	font-size: 1.1rem;
 	font-family: 'Poppins', sans-serif;
-
-	@media (max-width: $mantine-breakpoint-md) {
-		font-size: 0.9rem;
-	}
 }
 
 .UserInfoCol,

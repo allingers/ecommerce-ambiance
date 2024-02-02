@@ -1,3 +1,4 @@
+// Header.tsx
 import {
 	Menu,
 	Group,
@@ -31,59 +32,60 @@ import { useCart } from '@/contexts/CartContext'
 import { GoHeart } from 'react-icons/go'
 import Link from 'next/link'
 import router from 'next/router'
+import { links } from './MenuLinks'
 
-const links = [
-	{
-		link: '/products/dekoration',
-		label: 'Dekoration',
-		links: [
-			{ link: '/products/dekoration/posters', label: 'Posters' },
-			{ link: '/products/dekoration/skulpturer', label: 'Skulpturer' },
-			{ link: '/products/dekoration/vaser', label: 'Vaser' },
-			{ link: '/products/dekoration/krukor', label: 'Krukor' },
-			{
-				link: '/products/dekoration/dekorativa-accessoarer',
-				label: 'Dekorativa Accessoarer',
-			},
-		],
-	},
-	{
-		link: '/products/ljus-&-ljuslyktor',
-		label: 'Ljus & Ljuslyktor',
-		links: [
-			{
-				link: '/products/ljus-&-ljuslyktor/ljusstakar',
-				label: 'Ljusstakar',
-			},
-			{ link: '/products/ljus-&-ljuslyktor/ljuslyktor', label: 'Ljuslyktor' },
-			{ link: '/products/ljus-&-ljuslyktor/ljus', label: 'Ljus' },
-			{ link: '/products/ljus-&-ljuslyktor/doftljus', label: 'Doftljus' },
-		],
-	},
-	{
-		link: '/products/belysning',
-		label: 'Belysning',
-		links: [
-			{ link: '/products/belysning/taklampor', label: 'Taklampor' },
-			{ link: '/products/belysning/bordslampor', label: 'Bordslampor' },
-			{ link: '/products/belysning/vägglampor', label: 'Vägglampor' },
-			{ link: '/products/belysning/golvlampor', label: 'Golvlampor' },
-		],
-	},
-	{
-		link: '/products/textil',
-		label: 'Textil',
-		links: [
-			{
-				link: '/products/textil/plädar-&-prydnadskuddar',
-				label: 'Plädar & Prydnaskuddar',
-			},
-			{ link: '/products/textil/mattor', label: 'Mattor' },
-			{ link: '/products/textil/gardiner', label: 'Gardiner' },
-			{ link: '/products/textil/kökstextil', label: 'Kökstextil' },
-		],
-	},
-]
+// const links = [
+// 	{
+// 		link: '/products/dekoration',
+// 		label: 'Dekoration',
+// 		links: [
+// 			{ link: '/products/dekoration/posters', label: 'Posters' },
+// 			{ link: '/products/dekoration/skulpturer', label: 'Skulpturer' },
+// 			{ link: '/products/dekoration/vaser', label: 'Vaser' },
+// 			{ link: '/products/dekoration/krukor', label: 'Krukor' },
+// 			{
+// 				link: '/products/dekoration/dekorativa-accessoarer',
+// 				label: 'Dekorativa Accessoarer',
+// 			},
+// 		],
+// 	},
+// 	{
+// 		link: '/products/ljus-&-ljuslyktor',
+// 		label: 'Ljus & Ljuslyktor',
+// 		links: [
+// 			{
+// 				link: '/products/ljus-&-ljuslyktor/ljusstakar',
+// 				label: 'Ljusstakar',
+// 			},
+// 			{ link: '/products/ljus-&-ljuslyktor/ljuslyktor', label: 'Ljuslyktor' },
+// 			{ link: '/products/ljus-&-ljuslyktor/ljus', label: 'Ljus' },
+// 			{ link: '/products/ljus-&-ljuslyktor/doftljus', label: 'Doftljus' },
+// 		],
+// 	},
+// 	{
+// 		link: '/products/belysning',
+// 		label: 'Belysning',
+// 		links: [
+// 			{ link: '/products/belysning/taklampor', label: 'Taklampor' },
+// 			{ link: '/products/belysning/bordslampor', label: 'Bordslampor' },
+// 			{ link: '/products/belysning/vägglampor', label: 'Vägglampor' },
+// 			{ link: '/products/belysning/golvlampor', label: 'Golvlampor' },
+// 		],
+// 	},
+// 	{
+// 		link: '/products/textil',
+// 		label: 'Textil',
+// 		links: [
+// 			{
+// 				link: '/products/textil/plädar-&-prydnadskuddar',
+// 				label: 'Plädar & Prydnaskuddar',
+// 			},
+// 			{ link: '/products/textil/mattor', label: 'Mattor' },
+// 			{ link: '/products/textil/gardiner', label: 'Gardiner' },
+// 			{ link: '/products/textil/kökstextil', label: 'Kökstextil' },
+// 		],
+// 	},
+// ]
 export default function Header() {
 	const theme = useMantineTheme()
 	const [userMenuOpened, setUserMenuOpened] = useState(false)
@@ -101,9 +103,9 @@ export default function Header() {
 	}
 
 	const handleLogout = async () => {
-		localStorage.removeItem('userInfo')
+		localStorage.removeItem('userInfo') //Rensar användarens information från localStorage
 		await signOut() // Anropa signOut för att logga ut användaren
-		setUserMenuOpened(false) // Stäng användarmenyn efter utloggning
+		setUserMenuOpened(false) // Stänger användarmenyn efter utloggning
 		router.push('/')
 	}
 
@@ -167,9 +169,7 @@ export default function Header() {
 			<div key={item.link}>
 				<Link
 					onClick={() => {
-						// Stäng drawern när du klickar på en länk
 						closemenuDrawer()
-						// Du kan också navigera till den nya sidan här
 						router.push(item.link)
 					}}
 					href={item.link}
@@ -223,7 +223,7 @@ export default function Header() {
 							withinPortal>
 							<Group className={classes.rightSection}>
 								{session ? (
-									// Om session finns, visa användarens namn och dropdown-menyn
+									// Om session finns, visa "checkad användar-ikon" (användarmeny tillgänglig)
 									<Menu.Target>
 										<UnstyledButton
 											className={[
@@ -238,7 +238,7 @@ export default function Header() {
 										</UnstyledButton>
 									</Menu.Target>
 								) : (
-									// Om ingen session finns, visa "Logga in"-knappen
+									// Om ingen session finns, "användarikon" (Drawer för inloggningformulär tillgänglig)
 									<UnstyledButton
 										onClick={handleLoginClick}
 										className={classes.LoginButton}>
@@ -323,7 +323,6 @@ export default function Header() {
 							onClose={() => setIsCartDrawerOpen(false)}
 							products={[]}
 						/>
-						{/* Burger - meny för mindre skärmar */}
 						<Burger
 							opened={menudrawerOpened}
 							onClick={toggleDrawer}

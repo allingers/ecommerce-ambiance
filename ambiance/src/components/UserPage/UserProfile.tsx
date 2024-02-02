@@ -1,7 +1,6 @@
 // UserProfile.tsx
 import { Button, Paper, TextInput, Image } from '@mantine/core'
 import React, { useState, ChangeEvent, useEffect } from 'react'
-import { UserModel } from '@/models/User'
 import classes from './UserProfile.module.css'
 
 interface UserProfileProps {
@@ -10,7 +9,7 @@ interface UserProfileProps {
 		name: string
 		email: string
 		hashedPassword: string
-		favorites?: string[] // favorites kan vara undefined
+		favorites?: string[]
 	}
 }
 
@@ -44,8 +43,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
 
 	const handleSaveChanges = async () => {
 		try {
-			// Skicka förfrågan till backend för att uppdatera användaruppgifter
-			const updatedUserData = await fetch('/api/updateUser', {
+			// Skicka förfrågan för att uppdatera användaruppgifter
+			const updatedUserData = await fetch('/api/user/update-user-profile', {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -57,7 +56,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
 
 			if (!updatedUserData.ok) {
 				console.error('Fel vid uppdatering av användaruppgifter')
-				// Visa felmeddelande för användaren
+
 				return
 			}
 
@@ -73,7 +72,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
 
 				if (!uploadedImage.ok) {
 					console.error('Fel vid uppladdning av profilbild')
-					// Visa felmeddelande för användaren
 					return
 				}
 			}
@@ -82,7 +80,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
 			setEditMode(false)
 		} catch (error) {
 			console.error('Ett oväntat fel inträffade', error)
-			// Visa ett generellt felmeddelande för användaren
 		}
 	}
 
@@ -154,7 +151,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
 				disabled={!editMode}
 			/>
 
-			{/* Lägg till andra inputfält för användaruppgifter här */}
 			{editMode ? (
 				<Button className={classes.SaveButton} onClick={handleSaveChanges}>
 					Spara ändringar

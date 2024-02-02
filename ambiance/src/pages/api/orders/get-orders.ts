@@ -1,6 +1,6 @@
-// pages/api/orders.ts
+// pages/api/orders/get-orders.ts
 import { NextApiRequest, NextApiResponse } from 'next'
-import Order from '../../../models/Order' // Uppdatera sökvägen beroende på din filstruktur
+import Order from '../../../models/Order'
 
 export default async function handler(
 	req: NextApiRequest,
@@ -10,7 +10,7 @@ export default async function handler(
 		try {
 			const userEmail = req.query.userEmail as string // Hämta användarens e-postadress från förfrågan
 
-			// Hämta ordrar kopplade till användarens e-postadress
+			// Hämta alla ordrar kopplade till användarens e-postadress
 			const orders = await Order.find({ user: userEmail })
 
 			res.status(200).json({ success: true, orders })

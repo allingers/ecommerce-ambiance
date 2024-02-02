@@ -1,4 +1,5 @@
-// OrderHistoryComponent.tsx
+// OrderHistory.tsx
+// Komponent som för att visa användarens orderhistorik.
 import { OrderModel } from '@/models/Order'
 import {
 	Box,

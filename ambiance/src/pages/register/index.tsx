@@ -1,4 +1,5 @@
 // pages/register/index.ts
+// Sida för registererings-formulär
 import React, { useState } from 'react'
 import RegisterForm, {
 	RegistrationFormInput,
@@ -13,7 +14,7 @@ const RegisterPage: React.FC = () => {
 
 	const handleRegisterSubmit = async (data: RegistrationFormInput) => {
 		try {
-			// Validering av formulärdata innan du skickar till servern
+			// Validering av formulärdata
 			if (!data.name || !data.email || !data.password) {
 				console.error('Alla fält måste fyllas i.')
 				return
@@ -32,7 +33,7 @@ const RegisterPage: React.FC = () => {
 				const responseData = await response.json()
 				console.log('Registration successful:', responseData)
 
-				// Logga in användaren efter registreringen
+				// Loggar in användaren efter registreringen
 				const signInResponse = await signIn('credentials', {
 					redirect: false,
 					email: data.email, // Använd registrerade e-postadressen
@@ -40,21 +41,16 @@ const RegisterPage: React.FC = () => {
 				})
 
 				if (signInResponse?.error) {
-					// Inloggningen efter registreringen misslyckades, hantera fel här
 					console.error(
 						'Inloggning efter registrering misslyckades:',
 						signInResponse.error,
 					)
 				} else {
-					// Användaren är nu inloggad
-					console.log(
-						'Användaren är inloggad efter registrering:',
-						signInResponse,
-					)
-					router.push('/')
+					// Inloggning efter registrering lyckad
+					// Skickar användaren till profilsidan
+					router.push('/mina-sidor/profil')
 				}
 			} else {
-				// Hantera fel vid registreringen
 				const errorData = await response.json()
 				console.error('Registration failed:', errorData)
 			}
@@ -70,9 +66,7 @@ const RegisterPage: React.FC = () => {
 			<RegisterForm
 				onSubmit={handleRegisterSubmit}
 				isLoading={isLoading}
-				onOpenLoginDrawer={() => {
-					/* Öppna inloggningsdrawern */
-				}}
+				onOpenLoginDrawer={() => {}}
 			/>
 		</Container>
 	)

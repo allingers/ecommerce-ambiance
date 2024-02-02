@@ -7,6 +7,7 @@ interface Order {
 	totalAmount: number
 	createdAt: Date
 	status: string
+	isGuestOrder: boolean
 }
 
 interface OrderModel extends Order, Document {}
@@ -21,6 +22,7 @@ const OrderSchema = new mongoose.Schema({
 	],
 	user: { type: String, required: true },
 	totalAmount: { type: Number, required: true },
+	isGuestOrder: { type: Boolean, default: false },
 	createdAt: { type: Date, default: Date.now },
 	status: { type: String, default: 'Bekräftad' },
 })

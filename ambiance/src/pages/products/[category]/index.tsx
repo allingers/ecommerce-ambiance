@@ -1,4 +1,5 @@
 // pages/products/[category]/index.tsx
+// Dynamisk route som visar produkter efter huvudkategori
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import ProductList from '../../../components/ProductList/ProductList'
@@ -167,35 +168,41 @@ const CategoryPage: React.FC = () => {
 
 	return (
 		<>
-			<Box
-				className={classes.wrapper}
-				style={{ backgroundImage: getBackgroundImage() }}>
-				<Overlay color="#000" opacity={0.95} zIndex={1} />
-				<div className={classes.inner}>
-					<Title tt="capitalize" className={classes.title}>
-						{formatcategory(category)}
-					</Title>
-					<Container size="lg">
-						<Text className={classes.text}>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							Perspiciatis ipsam deleniti molestias nesciunt reiciendis delectus
-							impedit placeat eveniet esse fugiat.
-						</Text>
-					</Container>
-					<div className={classes.innerButtonContainer}>
-						<Link href={`/`}>
-							<Button
-								className={classes.backButton}
-								variant="filled"
-								size="md"
-								radius="xs">
-								<IoIosArrowBack className={classes.ArrowIcon} />
-								Tillbaka till startsidan
-							</Button>
-						</Link>
-					</div>
+			{loading ? (
+				<div>
+					<Loader color="gray" type="dots" />
 				</div>
-			</Box>
+			) : (
+				<Box
+					className={classes.wrapper}
+					style={{ backgroundImage: getBackgroundImage() }}>
+					<Overlay color="#000" opacity={0.95} zIndex={1} />
+					<div className={classes.inner}>
+						<Title tt="capitalize" className={classes.title}>
+							{formatcategory(category)}
+						</Title>
+						<Container size="lg">
+							<Text className={classes.text}>
+								Lorem ipsum dolor sit amet consectetur adipisicing elit.
+								Perspiciatis ipsam deleniti molestias nesciunt reiciendis
+								delectus impedit placeat eveniet esse fugiat.
+							</Text>
+						</Container>
+						<div className={classes.innerButtonContainer}>
+							<Link href={`/`}>
+								<Button
+									className={classes.backButton}
+									variant="filled"
+									size="md"
+									radius="xs">
+									<IoIosArrowBack className={classes.ArrowIcon} />
+									Tillbaka till startsidan
+								</Button>
+							</Link>
+						</div>
+					</div>
+				</Box>
+			)}
 			<Box className={classes.ButtonBox}>
 				<Flex
 					mih={60}

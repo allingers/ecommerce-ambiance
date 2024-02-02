@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema({
 			city: String,
 			postalCode: String,
 		},
-		default: null, // Sätt default till null eller ett annat värde om det är passande
+		default: null,
 	},
 })
 

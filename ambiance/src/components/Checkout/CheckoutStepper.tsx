@@ -8,17 +8,13 @@ import {
 	Button,
 	Loader,
 } from '@mantine/core'
-import classes from './Checkout.module.css'
 import router from 'next/router'
 import { useCart } from '@/contexts/CartContext'
 import UserForm from './UserForm'
 import CartOverview from './CartOverview'
 import OrderInformation from './OrderInformation'
-
-interface CheckoutStepperProps {
-	isOpen: boolean
-	onClose: () => void
-}
+import { useSession } from 'next-auth/react'
+import classes from './Checkout.module.css'
 
 export interface Product {
 	productId: string
@@ -42,14 +38,12 @@ export interface UserData {
 	address: Address
 }
 
-const CheckoutStepper: React.FC<CheckoutStepperProps> = ({
-	isOpen,
-	onClose,
-}) => {
+const CheckoutStepper: React.FC = () => {
 	const { calculateCartTotal } = useCart()
+	const { data: session } = useSession()
 	const [activeStep, setActiveStep] = useState(0)
 	const [cartProducts, setCartProducts] = useState<Product[]>([])
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(false)
 	const [saveUserInfo, setSaveUserInfo] = useState(true)
 	const [userData, setUserData] = useState<UserData>({
 		name: '',
@@ -69,12 +63,11 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({
 
 	//Hantering av stegen
 	const nextStep = () => {
-		// Om det är steg 2, uppdatera userData och gå vidare till nästa steg
+		// Om det är steg 2, uppdatera userData-statet och gå vidare till nästa steg
 		if (activeStep === 2) {
 			setUserData((prevData) => ({
 				...prevData,
 			}))
-			setActiveStep((current) => (current < 3 ? current + 1 : current))
 		} else if (activeStep < 2) {
 			setActiveStep((current) => current + 1)
 		}
@@ -91,7 +84,8 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({
 			: []
 		setCartProducts(cartProductsFromStorage)
 
-		//Hämta information om användaren som finns sparad i localStorage
+		// Hämtar userInfo från localStorage och sötter userData-state
+		// Beroende på vilken information som finns sätts inputfältens värden automatiskt i userForm.
 		const fetchSession = async () => {
 			const storedUserInfo = localStorage.getItem('userInfo')
 
@@ -114,14 +108,14 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({
 		fetchSession()
 	}, [])
 
-	// Funktionen för att uppdatera användarinformation
+	// Uppdaterar användarens information, både useInfo i localStorage och user-objektet i databasen
 	const updateUserInfo = async (newUserData: UserData) => {
 		try {
 			// Uppdatera userInfo i localStorage
 			localStorage.setItem('userInfo', JSON.stringify(newUserData))
 
 			// Anropa API för att uppdatera användarens information i databasen
-			const response = await fetch('/api/user/update-user-adress', {
+			const response = await fetch('/api/user/update-user-address', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -141,11 +135,14 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({
 
 	const handleOrder = async () => {
 		try {
+			setLoading(true)
 			const userEmail = userData.email
 
-			if (saveUserInfo) {
+			// Kallar endast på funktionen som uppdaterar användarinformationen om användaren är inloggad.
+			if (saveUserInfo && session) {
 				await updateUserInfo(userData)
 			}
+
 			const response = await fetch('/api/checkout/create-order', {
 				method: 'POST',
 				headers: {
@@ -159,6 +156,7 @@ const CheckoutStepper: React.FC<CheckoutStepperProps> = ({
 					})),
 					user: userEmail,
 					totalAmount: calculateCartTotal(),
+					isGuestOrder: !session,
 				}),
 			})
 

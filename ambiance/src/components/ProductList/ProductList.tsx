@@ -1,4 +1,5 @@
 // ProductList.tsx
+// Listar produktkorten
 import React from 'react'
 import ProductCard from '../ProductCard/ProductCard'
 import { Center, Container, SimpleGrid } from '@mantine/core'
