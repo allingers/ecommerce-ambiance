@@ -6,9 +6,13 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: 1.5rem;
+	padding-top: 1.3rem;
 }
-
+.cartItemContainer {
+	display: flex;
+	flex-direction: column;
+}
 .image {
 	padding-left: 1rem;
 }
