@@ -1,20 +1,20 @@
+//pages/api/user/update-user-profile
 import { NextApiRequest, NextApiResponse } from 'next'
-import connectDB from '../../lib/dbConnect'
-import User, { UserModel } from '../../models/User'
+import connectDB from '../../../lib/dbConnect'
+import User from '@/models/User'
 
 connectDB()
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'PUT') {
 		try {
-			// Här görs anslutningen till databasen
 			await connectDB()
 
 			const { name, email, avatar } = req.body
 
 			console.log('Received request with data:', req.body)
 
-			// Hitta användaren med det angivna e-postadressen och uppdatera dess namn, e-post och avatar
+			// Hitta användaren med det angivna e-postadressen och uppdatera dess namn, e-post och avatar/bild
 			const updatedUser = await User.findOneAndUpdate(
 				{ email: email },
 				{ $set: { name, email, avatar } },

@@ -1,4 +1,5 @@
-// components/ProductDetail.tsx
+// SingleProduct.tsx
+// Komponent för att visa enskild produkt inklusive relaterade och rekomenderade produkter.
 import React, { useEffect, useRef } from 'react'
 import { ProductModel } from '@/models/Product'
 import { Carousel } from '@mantine/carousel'
@@ -40,18 +41,23 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 	const topRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		// Scrolla till toppen när komponenten monteras
 		if (topRef.current) {
 			topRef.current.scrollIntoView({ behavior: 'smooth' })
 		}
-	}, []) // Den här effekten körs bara vid mount
+	}, [])
 
 	const handleAddToCart = (productToAdd: ProductModel) => {
-		// Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
-		addToCart(productToAdd._id, 1, productToAdd.price) // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
-		console.log(`Produkt med id ${productToAdd._id} lades till i varukorgen.`)
+		// Anropar addToCart-funktionen från useCart/CartContext
+		addToCart(
+			productToAdd._id,
+			1,
+			productToAdd.price,
+			productToAdd.name,
+			productToAdd.imageUrls[0],
+		)
 	}
 
+	//Hantering för att lägga till produkten i favoritlistan
 	const handleAddToFavorites = () => {
 		if (isFavorite(product._id)) {
 			removeFromFavorites(product._id)
@@ -60,6 +66,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 		}
 	}
 
+	//Hantering för att lägga till en relaterad proddukt i favoritlistan
 	const handleAddRelatedToFavorites = (relatedProductId: string) => {
 		if (isFavorite(relatedProductId)) {
 			removeFromFavorites(relatedProductId)
@@ -68,6 +75,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 		}
 	}
 
+	//Hantering för att lägga till en rekommenderad proddukt i favoritlistan
 	const handleAddRecommendedToFavorites = (recommendedProductId: string) => {
 		if (isFavorite(recommendedProductId)) {
 			removeFromFavorites(recommendedProductId)
@@ -77,7 +85,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 	}
 	return (
 		<>
-			<Container ref={topRef}>
+			<Container ref={topRef} size="xl">
 				<Center>
 					<SimpleGrid
 						className={classes.wrapper}
@@ -85,8 +93,8 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 						spacing={{ base: 10, sm: 'xl' }}>
 						<div className={classes.CarouselContainer}>
 							<Carousel
-								height={400}
-								w={400}
+								height={500}
+								w="auto"
 								loop
 								withIndicators
 								controlSize={30}
@@ -96,7 +104,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 								{product.imageUrls.map((url, index) => (
 									<Carousel.Slide key={index}>
 										<Image
-											h={400}
+											h={500}
 											fit="cover"
 											src={url}
 											alt={`Product Image ${index + 1}`}
@@ -118,13 +126,12 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 							<Text className={classes.text} fw={'bold'} mt={10} fz={'xl'}>
 								{product.price} SEK
 							</Text>
-							{/* <Text>I Lager {product.inStock} st</Text> */}
 							<div className={classes.ButtonContainer}>
 								<Button
 									className={classes.CartButton}
 									onClick={() => handleAddToCart(product)}
 									variant="filled"
-									size="lg">
+									size="md">
 									Lägg i varukorgen
 								</Button>
 								<UnstyledButton
@@ -175,7 +182,10 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 											{relatedProduct.brand}
 										</Text>
 										<Link href={`/product/${relatedProduct._id}`}>
-											<Text className={classes.ProductTitle} mt="xs" mb="xs">
+											<Text
+												className={classes.relatedProductName}
+												mt="xs"
+												mb="xs">
 												{relatedProduct.name}
 											</Text>
 										</Link>
@@ -199,12 +209,12 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 												handleAddRelatedToFavorites(relatedProduct._id)
 											}>
 											{isFavorite(relatedProduct._id) ? (
-												<span className={classes.HeartIconSpan}>
-													<GoHeart />
-												</span>
-											) : (
 												<span className={classes.FilledHeartIconSpan}>
 													<GoHeartFill />
+												</span>
+											) : (
+												<span className={classes.HeartIconSpan}>
+													<GoHeart />
 												</span>
 											)}
 										</UnstyledButton>

@@ -1,4 +1,4 @@
-// ProductCard.tsx
+// ProductCard.tsx (Produktkort)
 import React, { useState } from 'react'
 import { Card, Text, Image, Group } from '@mantine/core'
 import classes from './ProductCard.module.css'
@@ -6,8 +6,6 @@ import { TbHeart, TbShoppingBag } from 'react-icons/tb'
 import { ProductModel } from '@/models/Product'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/react'
 import { GoHeartFill } from 'react-icons/go'
 import { useFavorites } from '@/contexts/FavoritesContext'
 
@@ -18,8 +16,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const { addToCart } = useCart()
-	const router = useRouter()
-	const { data: session } = useSession()
 	const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites()
 
 	const handleHover = () => {
@@ -31,8 +27,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	}
 
 	const handleAddToCart = () => {
-		// Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
-		addToCart(product._id, 1, product.price) // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
+		// Anropar addToCart-funktionen från useCart/CartContext
+		addToCart(product._id, 1, product.price, product.name, product.imageUrls[0])
+
 		console.log(`Produkt med id ${product._id} lades till i varukorgen.`)
 	}
 
@@ -64,7 +61,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 						{product.imageUrls && product.imageUrls.length > 0 && (
 							<Image
 								className={`${classes.cardImage} ${isHovered ? classes.hovered : ''}`}
-								src={isHovered ? product.imageUrls[1] : product.imageUrls[0]}
+								src={
+									isHovered && product.imageUrls[1]
+										? product.imageUrls[1]
+										: product.imageUrls[0]
+								}
 								alt={product.name}
 								fit={isHovered ? 'cover' : 'contain'}
 								height={isHovered ? '300' : '250'}

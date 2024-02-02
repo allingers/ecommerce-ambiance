@@ -1,10 +1,9 @@
-// components/CategoryFilterDrawer.tsx
-
-import React, { useEffect, useState } from 'react'
+// FilterDrawer.tsx
+// Filtrerings komponent - används i [category].tsx och [subcategory].tsx
+import React from 'react'
 import {
 	Accordion,
 	Box,
-	Button,
 	Checkbox,
 	Divider,
 	Drawer,

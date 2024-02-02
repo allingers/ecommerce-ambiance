@@ -1,4 +1,6 @@
 // pages/api/product/[productId].ts
+// Hämtar produkt beroende på produktId
+// Hämtar relaterade och rekommmenderade produkter beroende på vilken produkt.
 import { NextApiRequest, NextApiResponse } from 'next'
 import dbConnect from '../../../lib/dbConnect'
 import { Product } from '../../../models/Product'
@@ -23,14 +25,14 @@ export default async function handler(
 			return res.status(404).json({ error: 'Product not found' })
 		}
 
-		// Hämta andra produkter från samma kategori
+		// Hämtar 3 relaterade produkter från samma kategori
 		const relatedProducts: Product[] = await Product.find({
 			'categories.main': product.categories.main,
 		})
-			.limit(3) // Anpassa antalet produkter du vill visa
+			.limit(3)
 			.exec()
 
-		// Hämta 8 slumpmässiga produkter från samma kategori
+		// Hämtar 8 random produkter från samma huvudkategori
 		const recommendedProducts: Product[] = await Product.aggregate([
 			{
 				$match: {

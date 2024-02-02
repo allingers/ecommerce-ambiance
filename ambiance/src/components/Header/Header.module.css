@@ -1,116 +1,150 @@
 .header {
-    height: rem(56px);
-    background-color: var(--mantine-color-body);
-    border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-    align-items: center;
-  }
-  
-  .inner {
-    height: rem(56px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .link{
-    display: block;
-    line-height: 1;
-    padding: rem(8px) rem(12px);
-    border-radius: var(--mantine-radius-sm);
-    text-decoration: none;
-    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
-    font-size: var(--mantine-font-size-sm);
-    font-weight: 500;
-  }
+	height: rem(56px);
+	background-color: var(--mantine-color-body);
+	border-bottom: rem(1px) solid
+		light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+	align-items: center;
+}
 
-  .link:hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-  }
-  
-  .linkLabel {
-    margin-right: rem(5px);
-    font-size: var(--mantine-font-size-sm);
-  }
-  
-  .logo {
-    font-weight: 600;
-    font-size: 1.6rem;
-    margin-bottom: .3rem;
-  }
-  
-  .user{
-   padding-top: .3rem;
-  }
+.inner {
+	height: rem(56px);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
-    .user:hover{
-      color: rgb(56, 84, 124);
-    }
-    
-    .UserIconSpan {
-      font-size: 1.6rem;
-    }
+.link,
+.drawerLinkMain {
+	display: block;
+	line-height: 1;
+	padding: rem(8px) rem(12px);
+	border-radius: var(--mantine-radius-sm);
+	text-decoration: none;
+	color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+	font-size: var(--mantine-font-size-sm);
+	font-weight: 500;
+}
 
-  .classes.rightSection{
-    display: flex;
-    align-items: center;
-  }
+@media (max-width: 36em) {
+	.link,
+	.drawerLinkMain {
+		display: flex;
+		flex-direction: column;
+	}
+}
+.link:hover {
+	background-color: light-dark(
+		var(--mantine-color-gray-0),
+		var(--mantine-color-dark-6)
+	);
+}
 
-  .LoginIconSpan{
-    font-size: 1.7rem;
-  }
+.linkLabel {
+	margin-right: rem(5px);
+	font-size: var(--mantine-font-size-sm);
+}
 
-  .LoginButton {
-      padding-top: .4rem;
-      cursor: pointer;
-  }
-  
-  .LoginButton:hover {
-    color: rgb(56, 84, 124);
-    }
+.logo {
+	font-weight: 600;
+	font-size: 1.6rem;
+	margin-bottom: 0.3rem;
+}
 
-  .CartButton{
-    padding-top: .5rem;
-    cursor: pointer;
-  }
+.user {
+	padding-top: 0.3rem;
+}
 
-    .CartIconSpan{
-    font-size: 1.5rem;
-    }
-    
-    .CartButton:hover {
-      color: rgb(107, 131, 107);
-    }
+.user:hover {
+	color: rgb(56, 84, 124);
+}
 
-    .CartButtonContainer {
-      position: relative;
-    }
-    
-    .badge {
-      position: absolute;
-      top: .4rem;
-      right: -.6rem;
-      background-color: rgb(157, 106, 163);
-      color: white;
-      padding: 2px 4px;
-      font-size: .6rem;
-      border-radius: 50%;
-    }
-    
-    .HeartIconSpan {
-      font-size: 1.6rem;
-    }
-    
-    .HeartButton {
-      padding-top: .4rem;
-      margin-left: .4rem;
-      cursor: pointer;
-    }
+.UserIconSpan {
+	font-size: 1.6rem;
+}
 
-    .HeartButton:hover {
-      color: rgb(185, 110, 145);
-    }
-    
-    /* .FilledHeartIconSpan {
+.classes.rightSection {
+	display: flex;
+	align-items: center;
+}
+
+.LoginIconSpan {
+	font-size: 1.7rem;
+}
+
+.LoginButton {
+	padding-top: 0.4rem;
+	cursor: pointer;
+}
+
+.LoginButton:hover {
+	color: rgb(56, 84, 124);
+}
+
+.CartButton {
+	padding-top: 0.5rem;
+	cursor: pointer;
+}
+
+.CartIconSpan {
+	font-size: 1.5rem;
+}
+
+.CartButton:hover {
+	color: rgb(107, 131, 107);
+}
+
+.CartButtonContainer {
+	position: relative;
+}
+
+.badge {
+	position: absolute;
+	top: 0.4rem;
+	right: -0.6rem;
+	background-color: rgb(157, 106, 163);
+	color: white;
+	padding: 2px 4px;
+	font-size: 0.6rem;
+	border-radius: 50%;
+}
+
+.HeartIconSpan {
+	font-size: 1.6rem;
+}
+
+.HeartButton {
+	padding-top: 0.4rem;
+	margin-left: 0.4rem;
+	cursor: pointer;
+}
+
+.HeartButton:hover {
+	color: rgb(185, 110, 145);
+}
+
+/* .FilledHeartIconSpan {
       color: rgb(185, 110, 145);
     }
      */
+
+.drawerCategorySpan {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.drawerLinkMainButton {
+	margin-top: 1.3rem;
+	margin-bottom: 0.5rem;
+	font-size: 1.3rem;
+	font-family: 'poppins', sans-serif;
+	font-weight: 600;
+	width: 100%;
+}
+
+.drawerSubLink {
+	font-family: 'poppins', sans-serif;
+	line-height: 1.9rem;
+	font-size: 1.2rem;
+}

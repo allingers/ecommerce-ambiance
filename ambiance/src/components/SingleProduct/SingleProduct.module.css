@@ -1,8 +1,9 @@
 .wrapper {
 	padding-top: rem(150px);
 	padding-bottom: rem(120px);
-
-	@media (max-width: $mantine-breakpoint-md) {
+}
+@media (max-width: 62em) {
+	.wrapper {
 		padding-top: rem(80px);
 		padding-bottom: rem(50px);
 	}
@@ -11,18 +12,12 @@
 .ProductInfo {
 	display: flex;
 	flex-direction: column;
-
-	@media (max-width: $mantine-breakpoint-sm) {
-		text-align: center;
-	}
-	@media (max-width: $mantine-breakpoint-md) {
-		padding-left: 1.5rem;
-	}
 }
-
-.CarouselContainer {
-	@media (max-width: $mantine-breakpoint-md) {
-		margin-right: 2rem;
+@media (max-width: 48em) {
+	.ProductInfo {
+		text-align: center;
+		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 }
 
@@ -31,9 +26,11 @@
 	flex-direction: row;
 	gap: 2rem;
 	padding-top: 1rem;
-
-	@media (max-width: $mantine-breakpoint-md) {
+}
+@media (max-width: 48em) {
+	.ButtonContainer {
 		justify-content: center;
+		flex-direction: row-reverse;
 	}
 }
 
@@ -41,6 +38,11 @@
 	background-color: rgb(115, 153, 115);
 	font-weight: 500;
 	font-size: 1rem;
+}
+@media (max-width: 48em) {
+	.CartButton {
+		font-size: 0.9rem;
+	}
 }
 
 .CartButton:hover {
@@ -60,9 +62,10 @@
 .RelatedProductContainer {
 	padding-top: 1rem;
 	padding-bottom: 2rem;
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		padding-bottom: 1rem;
+}
+@media (max-width: 36em) {
+	.RelatedProductContainer {
+		padding-bottom: 0.5rem;
 	}
 }
 
@@ -79,9 +82,9 @@
 }
 
 .body {
-	padding-top: var(--mantine-spacing-sm);
-	padding-bottom: var(--mantine-spacing-sm);
-	padding-left: var(--mantine-spacing-md);
+	padding-top: 0.6rem;
+	padding-bottom: 0.6rem;
+	padding-left: 1.5rem;
 	display: flex;
 	flex-direction: column;
 }
@@ -89,9 +92,9 @@
 .IconContainer {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
+	gap: 0.3rem;
 	margin-left: auto;
-	padding-right: 1.5rem;
+	padding-right: 1.7rem;
 }
 
 .HeartIconButton {
@@ -160,4 +163,11 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: 130px;
+}
+
+.relatedProductName {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
 }

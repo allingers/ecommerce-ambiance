@@ -1,5 +1,5 @@
 // pages/api/products/textil.ts
-
+// Hämtar 8 produkter inom kategorin textil
 import { NextApiRequest, NextApiResponse } from 'next'
 import dbConnect from '../../../lib/dbConnect'
 import { Product } from '../../../models/Product'

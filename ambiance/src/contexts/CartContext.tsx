@@ -10,12 +10,20 @@ interface CartItem {
 	productId: string
 	quantity: number
 	price: number
+	name: string
+	image: string
 }
 
 interface CartContextProps {
 	cartItems: CartItem[]
 	setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>
-	addToCart: (productId: string, quantity: number, price: number) => void
+	addToCart: (
+		productId: string,
+		quantity: number,
+		price: number,
+		name: string,
+		image: string,
+	) => void
 	removeCartItem: (productId: string) => void
 	updateCartItemQuantity: (productId: string, quantity: number) => void
 	calculateCartTotal: () => number
@@ -29,7 +37,13 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
 	const [cartItems, setCartItems] = useState<CartItem[]>([])
 
-	const addToCart = (productId: string, quantity: number, price: number) => {
+	const addToCart = (
+		productId: string,
+		quantity: number,
+		price: number,
+		name: string,
+		image: string,
+	) => {
 		// Hämta aktuell varukorg
 		const currentCart = [...cartItems]
 
@@ -41,7 +55,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
 		if (existingItemIndex !== -1) {
 			currentCart[existingItemIndex].quantity += quantity
 		} else {
-			currentCart.push({ productId, quantity, price })
+			currentCart.push({ productId, quantity, price, name, image })
 		}
 
 		// Uppdatera varukorgen med den nya varan
@@ -51,7 +65,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
 		setCartItems((prevItems) =>
 			prevItems.map((item) =>
 				item.productId === productId
-					? { ...item, quantity: Math.max(quantity, 1) } // Använd Math.max för att säkerställa att antalet är minst 1
+					? { ...item, quantity: Math.max(quantity, 1) } // Math.max för att säkerställa att antalet är minst 1
 					: item,
 			),
 		)
@@ -90,7 +104,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
 		}
 	}, [])
 
-	// Uppdatera localStorage när varukorgen ändras
+	// Uppdaterar localStorage när varukorgen ändras
 	useEffect(() => {
 		localStorage.setItem('cart', JSON.stringify(cartItems))
 	}, [cartItems])

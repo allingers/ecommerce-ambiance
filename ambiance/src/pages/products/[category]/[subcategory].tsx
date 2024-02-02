@@ -1,4 +1,5 @@
 // pages/[category]/[subcategory].tsx
+
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import ProductList from '../../../components/ProductList/ProductList'
@@ -12,6 +13,7 @@ import {
 	UnstyledButton,
 	Group,
 	Menu,
+	Loader,
 } from '@mantine/core'
 import classes from '../../../styles/ProductPage.module.css'
 import { ProductModel } from '@/models/Product'
@@ -71,7 +73,7 @@ const SubcategoryPage: React.FC = () => {
 					]
 					setAllColors(uniqueColors)
 
-					// Filtrera produkter baserat på huvudkategorin och underkategorin
+					// Filtrering
 					const filteredProducts = data.filter(
 						(product) =>
 							product.categories.main.toString() === category &&
@@ -85,6 +87,7 @@ const SubcategoryPage: React.FC = () => {
 					)
 
 					setProducts(filteredProducts)
+					console.log(filteredProducts)
 				} else {
 					setError('Error fetching products')
 				}
@@ -121,36 +124,61 @@ const SubcategoryPage: React.FC = () => {
 		return `url(/backgrounds/default.jpg)`
 	}
 
+	const formatSubcategory = (subcategory: string | string[] | undefined) => {
+		// Kontrollera om subcategory är definierad innan du försöker använda den
+		if (subcategory) {
+			// Om subcategory är en sträng, ersätt bindestreck med mellanslag
+			if (typeof subcategory === 'string') {
+				return subcategory.replace(/-/g, ' ')
+			}
+
+			// Om subcategory är en array, joina elementen med mellanslag
+			if (Array.isArray(subcategory)) {
+				return subcategory.join(' ')
+			}
+		}
+
+		// Returnera en tom sträng om subcategory är undefined eller annars inte matchar förväntade typer
+		return ''
+	}
+
 	return (
 		<>
-			<Box
-				className={classes.wrapper}
-				style={{ backgroundImage: getBackgroundImage() }}>
-				<Overlay color="#000" opacity={0.85} zIndex={1} />
-				<div className={classes.inner}>
-					<Title tt="capitalize" className={classes.title}>
-						{subcategory}
-					</Title>
-					<Container size="lg">
-						<Text className={classes.text}>
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis
-							accusantium nisi mollitia beatae, quidem explicabo.
-						</Text>
-					</Container>
-					<div className={classes.innerButtonContainer}>
-						<Link href={`/products/${category}`}>
-							<Button
-								className={classes.backButton}
-								variant="filled"
-								size="md"
-								radius="xs">
-								<IoIosArrowBack className={classes.ArrowIcon} />
-								Tillbaka till {category}
-							</Button>
-						</Link>
-					</div>
+			{loading ? (
+				<div>
+					<Loader color="gray" type="dots" />
 				</div>
-			</Box>
+			) : (
+				<Box
+					className={classes.wrapper}
+					style={{ backgroundImage: getBackgroundImage() }}>
+					<Overlay color="#000" opacity={0.85} zIndex={1} />
+					<div className={classes.inner}>
+						<Title tt="capitalize" className={classes.title}>
+							{formatSubcategory(subcategory)}
+						</Title>
+						<Container size="lg">
+							<Text className={classes.text}>
+								Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+								Debitis accusantium nisi mollitia beatae, quidem explicabo.
+							</Text>
+						</Container>
+						<div className={classes.innerButtonContainer}>
+							<Link href={`/products/${category}`}>
+								<Button
+									tt="capitalize"
+									className={classes.backButton}
+									variant="filled"
+									size="md"
+									radius="xs">
+									<IoIosArrowBack className={classes.ArrowIcon} />
+									Tillbaka till {formatSubcategory(category)}
+								</Button>
+							</Link>
+						</div>
+					</div>
+				</Box>
+			)}
 			<Container size="xl" pt={35} pb={35}>
 				<Group className={classes.group}>
 					<UnstyledButton
@@ -188,11 +216,17 @@ const SubcategoryPage: React.FC = () => {
 					</div>
 				</Group>
 			</Container>
-			{/* <Container size="xxl">
-				<Divider />
-			</Container> */}
-
-			<ProductList products={products} />
+			<div>
+				{loading ? (
+					<div>
+						<Loader color="gray" type="dots" />
+					</div>
+				) : (
+					<>
+						<ProductList products={products} />
+					</>
+				)}
+			</div>
 		</>
 	)
 }

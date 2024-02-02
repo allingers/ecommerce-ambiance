@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+//CartDrawer.tsx (Varukorg)
+import React, { useEffect, useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import {
 	Drawer,
@@ -15,6 +16,7 @@ import {
 import { ProductModel } from '@/models/Product'
 import classes from './CartDrawer.module.css'
 import { PiMinusThin, PiPlusThin } from 'react-icons/pi'
+import { useRouter } from 'next/router'
 
 interface CartDrawerProps {
 	isOpen: boolean
@@ -30,7 +32,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 		removeCartItem,
 		calculateCartTotal,
 	} = useCart()
-
+	const router = useRouter()
 	const fetchProductDetails = async () => {
 		try {
 			const response = await fetch('/api/products')
@@ -45,6 +47,11 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 		// Hämta produktinformation när komponenten mountar eller när cartItems ändras
 		fetchProductDetails()
 	}, [cartItems])
+
+	const handleCheckout = () => {
+		router.push('/checkout')
+		onClose()
+	}
 
 	return (
 		<Drawer
@@ -63,7 +70,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 						const product = products.find((p) => p._id === item.productId)
 
 						if (!product) {
-							return null // Skip rendering if product is not found
+							return null
 						}
 
 						const handleQuantityChange = (value: string | number) => {
@@ -71,10 +78,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 								typeof value === 'string' ? parseInt(value, 10) : value
 
 							if (quantity < 1) {
-								// Anropa removeCartItem om antalet är mindre än 1
+								// Tar bort produkten från cart om antalet är mindre än 1
 								removeCartItem(item.productId)
 							} else {
-								// Annars uppdatera antalet som vanligt
+								// Annars uppdateras antalet som vanligt
 								updateCartItemQuantity(item.productId, quantity)
 							}
 						}
@@ -126,7 +133,9 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 				<Text className={classes.CartTotal}>
 					Totalsumma: {calculateCartTotal()} SEK
 				</Text>
-				<Button className={classes.CheckoutButton}>Gå till kassan </Button>
+				<Button className={classes.CheckoutButton} onClick={handleCheckout}>
+					Gå till kassan{' '}
+				</Button>
 			</Box>
 		</Drawer>
 	)

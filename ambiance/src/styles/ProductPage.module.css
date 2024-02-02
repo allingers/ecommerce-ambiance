@@ -3,12 +3,28 @@
 	margin-bottom: 2rem;
 }
 
+@media (max-width: 36em) {
+	.ButtonBox {
+		padding-top: 2rem;
+		margin-bottom: 1rem;
+	}
+}
+
 .SubButton {
 	font-size: 0.95rem;
 	font-weight: 400;
 	font-family: 'Poppins', 'sans-serif';
 	color: black;
 	background-color: white;
+}
+@media (max-width: 48em) {
+	.SubButton {
+		font-size: 1rem;
+		text-decoration: underline;
+		border: none;
+		padding: 0.2rem;
+		justify-content: space-around;
+	}
 }
 
 .SubButton:hover {
@@ -20,13 +36,14 @@
 	position: relative;
 	padding-top: rem(180px);
 	padding-bottom: rem(140px);
-	/* background-image: url('/svg/bright-warm-hero.svg'); */
 	background-size: cover;
 	background-position: center;
+}
 
-	@media (max-width: $mantine-breakpoint-xs) {
-		padding-top: rem(80px);
-		padding-bottom: rem(50px);
+@media (max-width: 36em) {
+	.wrapper {
+		padding-top: rem(90px);
+		padding-bottom: rem(60px);
 	}
 }
 
@@ -45,9 +62,10 @@
 	margin-bottom: var(--mantine-spacing-xs);
 	text-align: center;
 	font-family: 'Montserrat', sans-serif;
-
-	@media (max-width: $mantine-breakpoint-xs) {
-		font-size: rem(28px);
+}
+@media (max-width: 36em) {
+	.title {
+		font-size: 2.5rem;
 	}
 }
 
@@ -60,9 +78,11 @@
 	margin-bottom: var(--mantine-spacing-xs);
 	text-align: center;
 	font-family: 'Montserrat', sans-serif;
+}
 
-	@media (max-width: $mantine-breakpoint-xs) {
-		font-size: 0.8rem;
+@media (max-width: 36em) {
+	.text {
+		font-size: 0.9rem;
 	}
 }
 
@@ -73,8 +93,9 @@
 .description {
 	color: var(--mantine-color-gray-0);
 	text-align: center;
-
-	@media (max-width: $mantine-breakpoint-xs) {
+}
+@media (max-width: 36em) {
+	.description {
 		font-size: var(--mantine-font-size-md);
 		text-align: left;
 	}
@@ -118,7 +139,7 @@
 
 .filterButton,
 .sortButton {
-	font-size: 1rem;
+	font-size: 1.1rem;
 	font-weight: 400;
 	font-family: 'Poppins', 'sans-serif';
 	color: rgb(34, 34, 34);

@@ -1,19 +1,18 @@
 /* CartDrawer.module.css */
 @import url('https://fonts.googleapis.com/css2?family=Average&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&family=Rufina:wght@400;700&family=Sintony:wght@400;700&display=swap');
 
-.cartItemContainer {
-	align-items: center;
-	padding-top: 1.5rem;
-}
-
 .cartItem {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: 1.5rem;
+	padding-top: 1.3rem;
 }
-
+.cartItemContainer {
+	display: flex;
+	flex-direction: column;
+}
 .image {
 	padding-left: 1rem;
 }

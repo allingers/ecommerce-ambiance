@@ -12,14 +12,19 @@
 	margin-left: 1rem;
 	flex-direction: row;
 	gap: 2rem;
-
-	@media (max-width: $mantine-breakpoint-sm) {
+}
+@media (max-width: 48em) {
+	.FavoriteItem {
 		gap: 1rem;
 	}
-}
-.image {
-	@media (max-width: $mantine-breakpoint-sm) {
+	.image {
 		display: none;
+	}
+	.name {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 200px;
 	}
 }
 
