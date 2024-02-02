@@ -15,7 +15,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
 			<Center>
 				<SimpleGrid
 					cols={{ base: 1, sm: 2, md: 3, lg: 4 }}
-					spacing={{ base: 10, sm: 'xl', md: 'xl', lg: 'md' }}
+					spacing={{ base: 10, sm: 'xl', md: 'lg', lg: 'xl' }}
 					verticalSpacing={{ base: 'md', sm: 'xl' }}>
 					{products.map((product) => (
 						<ProductCard key={product._id} product={product} />

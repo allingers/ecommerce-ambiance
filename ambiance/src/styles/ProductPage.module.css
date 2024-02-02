@@ -3,12 +3,28 @@
 	margin-bottom: 2rem;
 }
 
+@media (max-width: 36em) {
+	.ButtonBox {
+		padding-top: 2rem;
+		margin-bottom: 1rem;
+	}
+}
+
 .SubButton {
 	font-size: 0.95rem;
 	font-weight: 400;
 	font-family: 'Poppins', 'sans-serif';
 	color: black;
 	background-color: white;
+}
+@media (max-width: 48em) {
+	.SubButton {
+		font-size: 1rem;
+		text-decoration: underline;
+		border: none;
+		padding: 0.2rem;
+		justify-content: space-around;
+	}
 }
 
 .SubButton:hover {
@@ -22,6 +38,13 @@
 	padding-bottom: rem(140px);
 	background-size: cover;
 	background-position: center;
+}
+
+@media (max-width: 36em) {
+	.wrapper {
+		padding-top: rem(90px);
+		padding-bottom: rem(60px);
+	}
 }
 
 .inner {
@@ -40,6 +63,11 @@
 	text-align: center;
 	font-family: 'Montserrat', sans-serif;
 }
+@media (max-width: 36em) {
+	.title {
+		font-size: 2.5rem;
+	}
+}
 
 .text {
 	font-weight: 400;
@@ -51,30 +79,10 @@
 	text-align: center;
 	font-family: 'Montserrat', sans-serif;
 }
+
 @media (max-width: 36em) {
 	.text {
 		font-size: 0.9rem;
-	}
-
-	.title {
-		font-size: 2.5rem;
-	}
-
-	.wrapper {
-		padding-top: rem(90px);
-		padding-bottom: rem(60px);
-	}
-
-	.SubButton {
-		font-size: 1rem;
-		text-decoration: underline;
-		border: none;
-		padding: 0.2rem;
-		justify-content: space-around;
-	}
-	.ButtonBox {
-		padding-top: 2rem;
-		margin-bottom: 1rem;
 	}
 }
 

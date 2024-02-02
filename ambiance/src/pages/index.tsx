@@ -249,7 +249,7 @@ const Home: React.FC = () => {
 					)}
 					<SimpleGrid
 						cols={{ base: 1, sm: 2, md: 3, xl: 4 }}
-						spacing={{ base: 10, sm: 'md' }}
+						spacing={{ base: 10, sm: 'md', md: 'lg', lg: 'xl' }}
 						verticalSpacing={{ base: 'md', sm: 'xl' }}>
 						{textilProducts.map((product) => (
 							<div key={product._id}>
