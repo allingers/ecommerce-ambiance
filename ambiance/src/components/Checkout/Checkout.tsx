@@ -1,7 +1,7 @@
 import React from 'react'
-import CheckoutStepper from './CheckoutStepper'
 import { Container, Title } from '@mantine/core'
 import classes from './Checkout.module.css'
+import CheckoutStepper from './CheckoutStepper'
 
 function Checkout() {
 	return (

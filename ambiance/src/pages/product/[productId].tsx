@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { ProductModel } from '@/models/Product'
 import SingleProduct from '@/components/SingleProduct/SingleProduct'
+import { Container, Loader } from '@mantine/core'
 
 const SingleProductPage: React.FC = () => {
 	const router = useRouter()
@@ -39,10 +40,6 @@ const SingleProductPage: React.FC = () => {
 		}
 	}, [productId])
 
-	if (loading) {
-		return <p>Loading...</p>
-	}
-
 	if (error) {
 		return <p>Error: {error}</p>
 	}
@@ -53,7 +50,11 @@ const SingleProductPage: React.FC = () => {
 
 	return (
 		<>
-			{loading && <p>Loading...</p>}
+			{loading && (
+				<div>
+					<Loader color="gray" type="dots" />
+				</div>
+			)}
 			{error && <p>Error: {error}</p>}
 			{product && (
 				<SingleProduct

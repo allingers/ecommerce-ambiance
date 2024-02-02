@@ -6,8 +6,6 @@ import { TbHeart, TbShoppingBag } from 'react-icons/tb'
 import { ProductModel } from '@/models/Product'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/react'
 import { GoHeartFill } from 'react-icons/go'
 import { useFavorites } from '@/contexts/FavoritesContext'
 
@@ -18,8 +16,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const { addToCart } = useCart()
-	const router = useRouter()
-	const { data: session } = useSession()
 	const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites()
 
 	const handleHover = () => {
@@ -65,7 +61,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 						{product.imageUrls && product.imageUrls.length > 0 && (
 							<Image
 								className={`${classes.cardImage} ${isHovered ? classes.hovered : ''}`}
-								src={isHovered ? product.imageUrls[1] : product.imageUrls[0]}
+								src={
+									isHovered && product.imageUrls[1]
+										? product.imageUrls[1]
+										: product.imageUrls[0]
+								}
 								alt={product.name}
 								fit={isHovered ? 'cover' : 'contain'}
 								height={isHovered ? '300' : '250'}

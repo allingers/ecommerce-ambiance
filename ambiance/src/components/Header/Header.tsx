@@ -38,7 +38,6 @@ const links = [
 		label: 'Dekoration',
 		links: [
 			{ link: '/products/dekoration/posters', label: 'Posters' },
-			{ link: '/products/dekoration/tavlor', label: 'Tavlor' },
 			{ link: '/products/dekoration/skulpturer', label: 'Skulpturer' },
 			{ link: '/products/dekoration/vaser', label: 'Vaser' },
 			{ link: '/products/dekoration/krukor', label: 'Krukor' },
@@ -67,12 +66,8 @@ const links = [
 		links: [
 			{ link: '/products/belysning/taklampor', label: 'Taklampor' },
 			{ link: '/products/belysning/bordslampor', label: 'Bordslampor' },
-			{ link: '/products/belysning/vagglampor', label: 'Vägglampor' },
+			{ link: '/products/belysning/vägglampor', label: 'Vägglampor' },
 			{ link: '/products/belysning/golvlampor', label: 'Golvlampor' },
-			{
-				link: '/products/belysning/dekorativ-belysning',
-				label: 'Dekorativ Belysning',
-			},
 		],
 	},
 	{

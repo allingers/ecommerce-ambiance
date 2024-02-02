@@ -11,6 +11,7 @@ import {
 	Card,
 	Input,
 	Modal,
+	Loader,
 } from '@mantine/core'
 import { ChangeEvent, useEffect, useState } from 'react'
 import ProductCard from '@/components/ProductCard/ProductCard'
@@ -24,6 +25,7 @@ const Home: React.FC = () => {
 	const [email, setEmail] = useState('')
 	const [error, setError] = useState('')
 	const [opened, { open, close }] = useDisclosure(false)
+	const [loading, setLoading] = useState(false)
 
 	const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = event.target.value
@@ -50,11 +52,14 @@ const Home: React.FC = () => {
 		// Anropar API-endpoint och hämtar 4 slumpmässiga produkter
 		const fetchRandomProducts = async () => {
 			try {
+				setLoading(true)
 				const response = await fetch('/api/products/randomProducts')
 				const data = await response.json()
 				setRandomProducts(data)
 			} catch (error) {
 				console.error('Error fetching random products:', error)
+			} finally {
+				setLoading(false)
 			}
 		}
 
@@ -65,11 +70,14 @@ const Home: React.FC = () => {
 		// Anropar API-endpoint och hämtar 8 textilprodukter
 		const fetchTextilProducts = async () => {
 			try {
+				setLoading(true)
 				const response = await fetch('/api/products/textil')
 				const data = await response.json()
 				setTextilProducts(data)
 			} catch (error) {
 				console.error('Error fetching textil products:', error)
+			} finally {
+				setLoading(false)
 			}
 		}
 
@@ -104,6 +112,11 @@ const Home: React.FC = () => {
 			{/* Popular products section */}
 			<Container pt={35} pb={35} className={classes.PopularSection} size="xxl">
 				<Center>
+					{loading && (
+						<div>
+							<Loader color="gray" type="dots" />
+						</div>
+					)}
 					<SimpleGrid
 						cols={{ base: 1, sm: 2, md: 3, xl: 4 }}
 						spacing={{ base: 10, sm: 'md' }}
@@ -117,11 +130,11 @@ const Home: React.FC = () => {
 				</Center>
 			</Container>
 
-			{/* Category hero */}
+			{/* Textil-Category hero */}
 			<div className={classes.TextilCategoryWrapper}>
 				<Overlay color="#000" opacity={0.25} zIndex={1} />
 				<div className={classes.inner}>
-					<Title tt="uppercase" className={classes.title}>
+					<Title fw={400} tt="uppercase" className={classes.title}>
 						Ge liv med textil
 					</Title>
 					<div className={classes.controls}>
@@ -129,13 +142,13 @@ const Home: React.FC = () => {
 							className={cx(classes.control, classes.secondaryControl)}
 							size="sm">
 							<Link href="/products/textil">
-								<span>Fynda här!</span>
+								<span>Shoppa!</span>
 							</Link>
 						</Button>
 					</div>
 				</div>
 			</div>
-			{/* Category Card section (textil) */}
+			{/* Textil-Category Cards*/}
 			<Container pt={35} className={classes.CategoryCardSection} size="xxl">
 				<Center>
 					<SimpleGrid
@@ -143,89 +156,94 @@ const Home: React.FC = () => {
 						spacing={{ base: 10, sm: 'md' }}
 						verticalSpacing={{ base: 'md', sm: 'xl' }}>
 						<div className={classes.cardContainer}>
-							<Card
-								className={classes.card}
-								style={{
-									backgroundImage:
-										'url(https://royaldesign.se/image/1/chhatwal-jonsson-mahi-dhurry-matta-1?w=1920&quality=80)',
-									backgroundSize: 'cover',
-								}}>
-								<div className={classes.ImageOverlay}></div>
-								<div className={classes.TextContainer}>
-									<Link href={'/products/textil/plädar-&-prydnadskuddar'}>
+							<Link href={'/products/textil/plädar-&-prydnadskuddar'}>
+								<Card
+									className={classes.card}
+									style={{
+										backgroundImage:
+											'url(https://royaldesign.se/image/1/chhatwal-jonsson-mahi-dhurry-matta-1?w=1920&quality=80)',
+										backgroundSize: 'cover',
+									}}>
+									<div className={classes.ImageOverlay}></div>
+									<div className={classes.TextContainer}>
 										<Text className={classes.CardTitle} ta="center">
 											Plädar &
 										</Text>
 										<Text className={classes.CardTitle} ta="center">
 											Prydnadskuddar
 										</Text>
-									</Link>
-								</div>
-							</Card>
+									</div>
+								</Card>
+							</Link>
 						</div>
 
 						<div className={classes.cardContainer}>
-							<Card
-								className={classes.card}
-								style={{
-									backgroundImage:
-										'url(https://royaldesign.se/image/1/house-doctor-chindi-matta-vit-3?w=1920&quality=80)',
-									backgroundSize: 'cover',
-								}}>
-								<div className={classes.ImageOverlay}></div>
-								<div className={classes.TextContainer}>
-									<Link href={'/products/textil/mattor'}>
+							<Link href={'/products/textil/mattor'}>
+								<Card
+									className={classes.card}
+									style={{
+										backgroundImage:
+											'url(https://royaldesign.se/image/1/house-doctor-chindi-matta-vit-3?w=1920&quality=80)',
+										backgroundSize: 'cover',
+									}}>
+									<div className={classes.ImageOverlay}></div>
+									<div className={classes.TextContainer}>
 										<Text className={classes.CardTitle} ta="center">
 											Mattor
 										</Text>
-									</Link>
-								</div>
-							</Card>
+									</div>
+								</Card>
+							</Link>
 						</div>
 
 						<div className={classes.cardContainer}>
-							<Card
-								className={classes.card}
-								style={{
-									backgroundImage:
-										'url(https://www.rum21.se/image/14/mimou-gardin-ellie-halvlinne-dubbel-bredd-vit-290x250-43?w=1920&quality=80)',
-									backgroundSize: 'cover',
-								}}>
-								<div className={classes.ImageOverlay}></div>
-								<div className={classes.TextContainer}>
-									<Link href={'/products/textil/gardiner'}>
+							<Link href={'/products/textil/gardiner'}>
+								<Card
+									className={classes.card}
+									style={{
+										backgroundImage:
+											'url(https://www.rum21.se/image/14/mimou-gardin-ellie-halvlinne-dubbel-bredd-vit-290x250-43?w=1920&quality=80)',
+										backgroundSize: 'cover',
+									}}>
+									<div className={classes.ImageOverlay}></div>
+									<div className={classes.TextContainer}>
 										<Text className={classes.CardTitle} ta="center">
 											Gardiner
 										</Text>
-									</Link>
-								</div>
-							</Card>
+									</div>
+								</Card>
+							</Link>
 						</div>
 
 						<div className={classes.cardContainer}>
-							<Card
-								className={classes.card}
-								style={{
-									backgroundImage:
-										'url(https://royaldesign.se/image/1/boeljan-mirja-bordsduk-150x260-cm-1?w=1920&quality=80)',
-									backgroundSize: 'cover',
-								}}>
-								<div className={classes.ImageOverlay}></div>
-								<div className={classes.TextContainer}>
-									<Link href={'/products/textil/kökstextiler'}>
+							<Link href={'/products/textil/kökstextiler'}>
+								<Card
+									className={classes.card}
+									style={{
+										backgroundImage:
+											'url(https://royaldesign.se/image/1/boeljan-mirja-bordsduk-150x260-cm-1?w=1920&quality=80)',
+										backgroundSize: 'cover',
+									}}>
+									<div className={classes.ImageOverlay}></div>
+									<div className={classes.TextContainer}>
 										<Text className={classes.CardTitle} ta="center">
 											Kökstextil
 										</Text>
-									</Link>
-								</div>
-							</Card>
+									</div>
+								</Card>
+							</Link>
 						</div>
 					</SimpleGrid>
 				</Center>
 			</Container>
-			{/* Textil products section */}
+			{/* Textil products-section */}
 			<Container pt={35} className={classes.TextilSection} size="xxl">
 				<Center>
+					{loading && (
+						<div>
+							<Loader color="gray" type="dots" />
+						</div>
+					)}
 					<SimpleGrid
 						cols={{ base: 1, sm: 2, md: 3, xl: 4 }}
 						spacing={{ base: 10, sm: 'md' }}
@@ -238,7 +256,8 @@ const Home: React.FC = () => {
 					</SimpleGrid>
 				</Center>
 			</Container>
-			{/* Double hero section */}
+
+			{/* Double hero-section */}
 			<Container
 				pt={35}
 				pb={40}

@@ -21,7 +21,7 @@
 
 .title {
 	font-weight: 600;
-	font-size: 3.8rem;
+	font-size: 3.9rem;
 	letter-spacing: rem(-1px);
 	padding-left: var(--mantine-spacing-md);
 	padding-right: var(--mantine-spacing-md);
@@ -62,10 +62,8 @@
 .control {
 	height: rem(42px);
 	font-size: var(--mantine-font-size-md);
-
-	&:not(:first-of-type) {
-		margin-left: var(--mantine-spacing-md);
-	}
+	font-family: 'poppins', sans-serif;
+	font-weight: 400;
 
 	@media (max-width: $mantine-breakpoint-xs) {
 		&:not(:first-of-type) {
@@ -73,6 +71,11 @@
 			margin-left: 0;
 		}
 	}
+}
+
+.control:hover {
+	background: none;
+	border: 1px solid rgba(255, 255, 255, 0.45);
 }
 
 .secondaryControl {

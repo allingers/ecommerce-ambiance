@@ -40,18 +40,23 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 	const topRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		// Scrolla till toppen när komponenten monteras
 		if (topRef.current) {
 			topRef.current.scrollIntoView({ behavior: 'smooth' })
 		}
-	}, []) // Den här effekten körs bara vid mount
+	}, [])
 
 	const handleAddToCart = (productToAdd: ProductModel) => {
-		// Anropa addToCart-funktionen från useCart och skicka med produktens id och kvantitet
-		addToCart(productToAdd._id, 1, productToAdd.price) // Här används 1 som standardkvantitet, du kan anpassa den beroende på ditt behov
-		console.log(`Produkt med id ${productToAdd._id} lades till i varukorgen.`)
+		// Anropar addToCart-funktionen från useCart/CartContext
+		addToCart(
+			productToAdd._id,
+			1,
+			productToAdd.price,
+			productToAdd.name,
+			productToAdd.imageUrls[0],
+		)
 	}
 
+	//Hantering för att lägga till produkten i favoritlistan
 	const handleAddToFavorites = () => {
 		if (isFavorite(product._id)) {
 			removeFromFavorites(product._id)
@@ -60,6 +65,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 		}
 	}
 
+	//Hantering för att lägga till en relaterad proddukt i favoritlistan
 	const handleAddRelatedToFavorites = (relatedProductId: string) => {
 		if (isFavorite(relatedProductId)) {
 			removeFromFavorites(relatedProductId)
@@ -68,6 +74,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 		}
 	}
 
+	//Hantering för att lägga till en rekommenderad proddukt i favoritlistan
 	const handleAddRecommendedToFavorites = (recommendedProductId: string) => {
 		if (isFavorite(recommendedProductId)) {
 			removeFromFavorites(recommendedProductId)
@@ -118,7 +125,6 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 							<Text className={classes.text} fw={'bold'} mt={10} fz={'xl'}>
 								{product.price} SEK
 							</Text>
-							{/* <Text>I Lager {product.inStock} st</Text> */}
 							<div className={classes.ButtonContainer}>
 								<Button
 									className={classes.CartButton}
@@ -199,12 +205,12 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 												handleAddRelatedToFavorites(relatedProduct._id)
 											}>
 											{isFavorite(relatedProduct._id) ? (
-												<span className={classes.HeartIconSpan}>
-													<GoHeart />
-												</span>
-											) : (
 												<span className={classes.FilledHeartIconSpan}>
 													<GoHeartFill />
+												</span>
+											) : (
+												<span className={classes.HeartIconSpan}>
+													<GoHeart />
 												</span>
 											)}
 										</UnstyledButton>

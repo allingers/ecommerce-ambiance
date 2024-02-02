@@ -12,6 +12,7 @@ import {
 	UnstyledButton,
 	Group,
 	Menu,
+	Loader,
 } from '@mantine/core'
 import classes from '../../../styles/ProductPage.module.css'
 import { ProductModel } from '@/models/Product'
@@ -20,7 +21,6 @@ import { IoIosArrowBack, IoIosArrowDown } from 'react-icons/io'
 import { IoFilterOutline } from 'react-icons/io5'
 import FilterDrawer from '@/components/FilterDrawer/FilterDrawer'
 import { useFilterContext } from '@/contexts/FilterContext'
-import { SubcategoryModel } from '@/models/Subcategory'
 
 const SubcategoryPage: React.FC = () => {
 	const router = useRouter()
@@ -72,7 +72,7 @@ const SubcategoryPage: React.FC = () => {
 					]
 					setAllColors(uniqueColors)
 
-					// Filtrera produkter baserat på huvudkategorin och underkategorin
+					// Filtrering
 					const filteredProducts = data.filter(
 						(product) =>
 							product.categories.main.toString() === category &&
@@ -123,6 +123,24 @@ const SubcategoryPage: React.FC = () => {
 		return `url(/backgrounds/default.jpg)`
 	}
 
+	const formatSubcategory = (subcategory: string | string[] | undefined) => {
+		// Kontrollera om subcategory är definierad innan du försöker använda den
+		if (subcategory) {
+			// Om subcategory är en sträng, ersätt bindestreck med mellanslag
+			if (typeof subcategory === 'string') {
+				return subcategory.replace(/-/g, ' ')
+			}
+
+			// Om subcategory är en array, joina elementen med mellanslag
+			if (Array.isArray(subcategory)) {
+				return subcategory.join(' ')
+			}
+		}
+
+		// Returnera en tom sträng om subcategory är undefined eller annars inte matchar förväntade typer
+		return ''
+	}
+
 	return (
 		<>
 			<Box
@@ -130,8 +148,13 @@ const SubcategoryPage: React.FC = () => {
 				style={{ backgroundImage: getBackgroundImage() }}>
 				<Overlay color="#000" opacity={0.85} zIndex={1} />
 				<div className={classes.inner}>
+					{loading && (
+						<div>
+							<Loader color="gray" type="dots" />
+						</div>
+					)}
 					<Title tt="capitalize" className={classes.title}>
-						{subcategory}
+						{formatSubcategory(subcategory)}
 					</Title>
 					<Container size="lg">
 						<Text className={classes.text}>
@@ -142,12 +165,13 @@ const SubcategoryPage: React.FC = () => {
 					<div className={classes.innerButtonContainer}>
 						<Link href={`/products/${category}`}>
 							<Button
+								tt="capitalize"
 								className={classes.backButton}
 								variant="filled"
 								size="md"
 								radius="xs">
 								<IoIosArrowBack className={classes.ArrowIcon} />
-								Tillbaka till {category}
+								Tillbaka till {formatSubcategory(category)}
 							</Button>
 						</Link>
 					</div>
@@ -190,11 +214,18 @@ const SubcategoryPage: React.FC = () => {
 					</div>
 				</Group>
 			</Container>
-			{/* <Container size="xxl">
-				<Divider />
-			</Container> */}
-
-			<ProductList products={products} />
+			<div>
+				{loading ? (
+					<div>
+						{' '}
+						<Loader color="gray" type="dots" />
+					</div>
+				) : (
+					<>
+						<ProductList products={products} />
+					</>
+				)}
+			</div>
 		</>
 	)
 }

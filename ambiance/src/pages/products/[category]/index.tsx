@@ -14,6 +14,7 @@ import {
 	Group,
 	Menu,
 	Divider,
+	Loader,
 } from '@mantine/core'
 import classes from '../../../styles/ProductPage.module.css'
 import { ProductModel } from '@/models/Product'
@@ -130,6 +131,40 @@ const CategoryPage: React.FC = () => {
 		return `url(/backgrounds/default.jpg)`
 	}
 
+	const formatcategory = (category: string | string[] | undefined) => {
+		if (category) {
+			// Om subcategory är en sträng, ersätt bindestreck med mellanslag
+			if (typeof category === 'string') {
+				return category.replace(/-/g, ' ')
+			}
+
+			// Om subcategory är en array, joina elementen med mellanslag
+			if (Array.isArray(category)) {
+				return category.join(' ')
+			}
+		}
+
+		// Returnera en tom sträng om subcategory är undefined eller inte matchar förväntad typ
+		return ''
+	}
+
+	const formatSubcategory = (subcategory: string | string[] | undefined) => {
+		if (subcategory) {
+			// Om subcategory är en sträng, ersätt bindestreck med mellanslag
+			if (typeof subcategory === 'string') {
+				return subcategory.replace(/-/g, ' ')
+			}
+
+			// Om subcategory är en array, joina elementen med mellanslag
+			if (Array.isArray(subcategory)) {
+				return subcategory.join(' ')
+			}
+		}
+
+		// Returnera en tom sträng om subcategory är undefined eller inte matchar förväntad typ
+		return ''
+	}
+
 	return (
 		<>
 			<Box
@@ -138,7 +173,7 @@ const CategoryPage: React.FC = () => {
 				<Overlay color="#000" opacity={0.95} zIndex={1} />
 				<div className={classes.inner}>
 					<Title tt="capitalize" className={classes.title}>
-						{category}
+						{formatcategory(category)}
 					</Title>
 					<Container size="lg">
 						<Text className={classes.text}>
@@ -171,6 +206,7 @@ const CategoryPage: React.FC = () => {
 					wrap="wrap">
 					{filteredSubcategories.map((subcategory) => (
 						<Button
+							tt="capitalize"
 							size="md"
 							variant="outline"
 							color="rgba(18, 18, 18, 1)"
@@ -182,7 +218,7 @@ const CategoryPage: React.FC = () => {
 									`/products/${category}/${subcategory.name.toLowerCase().replace(/\s+/g, '-')}`,
 								)
 							}>
-							{subcategory.name}
+							{formatSubcategory(subcategory.name)}
 						</Button>
 					))}
 				</Flex>
@@ -226,7 +262,17 @@ const CategoryPage: React.FC = () => {
 
 				<Divider />
 			</Container>
-			<ProductList products={products} />
+			<div>
+				{loading ? (
+					<div>
+						<Loader color="gray" type="dots" />
+					</div>
+				) : (
+					<>
+						<ProductList products={products} />
+					</>
+				)}
+			</div>
 		</>
 	)
 }
