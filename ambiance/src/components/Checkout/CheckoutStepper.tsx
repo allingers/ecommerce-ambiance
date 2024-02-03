@@ -45,6 +45,11 @@ const CheckoutStepper: React.FC = () => {
 	const [cartProducts, setCartProducts] = useState<Product[]>([])
 	const [loading, setLoading] = useState(false)
 	const [saveUserInfo, setSaveUserInfo] = useState(true)
+	const userFormRef = useRef<{
+		validateForm: () => boolean
+		validateFields: () => () => Record<string, string | null>
+	} | null>(null)
+
 	const [userData, setUserData] = useState<UserData>({
 		name: '',
 		email: '',
@@ -61,9 +66,19 @@ const CheckoutStepper: React.FC = () => {
 		localStorage.removeItem(cartKey)
 	}
 
-	//Hantering av stegen
+	//Hantering av stegen i Steppern
 	const nextStep = () => {
-		// Om det är steg 2, uppdatera userData-statet och gå vidare till nästa steg
+		if (activeStep === 1) {
+			// Kontrollerar om userFormRef.current är null innan den används
+			if (userFormRef.current) {
+				// Anropa valideringsfunktionen, kontrollerar om alla fält är ifyllda
+				const isFormValid = userFormRef.current.validateFields()
+				if (!isFormValid) {
+					console.log('Vänligen fyll i alla obligatoriska fält.')
+					return
+				}
+			}
+		}
 		if (activeStep === 2) {
 			setUserData((prevData) => ({
 				...prevData,
@@ -72,23 +87,23 @@ const CheckoutStepper: React.FC = () => {
 			setActiveStep((current) => current + 1)
 		}
 	}
-	// Om det är första steget går det inte att gå tillbaka
+	// Gå tillbaka till föregående steg i Stepper-komponenten
 	const prevStep = () =>
 		setActiveStep((current) => (current > 0 ? current - 1 : current))
 
 	useEffect(() => {
-		// Hämta produkter från localStorage när komponenten mountar
+		// Hämtar produkter från "cart" i localStorage när komponenten monterar
 		const storedCartProducts = localStorage.getItem('cart')
 		const cartProductsFromStorage: Product[] = storedCartProducts
 			? JSON.parse(storedCartProducts)
 			: []
 		setCartProducts(cartProductsFromStorage)
 
-		// Hämtar userInfo från localStorage och sötter userData-state
-		// Beroende på vilken information som finns sätts inputfältens värden automatiskt i userForm.
+		// Hämtar användarinformation från "userInfo" i localStorage när komponenten monterar
 		const fetchSession = async () => {
 			const storedUserInfo = localStorage.getItem('userInfo')
 
+			// Om användarinformation finns, uppdatera userData-statet
 			if (storedUserInfo) {
 				const userInfo = JSON.parse(storedUserInfo)
 
@@ -105,7 +120,7 @@ const CheckoutStepper: React.FC = () => {
 			}
 		}
 
-		fetchSession()
+		fetchSession() // Anropa funktionen fetchSession när komponenten monteras
 	}, [])
 
 	// Uppdaterar användarens information, både useInfo i localStorage och user-objektet i databasen
@@ -132,17 +147,18 @@ const CheckoutStepper: React.FC = () => {
 			console.error('Fel vid uppdatering av användarinformation:', error)
 		}
 	}
-
+	//Hanterar orderprocessen, inklusive skapande av order och uppdatering av användarinformation
 	const handleOrder = async () => {
 		try {
 			setLoading(true)
 			const userEmail = userData.email
 
-			// Kallar endast på funktionen som uppdaterar användarinformationen om användaren är inloggad.
+			// Kallar funktionen som uppdaterar användarinformationen OM en användare är inloggad.
 			if (saveUserInfo && session) {
 				await updateUserInfo(userData)
 			}
 
+			// Request till API:et för att skapa en order
 			const response = await fetch('/api/checkout/create-order', {
 				method: 'POST',
 				headers: {
@@ -161,7 +177,7 @@ const CheckoutStepper: React.FC = () => {
 			})
 
 			const data = await response.json()
-
+			// Om orderprocessen lyckas, rensas varukorgen, och navigerar till bekräftelsesidan
 			if (response.ok) {
 				console.log('Order created successfully')
 				clearCart()
@@ -170,12 +186,19 @@ const CheckoutStepper: React.FC = () => {
 				console.error('Error creating order:', data.message)
 			}
 		} catch (error) {
-			console.error('Error processing payment and creating order:', error)
+			console.error('Error processing and creating order:', error)
 		} finally {
 			setLoading(false)
 		}
 	}
 
+	const validateUserFormFields = () => {
+		// Använd ref för att få åtkomst till UserForm-funktioner
+		if (userFormRef.current && userFormRef.current.validateFields) {
+			return userFormRef.current.validateFields()
+		}
+		return {} // Om ref är null eller validateFields inte finns
+	}
 	return (
 		<>
 			<Container size="lg" pt={30}>
@@ -184,7 +207,6 @@ const CheckoutStepper: React.FC = () => {
 					active={activeStep}
 					onStepClick={setActiveStep}>
 					<Stepper.Step label="Översikt" description="Kontrollera ditt köp">
-						{/* Visa översikt av produkter*/}
 						{loading && (
 							<div>
 								<Loader color="gray" type="dots" />
@@ -200,7 +222,12 @@ const CheckoutStepper: React.FC = () => {
 								<Loader color="gray" type="dots" />
 							</div>
 						)}
-						<UserForm userData={userData} setUserData={setUserData} />
+						<UserForm
+							validateFields={validateUserFormFields}
+							userData={userData}
+							setUserData={setUserData}
+							ref={userFormRef}
+						/>
 					</Stepper.Step>
 					<Stepper.Step label="Beställning" description="Lägg din order">
 						{loading && (
