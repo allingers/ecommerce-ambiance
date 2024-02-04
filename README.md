@@ -56,6 +56,7 @@ NEXTAUTH_SECRET=your-nextauth-secret
 NEXTAUTH_URL=http://localhost:3000
 MONGODB_URI=your-mongodb-uri
 MONGODB_DB=your-mongodb-database-name
+JWT_SECRET
 ```
 
 ## Användning
