@@ -15,6 +15,9 @@ import CartOverview from './CartOverview'
 import OrderInformation from './OrderInformation'
 import { useSession } from 'next-auth/react'
 import classes from './Checkout.module.css'
+import { loadStripe } from '@stripe/stripe-js'
+import StripePaymentModal from './PaymentModal'
+import { Elements } from '@stripe/react-stripe-js'
 
 export interface Product {
 	productId: string
@@ -38,6 +41,10 @@ export interface UserData {
 	address: Address
 }
 
+const stripePromise = loadStripe(
+	'pk_test_51NmX8qLhyajhraaskkEutRIgA7qht39d7PxFlmEo0AJgfqy1Ffc06EXMs8OPdOPyAj3z07tF5XgSbaJ3pEbqfIfi00EYuTzwXF',
+) // Byt ut med din faktiska Stripe Publishable Key
+
 const CheckoutStepper: React.FC = () => {
 	const { calculateCartTotal } = useCart()
 	const { data: session } = useSession()
@@ -60,6 +67,7 @@ const CheckoutStepper: React.FC = () => {
 			postalCode: '',
 		},
 	})
+	const [isModalOpen, setModalOpen] = useState(false)
 	// Tömmer Cart i localStorage efter lagd order
 	const cartKey = 'cart'
 	const clearCart = () => {
@@ -199,6 +207,42 @@ const CheckoutStepper: React.FC = () => {
 		}
 		return {} // Om ref är null eller validateFields inte finns
 	}
+	const handleOrderCompletion = async () => {
+		try {
+			// Hårdkodad betalningsmetod id, ersätt med det faktiska id från Stripe eller annan betalningsgateway
+			const paymentMethodId = 'pm_card_visa'
+
+			// Skicka betalningsmetodens id och totalbelopp till servern för att initiera betalningen
+			const response = await fetch('/api/checkout/create-payment-intent', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					paymentMethodId: paymentMethodId,
+					totalAmount: calculateCartTotal(), // Anpassa detta baserat på ditt sätt att beräkna totalt belopp
+				}),
+			})
+
+			if (response.ok) {
+				await handleOrder()
+				console.log('Order completed successfully')
+				// Gå till bekräftelsesidan eller annan lämplig navigering
+				router.push('/order-confirm')
+			} else {
+				console.error('Error completing order:', response.statusText)
+				// Visa felmeddelande för användaren
+			}
+		} catch (error) {
+			console.error('Error completing order:', error)
+			// Visa felmeddelande för användaren
+		}
+	}
+
+	const stripePromise = loadStripe(
+		'pk_test_51NmX8qLhyajhraaskkEutRIgA7qht39d7PxFlmEo0AJgfqy1Ffc06EXMs8OPdOPyAj3z07tF5XgSbaJ3pEbqfIfi00EYuTzwXF',
+	)
+
 	return (
 		<>
 			<Container size="lg" pt={30}>
@@ -241,6 +285,13 @@ const CheckoutStepper: React.FC = () => {
 							saveUserInfo={saveUserInfo}
 							setSaveUserInfo={setSaveUserInfo}
 						/>
+						<Elements stripe={stripePromise}>
+							<StripePaymentModal
+								isOpen={isModalOpen}
+								onClose={() => setModalOpen(false)}
+								onConfirmation={handleOrderCompletion}
+							/>
+						</Elements>
 					</Stepper.Step>
 				</Stepper>
 			</Container>
@@ -263,8 +314,10 @@ const CheckoutStepper: React.FC = () => {
 						Nästa steg
 					</Button>
 				) : (
-					<Button className={classes.PayButton} onClick={handleOrder}>
-						Bekröfta order
+					<Button
+						className={classes.PayButton}
+						onClick={() => setModalOpen(true)}>
+						Bekräfta order och betala
 					</Button>
 				)}
 			</Group>
