@@ -43,7 +43,7 @@ export interface UserData {
 
 const stripePromise = loadStripe(
 	'pk_test_51NmX8qLhyajhraaskkEutRIgA7qht39d7PxFlmEo0AJgfqy1Ffc06EXMs8OPdOPyAj3z07tF5XgSbaJ3pEbqfIfi00EYuTzwXF',
-) // Byt ut med din faktiska Stripe Publishable Key
+)
 
 const CheckoutStepper: React.FC = () => {
 	const { calculateCartTotal } = useCart()
@@ -205,11 +205,11 @@ const CheckoutStepper: React.FC = () => {
 		if (userFormRef.current && userFormRef.current.validateFields) {
 			return userFormRef.current.validateFields()
 		}
-		return {} // Om ref är null eller validateFields inte finns
+		return {}
 	}
 	const handleOrderCompletion = async () => {
 		try {
-			// Hårdkodad betalningsmetod id, ersätt med det faktiska id från Stripe eller annan betalningsgateway
+			// Hårdkodad betalningsmetod-id
 			const paymentMethodId = 'pm_card_visa'
 
 			// Skicka betalningsmetodens id och totalbelopp till servern för att initiera betalningen
@@ -220,14 +220,13 @@ const CheckoutStepper: React.FC = () => {
 				},
 				body: JSON.stringify({
 					paymentMethodId: paymentMethodId,
-					totalAmount: calculateCartTotal(), // Anpassa detta baserat på ditt sätt att beräkna totalt belopp
+					totalAmount: calculateCartTotal(),
 				}),
 			})
 
 			if (response.ok) {
 				await handleOrder()
 				console.log('Order completed successfully')
-				// Gå till bekräftelsesidan eller annan lämplig navigering
 				router.push('/order-confirm')
 			} else {
 				console.error('Error completing order:', response.statusText)
@@ -238,10 +237,6 @@ const CheckoutStepper: React.FC = () => {
 			// Visa felmeddelande för användaren
 		}
 	}
-
-	const stripePromise = loadStripe(
-		'pk_test_51NmX8qLhyajhraaskkEutRIgA7qht39d7PxFlmEo0AJgfqy1Ffc06EXMs8OPdOPyAj3z07tF5XgSbaJ3pEbqfIfi00EYuTzwXF',
-	)
 
 	return (
 		<>
