@@ -15,6 +15,7 @@ import CartOverview from './CartOverview'
 import OrderInformation from './OrderInformation'
 import { useSession } from 'next-auth/react'
 import classes from './Checkout.module.css'
+import PaymentForm from './PaymentForm'
 
 export interface Product {
 	productId: string
@@ -79,6 +80,9 @@ const CheckoutStepper: React.FC = () => {
 				}
 			}
 		}
+		setActiveStep((current) => current + 1)
+
+		// Kontrollera om detta är sista steget, det vill säga betalningssteget
 		if (activeStep === 2) {
 			setUserData((prevData) => ({
 				...prevData,
@@ -199,6 +203,39 @@ const CheckoutStepper: React.FC = () => {
 		}
 		return {} // Om ref är null eller validateFields inte finns
 	}
+
+	const handleOrderCompletion = async () => {
+		try {
+			// Hårdkodad betalningsmetod id, ersätt med det faktiska id från Stripe eller annan betalningsgateway
+			const paymentMethodId = 'pm_card_visa'
+
+			// Skicka betalningsmetodens id och totalbelopp till servern för att initiera betalningen
+			const response = await fetch('/api/checkout/create-payment-intent', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					paymentMethodId: paymentMethodId,
+					totalAmount: calculateCartTotal(), // Anpassa detta baserat på ditt sätt att beräkna totalt belopp
+				}),
+			})
+
+			if (response.ok) {
+				await handleOrder()
+				console.log('Order completed successfully')
+				// Gå till bekräftelsesidan eller annan lämplig navigering
+				router.push('/order-confirm')
+			} else {
+				console.error('Error completing order:', response.statusText)
+				// Visa felmeddelande för användaren
+			}
+		} catch (error) {
+			console.error('Error completing order:', error)
+			// Visa felmeddelande för användaren
+		}
+	}
+
 	return (
 		<>
 			<Container size="lg" pt={30}>
@@ -242,6 +279,14 @@ const CheckoutStepper: React.FC = () => {
 							setSaveUserInfo={setSaveUserInfo}
 						/>
 					</Stepper.Step>
+					<Stepper.Step label="Beställning" description="Lägg din order">
+						{loading && (
+							<div>
+								<Loader color="gray" type="dots" />
+							</div>
+						)}
+						<PaymentForm onSubmit={handleOrderCompletion} />
+					</Stepper.Step>
 				</Stepper>
 			</Container>
 			<Divider mt={15} />
@@ -254,7 +299,7 @@ const CheckoutStepper: React.FC = () => {
 						Tillbaka
 					</Button>
 				)}
-				{activeStep < 2 ? (
+				{activeStep < 3 ? (
 					<Button
 						color="white"
 						fw={500}
@@ -263,8 +308,8 @@ const CheckoutStepper: React.FC = () => {
 						Nästa steg
 					</Button>
 				) : (
-					<Button className={classes.PayButton} onClick={handleOrder}>
-						Lägg din order
+					<Button className={classes.PayButton} onClick={handleOrderCompletion}>
+						Betala
 					</Button>
 				)}
 			</Group>
