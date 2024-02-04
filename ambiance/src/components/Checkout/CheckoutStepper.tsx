@@ -264,7 +264,7 @@ const CheckoutStepper: React.FC = () => {
 					</Button>
 				) : (
 					<Button className={classes.PayButton} onClick={handleOrder}>
-						Lägg din order
+						Bekröfta order
 					</Button>
 				)}
 			</Group>
