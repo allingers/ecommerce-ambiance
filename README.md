@@ -16,12 +16,12 @@ Ambiance är ett E-handelsprojekt som utvecklats inom ramen för studier inom we
 
 ## Tekniker
 
-- [Next.js](https://nextjs.org/) - En React-ramverk för att bygga webbapplikationer.
-- [TypeScript](https://www.typescriptlang.org/) - Ett typat övermängd av JavaScript som ökar koden kvalitet och läsbarhet.
-- [MongoDB](https://www.mongodb.com/) - En NoSQL-databas för lagring av data.
-- [Mongoose](https://mongoosejs.com/) - Ett elegant ODM (Object Data Modeling) för MongoDB och Node.js.
-- [NextAuth.js](https://next-auth.js.org/) - En autentiseringsbibliotek för Next.js-projekt.
-- [Mantine](https://mantine.dev/) - Ett React-komponentbibliotek med användbara komponenter och verktyg.
+- [Next.js](https://nextjs.org/) 
+- [TypeScript](https://www.typescriptlang.org/) 
+- [MongoDB](https://www.mongodb.com/) 
+- [Mongoose](https://mongoosejs.com/) 
+- [NextAuth.js](https://next-auth.js.org/) 
+- [Mantine](https://mantine.dev/) 
 
 ## Krav
 
