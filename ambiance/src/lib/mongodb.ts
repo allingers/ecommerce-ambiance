@@ -4,9 +4,7 @@ if (!process.env.MONGODB_URI) {
 	throw new Error('Please add your Mongo URI to .env.local')
 }
 
-const uri: string =
-	process.env.MONGODB_URI ||
-	'mongodb+srv://ambiance-admin:89Sierra567@ambiance.jgmcuvo.mongodb.net/ambianceDB?retryWrites=true&w=majority'
+const uri: string = process.env.MONGODB_URI
 let client: MongoClient
 let clientPromise: Promise<MongoClient>
 

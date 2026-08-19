@@ -6,9 +6,7 @@ if (!process.env.MONGODB_URI) {
 }
 
 // Hämta MONGODB_URI från miljövariablerna eller använd en fallback om det inte finns
-const MONGODB_URI: string =
-	process.env.MONGODB_URI ||
-	'mongodb+srv://ambiance-admin:89Sierra567@ambiance.jgmcuvo.mongodb.net/ambianceDB?retryWrites=true&w=majority'
+const MONGODB_URI: string = process.env.MONGODB_URI
 
 // Skapa en global variabel för att lagra mongoose och anslutningsinformation
 let globalWithMongoose = global as typeof globalThis & {

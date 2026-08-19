@@ -105,7 +105,7 @@ const SingleProduct: React.FC<ProductDetailProps> = ({
 									<Carousel.Slide key={index}>
 										<Image
 											h={500}
-											fit="cover"
+											fit="contain"
 											src={url}
 											alt={`Product Image ${index + 1}`}
 										/>
